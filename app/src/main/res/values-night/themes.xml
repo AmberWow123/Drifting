@@ -1,10 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Drifting" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.Drifting" parent="Theme.AppCompat">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#FFFFFF</item>
         <item name="colorPrimaryVariant">#E1B5B5</item>
         <item name="colorOnPrimary">#E1B5B5</item>
+        <item name="android:textColorPrimary">#E1B5B5</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
