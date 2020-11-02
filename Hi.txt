@@ -1,3 +1,0 @@
-Hi there, let's try merging our code. 
-
--- Test_branch_Vickie
