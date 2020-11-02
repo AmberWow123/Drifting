@@ -1,0 +1,32 @@
+let TRUE  = \x y -> x
+let FALSE = \x y -> y
+let ITE   = \b x y -> b x y
+let AND   = \b1 b2 -> ITE b1 b2 FALSE
+let OR    = \b1 b2 -> ITE b1 TRUE b2
+
+let ZERO  = \f x -> x
+let ONE   = \f x -> f x
+let TWO   = \f x -> f (f x)
+let INC   = \n f x -> f (n f x)
+
+let PAIR  = \x y b -> ITE b x y
+let FST   = \p     -> p TRUE
+let SND   = \p     -> p FALSE
+let ADD = \n m -> n INC m
+let SKIP1 = \f p -> ITE (FST p) (PAIR TRUE (f (SND p))) (PAIR TRUE (SND p))
+let DEC   = \n -> SND (n (SKIP1 INC) (PAIR FALSE ZERO))
+let SUB   = \n m -> m DEC n
+let ISZ   = \n -> n (\b -> AND b FALSE) TRUE
+let EQL   = \n m -> AND (ISZ (SUB n m)) (ISZ (SUB m n))
+
+let FIX = \stp -> (\x -> stp (x x)) (\x -> stp (x x))
+let STEP = 
+  \rec -> \n -> ITE (ISZ n) 
+                  ONE
+                  ((rec (DEC n)) ADD (rec (TWO DEC n)))
+
+let FIB = FIX STEP
+
+eval rec:
+  FIX STEP ZERO
+  =~> ONE
