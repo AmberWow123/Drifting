@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
         final Button forgotButton = findViewById(R.id.forgot_password);
+        final Button registerButton = findViewById(R.id.signup_text);
 
         // to underline the "Register now" text
         TextView textView = (TextView) findViewById(R.id.sign_up);
@@ -120,10 +121,22 @@ public class LoginActivity extends AppCompatActivity {
                 openForgotPasswordActivity();
             }
         });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openRegisterActivity();
+            }
+        });
     }
 
-    public void openForgotPasswordActivity(){
+    public void openForgotPasswordActivity() {
         Intent intent = new Intent(this, ForgotPasswordActivity.class);
+        startActivity(intent);
+    }
+
+    public void openRegisterActivity() {
+        Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
 
