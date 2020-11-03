@@ -10,6 +10,9 @@ class LoggedInUserView {
     LoggedInUserView(String displayName) {
         this.displayName = displayName;
     }
+    String setDisplayname(String newName) {
+        this.displayName = newName;
+        return newName;}
 
     String getDisplayName() {
         return displayName;
