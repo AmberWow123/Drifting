@@ -123,6 +123,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openForgotPasswordActivity();
+            }
+        });
+
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,9 +134,12 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void openForgotPasswordActivity(){
+    public void openForgotPasswordActivity() {
         Intent intent = new Intent(this, ForgotPasswordActivity.class);
-    public void openRegisterActivity(){
+        startActivity(intent);
+    }
+
+    public void openRegisterActivity() {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
