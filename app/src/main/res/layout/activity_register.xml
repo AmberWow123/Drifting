@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".ui.login.RegisterActivity">
+
+    <ImageView
+        android:layout_width="0dp"
+        android:id="@+id/drifter_logo"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/right_guideline_register"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/left_guideline_register"
+        app:layout_constraintTop_toTopOf="@+id/drifter_logo_guideline"
+        app:srcCompat="@drawable/drifter_logo" />
+
+    <Button
+        android:id="@+id/sign_up_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/loginbutton"
+        android:text="Sign Up"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/signup_button_guideline" />
+
+    <EditText
+        android:id="@+id/username_register"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="40dp"
+        android:background="@color/white"
+        android:drawableStart="@drawable/mdi_account"
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/roboto_light"
+        android:hint="@string/prompt_email"
+        android:inputType="textEmailAddress"
+        android:padding="10dp"
+        android:selectAllOnFocus="true"
+        android:textColorHint="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/right_guideline_register"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/left_guideline_register"
+        app:layout_constraintTop_toBottomOf="@+id/drifter_logo" />
+
+    <EditText
+        android:id="@+id/password_register"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:drawableStart="@drawable/mdi_lock"
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/roboto_light"
+        android:hint="@string/prompt_password"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:selectAllOnFocus="true"
+        android:textColorHint="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/right_guideline_register"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/left_guideline_register"
+        app:layout_constraintTop_toBottomOf="@+id/username_register" />
+
+    <EditText
+        android:id="@+id/re_enter_password_register"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:drawableStart="@drawable/eye_hide_line"
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/roboto_light"
+        android:hint="Re-enter Password"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:selectAllOnFocus="true"
+        android:textColorHint="@color/black"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toStartOf="@+id/right_guideline_register"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/left_guideline_register"
+        app:layout_constraintTop_toBottomOf="@+id/password_register" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/left_guideline_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".03"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right_guideline_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".97"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/drifter_logo_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".075"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/signup_button_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".65"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

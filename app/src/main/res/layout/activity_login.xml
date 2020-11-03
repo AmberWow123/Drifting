@@ -86,16 +86,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
 
-    <TextView
+    <Button
         android:id="@+id/signup_text"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="60dp"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/roboto"
         android:paddingRight="100dp"
         android:text="Don't have an account?"
         android:textColor="#323232"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login" />
@@ -140,7 +143,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:fontFamily="@font/roboto"
-        android:paddingLeft="150dp"
+        android:paddingLeft="180dp"
         android:text="Register here"
         android:textColor="#000000"
         app:layout_constraintStart_toStartOf="@+id/signup_text"
