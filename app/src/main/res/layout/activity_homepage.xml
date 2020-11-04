@@ -24,36 +24,23 @@
             app:layout_constraintGuide_percent=".7"/>
 
         <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/bottle1"
-            tools:layout_editor_absoluteX="242dp"
-            tools:layout_editor_absoluteY="424dp" />
-
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/bottle2"
-            tools:layout_editor_absoluteX="122dp"
-            tools:layout_editor_absoluteY="480dp" />
-
-        <ImageView
             android:id="@+id/imageView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/bottle3"
-            tools:layout_editor_absoluteX="259dp"
-            tools:layout_editor_absoluteY="524dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline"
+            app:srcCompat="@drawable/bottle3" />
 
-        <ImageView
-            android:id="@+id/imageView8"
+        <Button
+            android:id="@+id/test_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/bottle4"
-            tools:layout_editor_absoluteX="32dp"
-            tools:layout_editor_absoluteY="389dp" />
+            android:text="Button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
