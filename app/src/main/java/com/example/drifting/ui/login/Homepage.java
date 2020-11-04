@@ -15,18 +15,32 @@ import java.util.Random;
 
 public class Homepage extends AppCompatActivity {
 
+    int[] bottleAry = {R.id.imageView1, R.id.imageView2, R.id.imageView3, R.id.imageView4,
+            R.id.imageView5, R.id.imageView6, R.id.imageView7};
+
+    int[] imgAry = {R.drawable.bottle1, R.drawable.bottle2, R.drawable.bottle3,
+            R.drawable.bottle4};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
 
-        final ImageView myimg = findViewById(R.id.imageView7);
+        ImageView[] bottles = new ImageView[7];
+        for (int i = 0; i < bottleAry.length; i++){
+            bottles[i] = findViewById(bottleAry[i]);
+            bottles[i].setVisibility(View.GONE);
+        }
+
+        ImageView bottle1 = findViewById(getRandomBottleLocation());
+        bottle1.setImageResource(getRandomBottleImg());
+        bottle1.setVisibility(View.VISIBLE);
 
 
-        myimg.setOnClickListener(new View.OnClickListener() {
+        bottle1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myimg.setImageResource(getRandomBottleImg());
+                bottle1.setImageResource(getRandomBottleImg());
                 Log.v(getRandomBottleImg()+"", getRandomBottleImg()+"");
             }
         });
@@ -36,17 +50,14 @@ public class Homepage extends AppCompatActivity {
     public int getRandomBottleImg(){
         int bottle;
         Random rand = new Random();
-        int[] bottleAry = {R.drawable.bottle1, R.drawable.bottle2, R.drawable.bottle3,
-                R.drawable.bottle4};
 
-        bottle = bottleAry[rand.nextInt(bottleAry.length)];
+        bottle = imgAry[rand.nextInt(imgAry.length)];
         return bottle;
     }
 
     public int getRandomBottleLocation(){
         int location;
         Random rand = new Random();
-        int[] bottleAry = {};
 
         location = bottleAry[rand.nextInt(bottleAry.length)];
         return location;
