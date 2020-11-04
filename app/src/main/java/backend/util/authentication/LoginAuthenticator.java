@@ -1,5 +1,16 @@
 package backend.util.authentication;
 
+
+import android.app.Activity;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 /**
  * Class for login info authentication.
  * Input: input not needed for initialization.
@@ -14,24 +25,35 @@ package backend.util.authentication;
 
 public class LoginAuthenticator{
     private boolean successFlag = false;
-
-    public LoginAuthenticator(){}
+    public LoginAuthenticator(){
+    }
 
     public String validate(String username, String password){
         if(!username.contains("@")) return "Please enter a valid email address";
         if(password.length() < 8) return "Password must be at least 8 characters long";
-        if(!password.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z|[!@#$%&?]|[a-z]]).{8,}$"))
+        if(!password.matches("^(?=.*[0-9])(?=.*[[A-Z]|[!@#$%&?]|[a-z]]).{8,}$"))
             return "Password must contain digits and at least one other character";
 
         // TODO: After validation check, query db for user information
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        Task task = mAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>(){
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task){
 
-        successFlag = true;
+            }
+        });
 
-        return "Login successful! Welcome, Drifter.";
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if(currentUser != null) {
+            successFlag = true;
+            return "Login successful! Welcome, " + currentUser.getUid();
+        }
+
+        return "Login failed. Please check your credentials";
     }
 
     public boolean isSuccessful(){
         return successFlag;
     }
-
 }
