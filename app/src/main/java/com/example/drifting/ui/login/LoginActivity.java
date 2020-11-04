@@ -111,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+                openHomepageActivity();
             }
         });
 
@@ -128,6 +129,12 @@ public class LoginActivity extends AppCompatActivity {
                 openRegisterActivity();
             }
         });
+    }
+
+    public void openHomepageActivity() {
+        Intent intent = new Intent(this, Homepage.class);
+        startActivity(intent);
+        finish();
     }
 
     public void openForgotPasswordActivity() {
