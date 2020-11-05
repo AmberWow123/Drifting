@@ -9,6 +9,7 @@ import android.view.WindowManager;
 
 import com.example.drifting.R;
 
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.drifting.R;
+import backend.util.authentication.LoginAuthenticator;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -109,8 +110,20 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginViewModel.login(usernameEditText.getText().toString(),
+                LoginAuthenticator la = new LoginAuthenticator();
+                String feedback = la.validate(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+
+                // TODO: Use "feedback" to notify user what is going on
+                Toast.makeText(LoginActivity.this, feedback, Toast.LENGTH_LONG).show();
+
+
+                if(la.isSuccessful()) {
+                    // TODO: Go to main activity
+                }
+                else{
+                    // TODO: Prompt the user for further action
+                }
             }
         });
 
