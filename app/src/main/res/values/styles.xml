@@ -1,5 +1,7 @@
 <resources>
 
+    <color name="windowBackground">
+    </color>
     <style name="Widget.Theme.Drifting.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@color/black_overlay</item>
     </style>

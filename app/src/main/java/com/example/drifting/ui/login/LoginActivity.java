@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.drifting.NavBar;
 import com.example.drifting.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -132,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void openHomepageActivity() {
-        Intent intent = new Intent(this, HomepageActivity.class);
+        Intent intent = new Intent(this, NavBar.class);
         startActivity(intent);
         finish();
     }
