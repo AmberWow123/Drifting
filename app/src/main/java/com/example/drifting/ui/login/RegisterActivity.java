@@ -61,6 +61,10 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
+                if(!email.contains("@")){
+                    mEmail.setError("A valid email is needed! :(");
+                }
+
                 if(password.length() < 8 ){
                     mPassword.setError("Password should be >=8! :(");
                     return;
