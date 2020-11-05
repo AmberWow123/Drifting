@@ -46,15 +46,12 @@ public class HomepageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Bottle bottle1 = new Bottle("123");
                 bottle1.setVisible();
-                //bottle1.bottleAnimation.start();
 
                 Bottle bottle2 = new Bottle("123");
                 bottle2.setVisible();
-               // bottle2.bottleAnimation.start();
 
                 Bottle bottle3 = new Bottle("123");
                 bottle3.setVisible();
-               // bottle3.bottleAnimation.start();
             }
         });
 
