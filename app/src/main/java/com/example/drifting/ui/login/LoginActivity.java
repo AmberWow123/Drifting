@@ -129,20 +129,24 @@ public class LoginActivity extends AppCompatActivity {
                Toast.makeText(LoginActivity.this, feedback, Toast.LENGTH_SHORT).show();
 
                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+               if(ca.isValid()) {
+                   Task task = mAuth.signInWithEmailAndPassword(usernameEditText.getText().toString(),
+                           passwordEditText.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                       @Override
+                       public void onComplete(@NonNull Task<AuthResult> task) {
+                           if (task.isSuccessful()) {
+                               loadingBar.setVisibility((View.GONE));
+                               Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
 
-               Task task = mAuth.signInWithEmailAndPassword(usernameEditText.getText().toString(),
-                       passwordEditText.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                   @Override
-                   public void onComplete(@NonNull Task<AuthResult> task) {
-                       if (task.isSuccessful()) {
-                           Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
-                           loadingBar.setVisibility((View.GONE));
-                           // TODO: Go to main activity
-                       } else {
-                           Toast.makeText(LoginActivity.this, "Login failed. Please check your credentials", Toast.LENGTH_LONG).show();
+                               // TODO: Go to main activity
+                           } else {
+                               loadingBar.setVisibility((View.GONE));
+                               Toast.makeText(LoginActivity.this, "Login failed. Please check your credentials", Toast.LENGTH_LONG).show();
+                           }
                        }
-                   }
-               });
+                   });
+               }
+               loadingBar.setVisibility((View.GONE));
            }
        });
 

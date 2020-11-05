@@ -34,6 +34,7 @@ public class CredentialAuthenticator{
         if(!password.matches("^(?=.*[0-9])(?=.*[[A-Z]|[!@#$%&?]|[a-z]]).{8,}$"))
             return "Password must contain digits and at least one other character";
 
+        validFlag = true;
         return "Signing in...";
     }
 
