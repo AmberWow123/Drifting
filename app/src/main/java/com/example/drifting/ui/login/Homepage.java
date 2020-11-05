@@ -10,16 +10,17 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.drifting.R;
-
 import java.util.Random;
 
 public class Homepage extends AppCompatActivity {
 
-    int[] bottleAry = {R.id.imageView1, R.id.imageView2, R.id.imageView3, R.id.imageView4,
+    // define bottle positions
+    public static int[] bottleAry = {R.id.imageView1, R.id.imageView2, R.id.imageView3, R.id.imageView4,
             R.id.imageView5, R.id.imageView6, R.id.imageView7};
-
-    int[] imgAry = {R.drawable.bottle1, R.drawable.bottle2, R.drawable.bottle3,
+    // define bottle images
+    public static int[] imgAry = {R.drawable.bottle1, R.drawable.bottle2, R.drawable.bottle3,
             R.drawable.bottle4};
+    static boolean[] availableLocation =  {false,false,false,false,false,false,false};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,34 +33,82 @@ public class Homepage extends AppCompatActivity {
             bottles[i].setVisibility(View.GONE);
         }
 
-        ImageView bottle1 = findViewById(getRandomBottleLocation());
-        bottle1.setImageResource(getRandomBottleImg());
-        bottle1.setVisibility(View.VISIBLE);
+
+        Bottle bottle1 = new Bottle("123");
+        bottle1.setVisible();
+
+        Bottle bottle2 = new Bottle("123");
+        bottle2.setVisible();
+
+        Bottle bottle3 = new Bottle("123");
+        bottle3.setVisible();
 
 
-        bottle1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bottle1.setImageResource(getRandomBottleImg());
-                Log.v(getRandomBottleImg()+"", getRandomBottleImg()+"");
+        //bottle1.setOnClickListener(new View.OnClickListener() {
+         //   @Override
+          //  public void onClick(View v) {
+           //     bottle1.setImageResource(getRandomBottleImg());
+           // }
+        //});
+
+    }
+
+    public class Bottle{
+
+        String message;
+        ImageView bottleLocation;
+        int imageSrc;
+
+        // construct with a message
+        public Bottle(String msg){
+            message = msg;
+            bottleLocation =  findViewById(getRandomBottleLocation());
+            imageSrc = getRandomBottleImg();
+            bottleLocation.setImageResource(imageSrc);
+
+            bottleLocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    bottleLocation.setImageResource(getRandomBottleImg());
+                }
+            });
+
+        }
+
+        public int getRandomBottleImg(){
+            int bottle;
+            Random rand = new Random();
+
+            bottle = imgAry[rand.nextInt(imgAry.length)];
+            return bottle;
+        }
+
+        public int getRandomBottleLocation(){
+            int location;
+            int index;
+
+            Random rand = new Random();
+            index = rand.nextInt(bottleAry.length);
+            while (availableLocation[index]){
+                index = rand.nextInt(bottleAry.length);
             }
-        });
+
+            location = bottleAry[index];
+            availableLocation[index] = true;
+
+            // for debug
+            //Log.d("index", "index = "+index);
+            //Log.d("bottleloc", "id = "+bottleAry[index]);
+            //Log.d("avail", "avial = "+availableLocation[index]);
+
+            return location;
+        }
+
+        public void setVisible(){
+            bottleLocation.setVisibility(View.VISIBLE);
+        }
 
     }
 
-    public int getRandomBottleImg(){
-        int bottle;
-        Random rand = new Random();
 
-        bottle = imgAry[rand.nextInt(imgAry.length)];
-        return bottle;
-    }
-
-    public int getRandomBottleLocation(){
-        int location;
-        Random rand = new Random();
-
-        location = bottleAry[rand.nextInt(bottleAry.length)];
-        return location;
-    }
 }
