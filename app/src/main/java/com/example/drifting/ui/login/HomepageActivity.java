@@ -2,6 +2,7 @@ package com.example.drifting.ui.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,7 +13,7 @@ import android.widget.Toast;
 import com.example.drifting.R;
 import java.util.Random;
 
-public class Homepage extends AppCompatActivity {
+public class HomepageActivity extends AppCompatActivity {
 
     // define bottle positions
     public static int[] bottleAry = {R.id.imageView1, R.id.imageView2, R.id.imageView3, R.id.imageView4,
@@ -27,6 +28,7 @@ public class Homepage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
 
+        final Button generate_button = findViewById(R.id.generate_button);
         ImageView[] bottles = new ImageView[7];
         for (int i = 0; i < bottleAry.length; i++){
             bottles[i] = findViewById(bottleAry[i]);
@@ -34,30 +36,41 @@ public class Homepage extends AppCompatActivity {
         }
 
 
-        Bottle bottle1 = new Bottle("123");
-        bottle1.setVisible();
+        generate_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bottle bottle1 = new Bottle("123");
+                bottle1.setVisible();
 
-        Bottle bottle2 = new Bottle("123");
-        bottle2.setVisible();
+                Bottle bottle2 = new Bottle("123");
+                bottle2.setVisible();
 
-        Bottle bottle3 = new Bottle("123");
-        bottle3.setVisible();
+                Bottle bottle3 = new Bottle("123");
+                bottle3.setVisible();
+            }
+        });
 
 
-        //bottle1.setOnClickListener(new View.OnClickListener() {
-         //   @Override
-          //  public void onClick(View v) {
-           //     bottle1.setImageResource(getRandomBottleImg());
-           // }
-        //});
+
+
+
+
+
+
 
     }
+
+
+
+
+
 
     public class Bottle{
 
         String message;
         ImageView bottleLocation;
         int imageSrc;
+        int index;
 
         // construct with a message
         public Bottle(String msg){
@@ -69,7 +82,10 @@ public class Homepage extends AppCompatActivity {
             bottleLocation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    bottleLocation.setImageResource(getRandomBottleImg());
+
+                    startActivity(new Intent(HomepageActivity.this, ViewBottleActivity.class));
+                    availableLocation[index] = false;
+                    bottleLocation.setVisibility(View.GONE);
                 }
             });
 
@@ -85,7 +101,6 @@ public class Homepage extends AppCompatActivity {
 
         public int getRandomBottleLocation(){
             int location;
-            int index;
 
             Random rand = new Random();
             index = rand.nextInt(bottleAry.length);

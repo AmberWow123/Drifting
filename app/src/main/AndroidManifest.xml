@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Drifting">
-        <activity android:name=".ui.login.Homepage"></activity>
+        <activity android:name=".ui.login.ViewBottleActivity" android:theme="@style/CustomThemePOP"></activity>
+        <activity android:name=".ui.login.HomepageActivity" />
         <activity android:name=".ui.login.RegisterActivity" />
         <activity android:name=".ui.login.ForgotPasswordActivity" />
         <activity android:name=".ui.login.LoginActivity" />

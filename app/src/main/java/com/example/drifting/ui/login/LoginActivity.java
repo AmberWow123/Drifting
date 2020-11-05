@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void openHomepageActivity() {
-        Intent intent = new Intent(this, Homepage.class);
+        Intent intent = new Intent(this, HomepageActivity.class);
         startActivity(intent);
         finish();
     }
