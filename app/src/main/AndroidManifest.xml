@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Drifting">
+        <activity android:name=".ui.login.ProfileActivity"></activity>
         <activity
             android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
         <activity android:name=".ui.login.RegisterActivity" />
         <activity android:name=".ui.login.ForgotPasswordActivity" />
         <activity
