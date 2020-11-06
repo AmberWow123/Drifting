@@ -41,12 +41,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
                 //valid checks
                 if(TextUtils.isEmpty(email)){
-                    mEmail.setError("Email is required! :(");
+                    mEmail.setError("Email is required!");
                     return;
                 }
 
                 if(!email.contains("@")){
-                    mEmail.setError("A valid email is needed! :(");
+                    mEmail.setError("A valid email is needed!");
                 }
 
                 //send user a password reset
