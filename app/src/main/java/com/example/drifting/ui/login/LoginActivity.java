@@ -129,6 +129,8 @@ public class LoginActivity extends AppCompatActivity {
                Toast.makeText(LoginActivity.this, feedback, Toast.LENGTH_SHORT).show();
 
                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+
                if(ca.isValid()) {
                    Task task = mAuth.signInWithEmailAndPassword(usernameEditText.getText().toString(),
                            passwordEditText.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

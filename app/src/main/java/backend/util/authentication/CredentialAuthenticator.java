@@ -29,6 +29,7 @@ public class CredentialAuthenticator{
     }
 
     public String validate(String username, String password){
+        if(username == null | password == null | username.length() == 0 | password.length() == 0) return "Credentials cannot be empty";
         if(!username.contains("@")) return "Please enter a valid email address";
         if(password.length() < 8) return "Password must be at least 8 characters long";
         if(!password.matches("^(?=.*[0-9])(?=.*[[A-Z]|[!@#$%&?]|[a-z]]).{8,}$"))
