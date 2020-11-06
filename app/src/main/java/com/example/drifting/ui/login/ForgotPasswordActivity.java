@@ -42,6 +42,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 //valid checks
                 if(TextUtils.isEmpty(email)){
                     mEmail.setError("Email is required! :(");
+                    return;
                 }
 
                 if(!email.contains("@")){
@@ -54,7 +55,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()){
-                                    Toast.makeText(ForgotPasswordActivity.this, "Email Sent",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ForgotPasswordActivity.this, "Email Sent Successfully!",Toast.LENGTH_SHORT).show();
                                 }else{
                                     Toast.makeText(ForgotPasswordActivity.this, "Failed to Send",Toast.LENGTH_SHORT).show();
                                 }
