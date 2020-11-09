@@ -25,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.drifting.NavBar;
 import com.example.drifting.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -119,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // login button listener
         loginButton.setOnClickListener(new View.OnClickListener() {
+
            @Override
            public void onClick(View v) {
                loadingBar.setVisibility(View.VISIBLE);
@@ -140,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                                loadingBar.setVisibility((View.GONE));
                                Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
 
-                               // TODO: Go to main activity
+                               openHomepageActivity();
                            } else {
                                loadingBar.setVisibility((View.GONE));
                                Toast.makeText(LoginActivity.this, "Login failed. Please check your credentials", Toast.LENGTH_LONG).show();
@@ -151,7 +153,6 @@ public class LoginActivity extends AppCompatActivity {
                loadingBar.setVisibility((View.GONE));
            }
        });
-
 
         forgotButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +167,12 @@ public class LoginActivity extends AppCompatActivity {
                 openRegisterActivity();
             }
         });
+    }
+
+    public void openHomepageActivity() {
+        Intent intent = new Intent(this, NavBar.class);
+        startActivity(intent);
+        finish();
     }
 
     public void openForgotPasswordActivity() {
