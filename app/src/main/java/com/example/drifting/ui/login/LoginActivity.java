@@ -31,6 +31,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import backend.util.authentication.CredentialAuthenticator;
 import backend.util.authentication.CredentialAuthenticator;
@@ -41,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
 
+    FirebaseUser firebaseUser;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +69,13 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //auto login
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(firebaseUser != null){
+            openHomepageActivity();
+        }
 
         loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
             @Override
