@@ -18,42 +18,28 @@ import com.google.firebase.auth.FirebaseUser;
  * How to use:
  *      1. validate(String, String) - Takes user's inputs ("username" and "password") as arguments. Check
  *          if username is a valid email address and if password meets the requirement. Return
- *          corresponding string as feedback. Set status flag to true if log in is successful.
- *      2. isSuccessful() - Return the latest login status flag. true if log in was a success,
+ *          corresponding string as feedback. Set status flag to true if inputs are valid.
+ *      2. isSuccessful() - Return the latest validation status flag. true if inputs were valid,
  *          otherwise false.
  */
 
-public class LoginAuthenticator{
-    private boolean successFlag = false;
-    public LoginAuthenticator(){
+public class CredentialAuthenticator{
+    private boolean validFlag = false;
+    public CredentialAuthenticator(){
     }
 
     public String validate(String username, String password){
+        if(username == null | password == null | username.length() == 0 | password.length() == 0) return "Credentials cannot be empty";
         if(!username.contains("@")) return "Please enter a valid email address";
         if(password.length() < 8) return "Password must be at least 8 characters long";
         if(!password.matches("^(?=.*[0-9])(?=.*[[A-Z]|[!@#$%&?]|[a-z]]).{8,}$"))
             return "Password must contain digits and at least one other character";
 
-        // TODO: After validation check, query db for user information
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        Task task = mAuth.signInWithEmailAndPassword(username, password).addOnCompleteListener(new OnCompleteListener<AuthResult>(){
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task){
-
-            }
-        });
-
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        if(currentUser != null) {
-            successFlag = true;
-            return "Login successful! Welcome, " + currentUser.getUid();
-        }
-
-        return "Login failed. Please check your credentials";
+        validFlag = true;
+        return "Signing in...";
     }
 
-    public boolean isSuccessful(){
-        return successFlag;
+    public boolean isValid(){
+        return validFlag;
     }
 }
