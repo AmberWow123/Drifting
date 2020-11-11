@@ -3,13 +3,17 @@ package com.example.drifting;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class NavBar extends AppCompatActivity {
+
+
 
     private BottomNavigationView bottomNavigationView;
     @Override
@@ -21,6 +25,7 @@ public class NavBar extends AppCompatActivity {
 
         bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavMethod=new
@@ -45,7 +50,8 @@ public class NavBar extends AppCompatActivity {
                     break;
 
             }
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).detach(fragment).commitNowAllowingStateLoss();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).attach(fragment).commitNowAllowingStateLoss();
             return true;
         }
     };

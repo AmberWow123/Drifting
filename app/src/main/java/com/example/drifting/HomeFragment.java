@@ -16,9 +16,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.drifting.ui.login.LoginActivity;
 import com.example.drifting.ui.login.ViewBottleActivity;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.Random;
+import java.util.Vector;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +39,8 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    protected View mView;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -67,6 +73,9 @@ public class HomeFragment extends Fragment {
             R.drawable.animated_bottle4};
 
     static boolean[] availableLocation =  {false,false,false,false,false,false,false};
+    Dictionary bottleMap;
+    static Vector<Bottle> bottleList = new Vector<Bottle>();
+
 
 
 
@@ -86,7 +95,10 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
+        mView = rootView;
+        return rootView;
     }
 
     @Override
@@ -94,6 +106,9 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Log.d("gnereed id", "id is "+R.id.generate_button);
         final Button generate_button = getView().findViewById(R.id.generate_button);
+
+        if ( bottleMap == null ) bottleMap = new Hashtable();
+
         ImageView[] bottles = new ImageView[7];
         for (int i = 0; i < bottleAry.length; i++){
             bottles[i] = getView().findViewById(bottleAry[i]);
@@ -104,17 +119,27 @@ public class HomeFragment extends Fragment {
         generate_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bottle bottle1 = new Bottle("123");
-                bottle1.setVisible();
-
-                Bottle bottle2 = new Bottle("123");
-                bottle2.setVisible();
-
-                Bottle bottle3 = new Bottle("123");
-                bottle3.setVisible();
+                Bottle bottle = new Bottle("123", bottleList.size());
+                bottle.setVisible();
+                bottleList.add(bottle);
+                Log.e(" mView : ", mView.toString());
+                for (int i = 0; i < bottleList.size(); i ++) {
+                    bottleList.get(i).renderByLocation();
+                }
             }
         });
 
+
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
 
     }
 
@@ -123,15 +148,21 @@ public class HomeFragment extends Fragment {
         String message;
         ImageView bottleLocation;
         int imageSrc;
-        int index;
+        int avail_index;
+        int bottle_index;
+        int locationID;
         AnimationDrawable bottleAnimation;
 
         // construct with a message
-        public Bottle(String msg){
+        public Bottle(String msg, int bottle_index){
             message = msg;
-            bottleLocation =  getView().findViewById(getRandomBottleLocation());
+            this.bottle_index = bottle_index;
+            locationID = getRandomBottleLocation();
+            bottleLocation =  getView().findViewById(locationID);
+            Log.e(" old View : ", getView().toString());
             imageSrc = getRandomBottleImg();
             bottleLocation.setBackgroundResource(imageSrc);
+            bottleMap.put(Integer.toString(locationID), imageSrc);
 
             bottleAnimation = (AnimationDrawable) bottleLocation.getBackground();
             bottleAnimation.start();
@@ -141,10 +172,12 @@ public class HomeFragment extends Fragment {
                 public void onClick(View v) {
 
                     startActivity(new Intent(getActivity(), ViewBottleActivity.class));
-                    availableLocation[index] = false;
+                    availableLocation[avail_index] = false;
+                    bottleMap.remove(Integer.toString(locationID));
                     bottleAnimation.stop();
                     bottleLocation.setVisibility(View.GONE);
-                }
+                    bottleList.remove(bottle_index);
+                 }
             });
 
         }
@@ -161,20 +194,27 @@ public class HomeFragment extends Fragment {
             int location;
 
             Random rand = new Random();
-            index = rand.nextInt(bottleAry.length);
-            while (availableLocation[index]){
-                index = rand.nextInt(bottleAry.length);
+            avail_index = rand.nextInt(bottleAry.length);
+            while (availableLocation[avail_index]){
+                avail_index = rand.nextInt(bottleAry.length);
             }
 
-            location = bottleAry[index];
-            availableLocation[index] = true;
-
-            // for debug
-            //Log.d("index", "index = "+index);
-            //Log.d("bottleloc", "id = "+bottleAry[index]);
-            //Log.d("avail", "avial = "+availableLocation[index]);
+            location = bottleAry[avail_index];
+            availableLocation[avail_index] = true;
 
             return location;
+        }
+
+        public void renderByLocation(){
+            Log.e("location ID is:" , Integer.toString(this.locationID));
+            bottleLocation =  mView.findViewById(this.locationID);
+            Log.e("ImageView is:" , bottleLocation.toString());
+            imageSrc = getRandomBottleImg();
+            bottleLocation.setBackgroundResource(imageSrc);
+            bottleAnimation = (AnimationDrawable) bottleLocation.getBackground();
+            bottleAnimation.stop();
+            bottleAnimation.start();
+            this.setVisible();
         }
 
         public void setVisible(){
