@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.drifting">
-
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +11,6 @@
         android:theme="@style/Theme.Drifting">
 
         <activity android:name=".ui.login.ViewBottleActivity" android:theme="@style/CustomThemePOP"></activity>
-        <activity android:name=".ui.login.HomepageActivity" />
         <activity android:name=".NavBar"></activity>
         <activity
             android:name=".ui.login.LoginActivity"
