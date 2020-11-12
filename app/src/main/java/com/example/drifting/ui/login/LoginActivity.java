@@ -2,6 +2,7 @@ package com.example.drifting.ui.login;
 
 import android.app.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,10 +21,21 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.drifting.NavBar;
 import com.example.drifting.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+import backend.util.authentication.CredentialAuthenticator;
+import backend.util.authentication.CredentialAuthenticator;
+
+import static java.lang.Thread.sleep;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -41,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.login);
         final Button forgotButton = findViewById(R.id.forgot_password);
         final Button registerButton = findViewById(R.id.signup_text);
+        final ProgressBar loadingBar = findViewById(R.id.loadingBar);
 
         // to underline the "Register now" text
         TextView textView = (TextView) findViewById(R.id.sign_up);
@@ -107,13 +120,39 @@ public class LoginActivity extends AppCompatActivity {
 
         // login button listener
         loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
-            }
-        });
 
+           @Override
+           public void onClick(View v) {
+               loadingBar.setVisibility(View.VISIBLE);
+               CredentialAuthenticator ca = new CredentialAuthenticator();
+               String feedback = ca.validate(usernameEditText.getText().toString(),
+                       passwordEditText.getText().toString());
+
+               Toast.makeText(LoginActivity.this, feedback, Toast.LENGTH_SHORT).show();
+
+               FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+
+               if(ca.isValid()) {
+                   Task task = mAuth.signInWithEmailAndPassword(usernameEditText.getText().toString(),
+                           passwordEditText.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                       @Override
+                       public void onComplete(@NonNull Task<AuthResult> task) {
+                           if (task.isSuccessful()) {
+                               loadingBar.setVisibility((View.GONE));
+                               Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
+
+                               openHomepageActivity();
+                           } else {
+                               loadingBar.setVisibility((View.GONE));
+                               Toast.makeText(LoginActivity.this, "Login failed. Please check your credentials", Toast.LENGTH_LONG).show();
+                           }
+                       }
+                   });
+               }
+               loadingBar.setVisibility((View.GONE));
+           }
+       });
 
         forgotButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +167,12 @@ public class LoginActivity extends AppCompatActivity {
                 openRegisterActivity();
             }
         });
+    }
+
+    public void openHomepageActivity() {
+        Intent intent = new Intent(this, NavBar.class);
+        startActivity(intent);
+        finish();
     }
 
     public void openForgotPasswordActivity() {
