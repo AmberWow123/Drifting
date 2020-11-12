@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.drifting.ui.login.ViewBottleActivity;
+import com.example.drifting.ui.login.WriteMessageActivity;
 
 import java.util.Random;
 
@@ -74,7 +75,6 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -87,6 +87,9 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
+//        View V = inflater.inflate(R.layout.fragment_home, container, false);
+//        Button writeMessageButton = (Button) V.findViewById(R.id.write_message_button);
+//        return V;
     }
 
     @Override
@@ -94,6 +97,9 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Log.d("gnereed id", "id is "+R.id.generate_button);
         final Button generate_button = getView().findViewById(R.id.generate_button);
+
+        final Button writeMessageButton = getView().findViewById(R.id.write_message_button);
+
         ImageView[] bottles = new ImageView[7];
         for (int i = 0; i < bottleAry.length; i++){
             bottles[i] = getView().findViewById(bottleAry[i]);
@@ -115,6 +121,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        writeMessageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WriteMessageActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
