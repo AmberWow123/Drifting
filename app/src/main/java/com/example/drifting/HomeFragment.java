@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.drifting.ui.login.ViewBottleActivity;
+import com.example.drifting.ui.login.WriteMessageActivity;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
@@ -81,7 +82,6 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Log.d("gnereed id", "id is "+R.id.generate_button);
         final Button generate_button = getView().findViewById(R.id.generate_button);
-        final Button compose_button = getView().findViewById(R.id.compose_button);
+        final Button writeMessageButton = getView().findViewById(R.id.compose_button);
 
 
         ImageView[] bottles = new ImageView[7];
@@ -154,6 +154,13 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        writeMessageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WriteMessageActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

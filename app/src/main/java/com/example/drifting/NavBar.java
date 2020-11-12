@@ -21,9 +21,9 @@ public class NavBar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_bar);
 
-        bottomNavigationView=findViewById(R.id.bottomNav);
+        BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(bottomNavMethod);
+        bottomNav.setOnNavigationItemSelectedListener(bottomNavMethod);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
 
     }
