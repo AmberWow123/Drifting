@@ -152,10 +152,13 @@
 
     <Button
         android:id="@+id/button_send_button"
-        android:layout_width="47dp"
-        android:layout_height="22dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
         android:background="@drawable/ic_send_button"
+        android:text="Send"
+        android:textColor="@color/white"
+        android:fontFamily="@font/poppins"
+        app:layout_constraintBottom_toTopOf="@+id/text_InputMessage"
         app:layout_constraintEnd_toStartOf="@+id/guideline_text_right"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -168,7 +171,19 @@
         android:theme="@style/SwitchTheme"
         app:layout_constraintBottom_toTopOf="@+id/text_Image"
         app:layout_constraintEnd_toEndOf="@+id/Anonymous"
-        app:layout_constraintTop_toTopOf="@+id/Anonymous" />
+        app:layout_constraintTop_toTopOf="@+id/Anonymous"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <TextView
+        android:id="@+id/get_location_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins"
+        android:textColor="#D4D4D4"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="@+id/text_Location"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_text_right"
+        app:layout_constraintTop_toTopOf="@+id/text_Location" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
