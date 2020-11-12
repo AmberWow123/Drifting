@@ -9,8 +9,8 @@
 
     <TextView
         android:id="@+id/text_Video_Link"
-        android:layout_width="385dp"
-        android:layout_height="38dp"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
         android:gravity="center_vertical"
         android:text="Add Video Link"
         android:textColor="#000000"
@@ -18,6 +18,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_text_left"
         app:layout_constraintTop_toBottomOf="@+id/text_Image" />
+
+    <ImageView
+        android:id="@+id/text_Video_Link_bg"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="@drawable/bordere5"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/text_Video_Link"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_Video_Link" />
 
     <Button
         android:id="@+id/button_Add_Video_Link"
@@ -31,8 +42,8 @@
 
     <TextView
         android:id="@+id/text_Image"
-        android:layout_width="385dp"
-        android:layout_height="38dp"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
         android:gravity="center_vertical"
         android:text="Add Image"
         android:textColor="#000000"
@@ -41,16 +52,30 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_text_left"
         app:layout_constraintTop_toBottomOf="@+id/Anonymous" />
 
+
     <TextView
         android:id="@+id/Anonymous"
-        android:layout_width="385dp"
-        android:layout_height="38dp"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
         android:gravity="center_vertical"
         android:text="Anonymous"
         android:textColor="#000000"
         app:layout_constraintEnd_toStartOf="@+id/guideline_text_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_text_left"
         app:layout_constraintTop_toBottomOf="@+id/text_Location" />
+
+    <ImageView
+        android:id="@+id/Anonymous_bg"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:background="@drawable/bordere5"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/Anonymous"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Anonymous" />
+
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_text_left"
@@ -70,7 +95,7 @@
         android:id="@+id/text_InputMessage"
         android:layout_width="385dp"
         android:layout_height="192dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="45dp"
         android:gravity="top"
         android:hint="Write a message..."
         android:inputType="textLongMessage"
@@ -79,6 +104,17 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_text_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_text_left"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/text_InputMessage_bg"
+        android:layout_width="0dp"
+        android:layout_height="192dp"
+
+        android:background="@drawable/bordere5"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_InputMessage" />
 
     <TextView
         android:id="@+id/text_NewBottle"
@@ -95,8 +131,8 @@
 
     <TextView
         android:id="@+id/text_Location"
-        android:layout_width="385dp"
-        android:layout_height="38dp"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
         android:gravity="center_vertical"
         android:text="My Location"
         android:textColor="#000000"
@@ -128,8 +164,8 @@
         android:layout_width="67dp"
         android:layout_height="15dp"
         android:layout_marginEnd="10dp"
-        android:text="Switch"
         android:visibility="visible"
+        android:theme="@style/SwitchTheme"
         app:layout_constraintBottom_toTopOf="@+id/text_Image"
         app:layout_constraintEnd_toEndOf="@+id/Anonymous"
         app:layout_constraintTop_toTopOf="@+id/Anonymous" />
