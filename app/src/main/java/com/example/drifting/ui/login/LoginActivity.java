@@ -33,7 +33,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import backend.util.authentication.CredentialAuthenticator;
-import backend.util.authentication.CredentialAuthenticator;
 
 import static java.lang.Thread.sleep;
 
