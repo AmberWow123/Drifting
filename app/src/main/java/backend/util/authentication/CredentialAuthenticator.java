@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
  *      1. validate(String, String) - Takes user's inputs ("username" and "password") as arguments. Check
  *          if username is a valid email address and if password meets the requirement. Return
  *          corresponding string as feedback. Set status flag to true if inputs are valid.
- *      2. isSuccessful() - Return the latest validation status flag. true if inputs were valid,
+ *      2. isValid() - Return the latest validation status flag. true if inputs were valid,
  *          otherwise false.
  */
 

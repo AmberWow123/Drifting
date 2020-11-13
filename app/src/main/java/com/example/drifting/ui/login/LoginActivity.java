@@ -18,7 +18,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -32,7 +31,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import backend.util.authentication.CredentialAuthenticator;
 import backend.util.authentication.CredentialAuthenticator;
 
 import static java.lang.Thread.sleep;
@@ -110,10 +108,33 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
+                CredentialAuthenticator ca = new CredentialAuthenticator();
+                String feedback = ca.validate(usernameEditText.getText().toString(),
+                        passwordEditText.getText().toString());
+
+                Toast.makeText(LoginActivity.this, feedback, Toast.LENGTH_SHORT).show();
+
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+
+                if (ca.isValid()) {
+                    Task task = mAuth.signInWithEmailAndPassword(usernameEditText.getText().toString(),
+                            passwordEditText.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                loadingBar.setVisibility((View.GONE));
+                                Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
+
+                                openHomepageActivity();
+                            } else {
+                                loadingBar.setVisibility((View.GONE));
+                                Toast.makeText(LoginActivity.this, "Login failed. Please check your credentials", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
                 }
+                loadingBar.setVisibility((View.GONE));
                 return false;
             }
         });
