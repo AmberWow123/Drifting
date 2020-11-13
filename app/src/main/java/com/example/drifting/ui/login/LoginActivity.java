@@ -1,19 +1,9 @@
 package com.example.drifting.ui.login;
 
 import android.app.Activity;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -25,6 +15,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import com.example.drifting.NavBar;
 import com.example.drifting.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,7 +30,9 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import backend.util.authentication.CredentialAuthenticator;
 
+
 import static java.lang.Thread.sleep;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -118,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // login button listener
         loginButton.setOnClickListener(new View.OnClickListener() {
+
            @Override
            public void onClick(View v) {
                loadingBar.setVisibility(View.VISIBLE);
@@ -128,6 +128,8 @@ public class LoginActivity extends AppCompatActivity {
                Toast.makeText(LoginActivity.this, feedback, Toast.LENGTH_SHORT).show();
 
                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+
                if(ca.isValid()) {
                    Task task = mAuth.signInWithEmailAndPassword(usernameEditText.getText().toString(),
                            passwordEditText.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -137,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
                                loadingBar.setVisibility((View.GONE));
                                Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
 
-                               // TODO: Go to main activity
+                               openHomepageActivity();
                            } else {
                                loadingBar.setVisibility((View.GONE));
                                Toast.makeText(LoginActivity.this, "Login failed. Please check your credentials", Toast.LENGTH_LONG).show();
@@ -148,7 +150,6 @@ public class LoginActivity extends AppCompatActivity {
                loadingBar.setVisibility((View.GONE));
            }
        });
-
 
         forgotButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,6 +164,12 @@ public class LoginActivity extends AppCompatActivity {
                 openRegisterActivity();
             }
         });
+    }
+
+    public void openHomepageActivity() {
+        Intent intent = new Intent(this, NavBar.class);
+        startActivity(intent);
+        finish();
     }
 
     public void openForgotPasswordActivity() {
