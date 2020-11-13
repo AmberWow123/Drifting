@@ -38,10 +38,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         //TODO: add these code after we have sign out button
        //check if the user is already logged in
-       if(fAuth.getCurrentUser() != null){
-           startActivity(new Intent(getApplicationContext(), MainActivity.class));
-           finish();
-       }
+//        if(fAuth.getCurrentUser() != null){
+//            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//            finish();
+//        }
 
         mRegisterBtn.setOnClickListener((new View.OnClickListener() {
             @Override
