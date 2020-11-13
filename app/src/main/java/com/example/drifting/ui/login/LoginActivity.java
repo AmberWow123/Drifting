@@ -30,6 +30,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import backend.util.authentication.CredentialAuthenticator;
 
+
+import static java.lang.Thread.sleep;
+
+
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
