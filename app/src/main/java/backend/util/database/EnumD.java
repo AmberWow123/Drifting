@@ -4,7 +4,7 @@ public class EnumD {
     public enum gender {
         MALE,
         FEMALE,
-        TRANSGENDER
+        TRANSGENDER,
+        NOTSPECIFIED
     }
-
 }
