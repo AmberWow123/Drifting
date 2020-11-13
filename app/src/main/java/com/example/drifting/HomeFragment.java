@@ -14,11 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.drifting.ui.login.ViewBottleActivity;
+import com.example.drifting.ui.login.WriteMessageActivity;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.Random;
+import java.util.Vector;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +38,9 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    protected View mView;
+    final public int BOTTLE_MAX = 7;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -67,13 +73,14 @@ public class HomeFragment extends Fragment {
             R.drawable.animated_bottle4};
 
     static boolean[] availableLocation =  {false,false,false,false,false,false,false};
+    static Vector<Bottle> bottleList = new Vector<Bottle>();
+
 
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -86,7 +93,10 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
+        mView = rootView;
+        return rootView;
     }
 
     @Override
@@ -94,56 +104,104 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Log.d("gnereed id", "id is "+R.id.generate_button);
         final Button generate_button = getView().findViewById(R.id.generate_button);
+        final Button writeMessageButton = getView().findViewById(R.id.compose_button);
+
+
         ImageView[] bottles = new ImageView[7];
         for (int i = 0; i < bottleAry.length; i++){
             bottles[i] = getView().findViewById(bottleAry[i]);
             bottles[i].setVisibility(View.GONE);
         }
 
+        // **** codes below must change in correspondence to Bottle's constructor ****
+        Log.e(" mView : ", mView.toString());
+        for (int i = 0; i < bottleList.size(); i ++) {
+            Bottle myBottle = bottleList.get(i);
+            ImageView bottleView = mView.findViewById(myBottle.locationID);
 
-        generate_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bottle bottle1 = new Bottle("123");
-                bottle1.setVisible();
+            bottleView.setBackgroundResource(myBottle.imageSrc);
+            bottleView.setVisibility(View.VISIBLE);
+            myBottle.bottleAnimation = (AnimationDrawable) bottleView.getBackground();
+            myBottle.bottleAnimation.start();
 
-                Bottle bottle2 = new Bottle("123");
-                bottle2.setVisible();
-
-                Bottle bottle3 = new Bottle("123");
-                bottle3.setVisible();
-            }
-        });
-
-
-    }
-
-    public class Bottle{
-
-        String message;
-        ImageView bottleLocation;
-        int imageSrc;
-        int index;
-        AnimationDrawable bottleAnimation;
-
-        // construct with a message
-        public Bottle(String msg){
-            message = msg;
-            bottleLocation =  getView().findViewById(getRandomBottleLocation());
-            imageSrc = getRandomBottleImg();
-            bottleLocation.setBackgroundResource(imageSrc);
-
-            bottleAnimation = (AnimationDrawable) bottleLocation.getBackground();
-            bottleAnimation.start();
-
-            bottleLocation.setOnClickListener(new View.OnClickListener() {
+            bottleView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                     startActivity(new Intent(getActivity(), ViewBottleActivity.class));
-                    availableLocation[index] = false;
+                    availableLocation[myBottle.avail_index] = false;
+                    myBottle.bottleAnimation.stop();
+                    bottleView.setVisibility(View.GONE);
+                    bottleList.remove(myBottle);
+                    Log.d(" BottleList size is :" , " " + bottleList.size());
+                    Log.d(" vector contains ", bottleList.toString());
+                }
+            });
+
+        }
+        // **** **** **** **** **** **** **** **** **** **** **** **** **** ****
+
+        generate_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (bottleList.size() < BOTTLE_MAX) {
+                    Bottle bottle = new Bottle("123", bottleList.size());
+                    bottle.setVisible();
+                    bottleList.add(bottle);
+                    Log.d(" BottleList size is :", " " + bottleList.size());
+                    Log.d(" vector contains ", bottleList.toString());
+                }
+            }
+        });
+
+        writeMessageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WriteMessageActivity.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+
+    public class Bottle{
+
+        Bottle self;
+        String message;
+        ImageView bottleView;
+        int imageSrc;
+        int avail_index;
+        int bottle_index;
+        int locationID;
+        AnimationDrawable bottleAnimation;
+
+        // construct with a message and bottle index
+        public Bottle(String msg, int bottle_index){
+            self = this;
+            message = msg;
+            this.bottle_index = bottle_index;
+            locationID = getRandomBottleLocation();
+            bottleView =  getView().findViewById(locationID);
+            imageSrc = getRandomBottleImg();
+            bottleView.setBackgroundResource(imageSrc);
+
+
+            bottleAnimation = (AnimationDrawable) bottleView.getBackground();
+            bottleAnimation.start();
+
+            bottleView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    startActivity(new Intent(getActivity(), ViewBottleActivity.class));
+                    availableLocation[avail_index] = false;
                     bottleAnimation.stop();
-                    bottleLocation.setVisibility(View.GONE);
+                    bottleView.setVisibility(View.GONE);
+                    bottleList.remove(self);
+
+                    Log.d(" BottleList size is :" , " " + bottleList.size());
+                    Log.d(" vector contains ", bottleList.toString());
                 }
             });
 
@@ -161,24 +219,19 @@ public class HomeFragment extends Fragment {
             int location;
 
             Random rand = new Random();
-            index = rand.nextInt(bottleAry.length);
-            while (availableLocation[index]){
-                index = rand.nextInt(bottleAry.length);
+            avail_index = rand.nextInt(bottleAry.length);
+            while (availableLocation[avail_index] && bottleList.size() <BOTTLE_MAX){
+                avail_index = rand.nextInt(bottleAry.length);
             }
 
-            location = bottleAry[index];
-            availableLocation[index] = true;
-
-            // for debug
-            //Log.d("index", "index = "+index);
-            //Log.d("bottleloc", "id = "+bottleAry[index]);
-            //Log.d("avail", "avial = "+availableLocation[index]);
+            location = bottleAry[avail_index];
+            availableLocation[avail_index] = true;
 
             return location;
         }
 
         public void setVisible(){
-            bottleLocation.setVisibility(View.VISIBLE);
+            bottleView.setVisibility(View.VISIBLE);
         }
 
     }
