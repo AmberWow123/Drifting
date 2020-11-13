@@ -48,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
-                String password_re = mPassword.getText().toString().trim();
+                String password_re = mRePassword.getText().toString().trim();
 
                 //valid checks
                 if(TextUtils.isEmpty(email)){
@@ -75,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(TextUtils.equals(password, password_re)){
+                if(!TextUtils.equals(password, password_re)){
                     mRePassword.setError("Please enter same passwords! :(");
                 }
 
