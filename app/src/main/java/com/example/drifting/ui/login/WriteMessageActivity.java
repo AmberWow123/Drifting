@@ -1,21 +1,22 @@
 package com.example.drifting.ui.login;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
-import android.media.ThumbnailUtils;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -23,12 +24,6 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.example.drifting.R;
 
@@ -57,13 +52,8 @@ public class WriteMessageActivity extends AppCompatActivity {
     ImageView added_image_view;
     Button added_image_button;
 
-    // for adding video
-    Button added_video_button;
-
     private static final int IMAGE_PICK_CODE = 1000;
-    private static final int VIDEO_PICK_CODE = 2000;
-    private static final int PERMISSION_CODE_IMAGE = 1001;
-    private static final int PERMISSION_CODE_VIDEO = 2001;
+    private static final int PERMISSION_CODE = 1001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +65,6 @@ public class WriteMessageActivity extends AppCompatActivity {
         added_image_view = findViewById(R.id.image_view_added);
         added_image_button = findViewById(R.id.button_Add_Image);
 
-        //adding video
-        added_video_button = findViewById(R.id.button_Add_Video_Link);
-
         added_image_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +74,7 @@ public class WriteMessageActivity extends AppCompatActivity {
                         // permission not granted, request it.
                         String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
                         // show popup for runtime permission
-                        requestPermissions(permissions, PERMISSION_CODE_IMAGE);
+                        requestPermissions(permissions, PERMISSION_CODE);
                     } else {
                         // permission already granted
                         pickImageFromGallery();
@@ -96,29 +83,6 @@ public class WriteMessageActivity extends AppCompatActivity {
                 else {
                     // system os is less than marshmallow
                     pickImageFromGallery();
-                }
-            }
-        });
-
-        //clicks on add video button
-        added_video_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // check runtime permission
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                        // permission not granted, request it.
-                        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                        // show popup for runtime permission
-                        requestPermissions(permissions, PERMISSION_CODE_VIDEO);
-                    } else {
-                        // permission already granted
-                        pickVideoFromGallery();
-                    }
-                }
-                else {
-                    // system os is less than marshmallow
-                    pickVideoFromGallery();
                 }
             }
         });
@@ -199,13 +163,6 @@ public class WriteMessageActivity extends AppCompatActivity {
         startActivityForResult(intent, IMAGE_PICK_CODE);
     }
 
-    private void pickVideoFromGallery() {
-        // intent to pick video
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("video/*");
-        startActivityForResult(Intent.createChooser(intent,"Select Video"), VIDEO_PICK_CODE);
-    }
-
     // handle result of runtime permission
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -231,22 +188,10 @@ public class WriteMessageActivity extends AppCompatActivity {
                 }
             }
             // adding image
-            case PERMISSION_CODE_IMAGE: {
+            case PERMISSION_CODE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted
                     pickImageFromGallery();
-                }
-                else {
-                    // permission was denied
-                    Toast.makeText(this, "Permission denied...!", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            // adding video
-            case PERMISSION_CODE_VIDEO: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted
-                    pickVideoFromGallery();
                 }
                 else {
                     // permission was denied
@@ -257,6 +202,8 @@ public class WriteMessageActivity extends AppCompatActivity {
     }
 
     // handle result of picked image
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -264,36 +211,6 @@ public class WriteMessageActivity extends AppCompatActivity {
             // set image to image view
             added_image_view.setImageURI(data.getData());
         }
-        if (resultCode == RESULT_OK && requestCode == VIDEO_PICK_CODE) {
-            // set video preview to image view
-
-
-            Uri selectedImageUri = data.getData();
-
-            // OI FILE Manager
-            String filemanagerstring = selectedImageUri.getPath();
-
-            // MEDIA GALLERY
-            String selectedImagePath = getPath(selectedImageUri);
-            if (selectedImagePath != null) {
-                Bitmap thumbnail = ThumbnailUtils.createVideoThumbnail(selectedImagePath, MediaStore.Images.Thumbnails.MINI_KIND);
-                added_image_view.setImageBitmap(thumbnail);
-            }
-        }
-    }
-
-    String getPath(Uri uri) {
-        String[] projection = { MediaStore.Video.Media.DATA };
-        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
-        if (cursor != null) {
-            // HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
-            // THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
-            int column_index = cursor
-                    .getColumnIndexOrThrow(MediaStore.Video.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        } else
-            return null;
     }
 
     // get closest city name

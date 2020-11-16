@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "285935492036",
+    "firebase_url": "https://cse110-drifting.firebaseio.com",
+    "project_id": "cse110-drifting",
+    "storage_bucket": "cse110-drifting.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285935492036:android:e751bbf43ffe480630e291",
+        "android_client_info": {
+          "package_name": "com.example.drifting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "285935492036-qglnb54kirsh38tipbtb2qo81ohut7rj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoB8aGaorxTnbpI78h42bF2x8cgUrq8EE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "285935492036-qglnb54kirsh38tipbtb2qo81ohut7rj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
