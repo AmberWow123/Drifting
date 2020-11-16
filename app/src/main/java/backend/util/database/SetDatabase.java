@@ -9,7 +9,6 @@ public class SetDatabase {
     public void addNewUser(UserProfile userProfile) {
         //System.out.println(database == null);
         DatabaseReference usersRef = database.child("user");
-
         usersRef.child(userProfile.user_id).setValue(userProfile);
     }
 }
