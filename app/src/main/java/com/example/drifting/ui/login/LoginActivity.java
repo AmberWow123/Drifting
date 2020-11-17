@@ -51,13 +51,13 @@ public class LoginActivity extends AppCompatActivity {
         final ProgressBar loadingBar = findViewById(R.id.loadingBar);
 
         //TODO: use the code when testing to auto-login
-        FirebaseAuth fAuth;
-        fAuth = FirebaseAuth.getInstance();
-        //check if the user is already logged in
-        if(fAuth.getCurrentUser() != null){
-            startActivity(new Intent(getApplicationContext(), WriteMessageActivity.class));
-            finish();
-        }
+//        FirebaseAuth fAuth;
+//        fAuth = FirebaseAuth.getInstance();
+//        //check if the user is already logged in
+//        if(fAuth.getCurrentUser() != null){
+//            startActivity(new Intent(getApplicationContext(), WriteMessageActivity.class));
+//            finish();
+//        }
 
         // to underline the "Register now" text
         TextView textView = (TextView) findViewById(R.id.sign_up);
