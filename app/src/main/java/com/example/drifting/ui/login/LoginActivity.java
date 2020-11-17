@@ -49,10 +49,10 @@ public class LoginActivity extends AppCompatActivity {
         final Button forgotButton = findViewById(R.id.forgot_password);
         final Button registerButton = findViewById(R.id.signup_text);
         final ProgressBar loadingBar = findViewById(R.id.loadingBar);
+
+        //TODO: use the code when testing to auto-login
         FirebaseAuth fAuth;
         fAuth = FirebaseAuth.getInstance();
-
-        //TODO: add these code after we have sign out button
         //check if the user is already logged in
         if(fAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(), WriteMessageActivity.class));

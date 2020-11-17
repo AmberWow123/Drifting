@@ -17,7 +17,7 @@ public class SetDatabase {
     //add a new bottle to the database
     public void addNewBottle(Bottle_back this_bottle){
         DatabaseReference bottlesRef = database.child("bottle");
-        bottlesRef.child(String.valueOf(this_bottle.bottle_index)).setValue(this_bottle);
+        bottlesRef.child(String.valueOf(this_bottle.bottleID)).setValue(this_bottle);
     }
 
 }

@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,14 +17,20 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.example.drifting.HomeFragment;
 import com.example.drifting.NavBar;
 import com.example.drifting.R;
+import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -39,7 +46,7 @@ public class WriteMessageActivity extends AppCompatActivity {
     EditText TextMessage;
     Button sendBtn;
 
-    //function to return to home
+    //function to return to home after sending the bottle
     public void openHomepageActivity() {
         Intent intent = new Intent(this, NavBar.class);
         startActivity(intent);
@@ -51,59 +58,87 @@ public class WriteMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_message);
 
-        // set the text and button
-        //locationText = findViewById(R.id.get_location_text);
+        //set the text and button
+        locationText = findViewById(R.id.get_location_text);
         sendBtn = findViewById(R.id.button_send_button);
         TextMessage = findViewById(R.id.text_InputMessage);
+        Switch AnonymousBtn = (Switch) findViewById(R.id.switch_button);
+
+        //get current userID
+        FirebaseAuth fAuth;
+        fAuth = FirebaseAuth.getInstance();
+        final int[] whether_anonymous = {0};
+
+        AnonymousBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    whether_anonymous[0]++;
+                }
+                else{
+                    whether_anonymous[0]--;
+                }
+            }
+        });
 
         sendBtn.setOnClickListener((new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //TODO: set bottle index
-                int bottle_index = 1;
-                String input_text = TextMessage.getText().toString().trim();
-                //create a new bottle object
-                Bottle_back this_bottle = new Bottle_back(input_text, bottle_index);
-                SetDatabase set = new SetDatabase();
-                set.addNewBottle(this_bottle);
 
-                //return to the previous page
+                //set bottle id with user id and timestamp
+                @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+                String input_text = TextMessage.getText().toString().trim();
+
+                if(whether_anonymous[0] > 0) {
+                    //create a new bottle object
+                    String userID = "NOTAVAILABLE";
+                    String bottleID = (userID + timeStamp).trim();
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID);
+                    SetDatabase set = new SetDatabase();
+                    set.addNewBottle(this_bottle);
+                }
+                else{
+                    String userID = fAuth.getUid();
+                    String bottleID = (userID + timeStamp).trim();
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID);
+                    SetDatabase set = new SetDatabase();
+                    set.addNewBottle(this_bottle);
+                }
+
+                //return to the home page
                 openHomepageActivity();
 
             }
         }));
 
 
+        if (ContextCompat.checkSelfPermission(WriteMessageActivity.this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
 
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    WriteMessageActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)){
+                ActivityCompat.requestPermissions(WriteMessageActivity.this,
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                        MY_PERMISSION_REQUEST_LOCATION);
+            }
+            else {
+                ActivityCompat.requestPermissions(WriteMessageActivity.this,
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                        MY_PERMISSION_REQUEST_LOCATION);
+            }
 
-//        if (ContextCompat.checkSelfPermission(WriteMessageActivity.this,
-//                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-//
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(
-//                    WriteMessageActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)){
-//                ActivityCompat.requestPermissions(WriteMessageActivity.this,
-//                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-//                        MY_PERMISSION_REQUEST_LOCATION);
-//            }
-//            else {
-//                ActivityCompat.requestPermissions(WriteMessageActivity.this,
-//                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-//                        MY_PERMISSION_REQUEST_LOCATION);
-//            }
-//
-//        }
-//
-//        else{
-//            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-//            try{
-//                locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
-//            }
-//            catch (Exception e){
-//                e.printStackTrace();
-//                Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
-//            }
-//        }
+        }
+
+        else{
+            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            try{
+                locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
+            }
+        }
 
     }
 

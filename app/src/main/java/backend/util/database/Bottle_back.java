@@ -15,9 +15,10 @@ import java.util.Random;
 public class Bottle_back{
 
      Bottle_back self;
-    public String message;
-    public int bottle_index;
-     ImageView bottleView;
+     public String message;
+     public String bottleID;
+     public String userID;
+//    ImageView bottleView;
 //    int imageSrc;
 //    int avail_index;
 
@@ -25,21 +26,22 @@ public class Bottle_back{
 //    AnimationDrawable bottleAnimation;
 
     // construct with a message and bottle index
-    public Bottle_back(String msg, int bottle_index){
+    public Bottle_back(String msg, String bottleID, String userID){
         self = this;
-        message = msg;
-        this.bottle_index = bottle_index;
-        //locationID = getRandomBottleLocation();
-        //bottleView =  getView().findViewById(locationID);
-        //imageSrc = getRandomBottleImg();
+        this.message = msg;
+        this.bottleID= bottleID;
+        this.userID = userID;
+//        locationID = getRandomBottleLocation();
+//        bottleView =  getView().findViewById(locationID);
+//        imageSrc = getRandomBottleImg();
 //        bottleView.setBackgroundResource(imageSrc);
 //        bottleAnimation = (AnimationDrawable) bottleView.getBackground();
 //        bottleAnimation.start();
 
     }
 
-    public void setVisible(){
-        bottleView.setVisibility(View.VISIBLE);
-    }
+//    public void setVisible(){
+//        bottleView.setVisibility(View.VISIBLE);
+//    }
 
 }
