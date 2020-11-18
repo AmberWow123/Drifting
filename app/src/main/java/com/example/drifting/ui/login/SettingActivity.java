@@ -34,6 +34,8 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(intent);
+                finish();
+                // todo: logout token and end current activity. Make sure that the user cannot go back to the setting page.
                 Toast.makeText(SettingActivity.this, "Logout Succeed", Toast.LENGTH_LONG).show();
             }
         });
