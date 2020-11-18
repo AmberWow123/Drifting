@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.os.Looper;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -35,6 +36,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import com.example.drifting.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -85,6 +94,10 @@ public class WriteMessageActivity extends AppCompatActivity {
     private static final int VIDEO_PICK_CODE = 2000;
     private static final int PERMISSION_CODE_IMAGE = 1001;
     private static final int PERMISSION_CODE_VIDEO = 2001;
+
+    FusedLocationProviderClient fusedLocationProviderClient;
+    private LocationRequest locationRequest;
+    private LocationCallback locationCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -221,6 +234,8 @@ public class WriteMessageActivity extends AppCompatActivity {
         } else {
             text_view_anon.setText("OFF!");
         }
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
 
         switch_anon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -245,32 +260,65 @@ public class WriteMessageActivity extends AppCompatActivity {
 
         // request permissions
         if (ContextCompat.checkSelfPermission(WriteMessageActivity.this,
-                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(
-                    WriteMessageActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)){
+                    WriteMessageActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)) {
                 ActivityCompat.requestPermissions(WriteMessageActivity.this,
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSION_REQUEST_LOCATION);
+            } else {
+                ActivityCompat.requestPermissions(WriteMessageActivity.this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSION_REQUEST_LOCATION);
             }
-            else {
-                ActivityCompat.requestPermissions(WriteMessageActivity.this,
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                        MY_PERMISSION_REQUEST_LOCATION);
-            }
-        }
 
-        //set locations
-        else{
-            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            try{
-                locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
-            }
-            catch (Exception e){
-                e.printStackTrace();
-                Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
-            }
+        } else {
+
+            fusedLocationProviderClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @SuppressLint("MissingPermission")
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
+                            } else {
+                                Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
+
+                                locationRequest = LocationRequest.create();
+                                locationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
+                                locationRequest.setInterval(2 * 1000);
+                                locationCallback = new LocationCallback() {
+                                    @Override
+                                    public void onLocationResult(LocationResult locationResult) {
+                                        if (locationResult == null) {
+                                            return;
+                                        }
+                                        for (Location mlocation : locationResult.getLocations()) {
+                                            if (mlocation != null) {
+                                                locationText.setText(hereLocation(mlocation.getLatitude(), mlocation.getLongitude()));
+                                                fusedLocationProviderClient.removeLocationUpdates(locationCallback);
+                                            }
+                                        }
+                                    }
+                                };
+
+                                fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
+
+                            }
+                        }
+                    });
+
+         //   LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+         //   Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+         //   try{
+         //       locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
+         //   }
+         //   catch (Exception e){
+         //       e.printStackTrace();
+         //       Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
+         //   }
         }
 
     }
@@ -296,17 +344,32 @@ public class WriteMessageActivity extends AppCompatActivity {
             case MY_PERMISSION_REQUEST_LOCATION: {
                 if (grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     if(ContextCompat.checkSelfPermission(WriteMessageActivity.this,
-                            Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                            Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
 
-                        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        try{
-                            locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
-                        }
-                        catch (Exception e){
-                            e.printStackTrace();
-                            Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
-                        }
+                        fusedLocationProviderClient.getLastLocation()
+                                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                                    @Override
+                                    public void onSuccess(Location location) {
+                                        // Got last known location. In some rare situations this can be null.
+                                        if (location != null) {
+                                            locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
+                                        }
+                                        else{
+                                            Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
+
+                    //    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                    //    Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    //    try{
+                    //        locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
+                    //    }
+                    //    catch (Exception e){
+                    //        e.printStackTrace();
+                    //        Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
+                    //    }
                     }
                 }
                 else {
