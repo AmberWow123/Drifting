@@ -36,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
 
         //TODO: add these code after we have sign out button
-//        //check if the user is already logged in
+       //check if the user is already logged in
 //        if(fAuth.getCurrentUser() != null){
 //            startActivity(new Intent(getApplicationContext(), MainActivity.class));
 //            finish();
@@ -47,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
-                String password_re = mPassword.getText().toString().trim();
+                String password_re = mRePassword.getText().toString().trim();
 
                 //valid checks
                 if(TextUtils.isEmpty(email)){
@@ -74,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(TextUtils.equals(password, password_re)){
+                if(!TextUtils.equals(password, password_re)){
                     mRePassword.setError("Please enter same passwords! :(");
                 }
 
