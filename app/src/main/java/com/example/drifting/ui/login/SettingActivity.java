@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.drifting.R;
@@ -18,24 +17,24 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class EditProfileActivity extends AppCompatActivity {
+public class SettingActivity extends AppCompatActivity {
 
-    int flag;
-    Button editButton;
-    public void finishEditActivity() {
-        Intent intent = new Intent(this, ProfileActivity.class);
-        startActivity(intent);
-    }
+    Button logout_button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
+        setContentView(R.layout.activity_setting);
 
-        editButton = findViewById(R.id.editbutton);
-        editButton.setOnClickListener(new Button.OnClickListener() {
+        logout_button = findViewById(R.id.logout_button);
+
+        Intent intent = new Intent(this, LoginActivity.class);
+
+        logout_button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finishEditActivity();
+                startActivity(intent);
+                Toast.makeText(SettingActivity.this, "Logout Succeed", Toast.LENGTH_LONG).show();
             }
         });
     }
