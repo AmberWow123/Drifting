@@ -267,11 +267,7 @@ public class WriteMessageActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == VIDEO_PICK_CODE) {
             // set video preview to image view
 
-
             Uri selectedImageUri = data.getData();
-
-            // OI FILE Manager
-            String filemanagerstring = selectedImageUri.getPath();
 
             // MEDIA GALLERY
             String selectedImagePath = getPath(selectedImageUri);
@@ -282,6 +278,7 @@ public class WriteMessageActivity extends AppCompatActivity {
         }
     }
 
+    // get the path of video on the drive
     String getPath(Uri uri) {
         String[] projection = { MediaStore.Video.Media.DATA };
         Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
