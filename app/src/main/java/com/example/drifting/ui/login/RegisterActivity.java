@@ -88,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(RegisterActivity.this, "Yay User Created! :D", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                             UserProfile userProfile = new UserProfile(fAuth.getUid(), email, null,null,null, EnumD.gender.NOTSPECIFIED,null);
                             SetDatabase set = new SetDatabase();
                             set.addNewUser(userProfile);
