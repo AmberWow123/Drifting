@@ -3,6 +3,9 @@ package com.example.drifting.ui.login;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -16,6 +19,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+import backend.util.connectivity.ConnectionChecker;
+
 
 public class ForgotPasswordActivity extends AppCompatActivity {
     EditText mEmail;
@@ -27,6 +32,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fogot_password);
+        Context context = getApplicationContext();
 
 
         //correspond those buttons/texts
@@ -37,6 +43,13 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         mRestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean isConnected = ConnectionChecker.isInternetConnected(getApplicationContext());
+
+                if(!isConnected){
+                    Toast.makeText(getApplicationContext(), "Please check Internet connection", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 String email = mEmail.getText().toString().trim();
 
                 //valid checks
@@ -54,12 +67,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()){
-                                    Toast.makeText(ForgotPasswordActivity.this, "Email Sent Successfully!",Toast.LENGTH_SHORT).show();
-                                }else{
-                                    Toast.makeText(ForgotPasswordActivity.this, "Failed to Send",Toast.LENGTH_SHORT).show();
-                                }
-
+                                    Toast.makeText(ForgotPasswordActivity.this,
+                                            "An email is sent if an associated account exists",
+                                            Toast.LENGTH_LONG).show();
                             }
                         });
             }
