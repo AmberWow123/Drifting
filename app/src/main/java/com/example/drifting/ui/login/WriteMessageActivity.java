@@ -1,23 +1,14 @@
 package com.example.drifting.ui.login;
-<<<<<<< HEAD
-=======
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
->>>>>>> parent of d514bbc... Merge branch 'master' of https://github.com/AmberWow123/CSE110_Drifting
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-<<<<<<< HEAD
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -27,20 +18,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-=======
-import android.widget.TextView;
-import android.widget.Toast;
-
->>>>>>> parent of d514bbc... Merge branch 'master' of https://github.com/AmberWow123/CSE110_Drifting
 import com.example.drifting.R;
 
 import java.util.List;
 import java.util.Locale;
+
+<<<<<<<HEAD
+=======
+        >>>>>>>parent of d514bbc...Merge branch'master'of https:
+//github.com/AmberWow123/CSE110_Drifting
+        <<<<<<<HEAD
+=======
+        >>>>>>>parent of d514bbc...Merge branch'master'of https:
+//github.com/AmberWow123/CSE110_Drifting
 
 public class WriteMessageActivity extends AppCompatActivity {
 
