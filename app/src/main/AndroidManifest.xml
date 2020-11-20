@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.drifting">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <!--  Adding Read External Storage Permission  -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of d514bbc... Merge branch 'master' of https://github.com/AmberWow123/CSE110_Drifting
-=======
->>>>>>> parent of ebe64ec... Merge branch 'master' into frontend_Sam
-=======
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
->>>>>>> parent of e05f4bf... Revert "Merge branch 'master' into frontend_Sam"
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
