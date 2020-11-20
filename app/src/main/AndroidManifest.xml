@@ -3,13 +3,11 @@
     package="com.example.drifting">
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-<<<<<<< HEAD
 
     <!--  Adding Read External Storage Permission  -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-=======
->>>>>>> parent of d514bbc... Merge branch 'master' of https://github.com/AmberWow123/CSE110_Drifting
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,6 +19,7 @@
         <activity android:name=".ui.login.ViewBottleActivity" android:theme="@style/CustomThemePOP"></activity>
         <activity android:name=".ui.login.WriteMessageActivity"></activity>
         <activity android:name=".NavBar" />
+        <activity android:name=".ui.login.SettingActivity"></activity>
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login" />

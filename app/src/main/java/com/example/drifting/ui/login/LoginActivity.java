@@ -43,12 +43,21 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        final EditText usernameEditText = findViewById(R.id.username);
+        final EditText usernameEditText = findViewById(R.id.username_forget);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
         final Button forgotButton = findViewById(R.id.forgot_password);
         final Button registerButton = findViewById(R.id.signup_text);
         final ProgressBar loadingBar = findViewById(R.id.loadingBar);
+
+        //TODO: use the code when testing to auto-login
+//        FirebaseAuth fAuth;
+//        fAuth = FirebaseAuth.getInstance();
+//        //check if the user is already logged in
+//        if(fAuth.getCurrentUser() != null){
+//            startActivity(new Intent(getApplicationContext(), WriteMessageActivity.class));
+//            finish();
+//        }
 
         // to underline the "Register now" text
         TextView textView = (TextView) findViewById(R.id.sign_up);
