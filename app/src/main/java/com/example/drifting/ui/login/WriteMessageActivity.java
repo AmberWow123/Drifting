@@ -9,6 +9,10 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+<<<<<<< HEAD
+=======
+import android.provider.MediaStore;
+>>>>>>> parent of ebe64ec... Merge branch 'master' into frontend_Sam
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -26,6 +30,7 @@ import com.example.drifting.R;
 
 import java.util.List;
 import java.util.Locale;
+<<<<<<< HEAD
 
 <<<<<<<HEAD
 =======
@@ -35,6 +40,8 @@ import java.util.Locale;
 =======
         >>>>>>>parent of d514bbc...Merge branch'master'of https:
 //github.com/AmberWow123/CSE110_Drifting
+=======
+>>>>>>> parent of ebe64ec... Merge branch 'master' into frontend_Sam
 
 public class WriteMessageActivity extends AppCompatActivity {
 
@@ -67,14 +74,20 @@ public class WriteMessageActivity extends AppCompatActivity {
     private static final int PERMISSION_CODE_IMAGE = 1001;
     private static final int PERMISSION_CODE_VIDEO = 2001;
 
+<<<<<<< HEAD
 =======
 >>>>>>> parent of d514bbc... Merge branch 'master' of https://github.com/AmberWow123/CSE110_Drifting
+=======
+>>>>>>> parent of ebe64ec... Merge branch 'master' into frontend_Sam
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_message);
         locationText = findViewById(R.id.get_location_text);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of ebe64ec... Merge branch 'master' into frontend_Sam
 
         // adding image
         added_image_view = findViewById(R.id.image_view_added);
@@ -167,8 +180,11 @@ public class WriteMessageActivity extends AppCompatActivity {
             }
         });
 
+<<<<<<< HEAD
 =======
 >>>>>>> parent of d514bbc... Merge branch 'master' of https://github.com/AmberWow123/CSE110_Drifting
+=======
+>>>>>>> parent of ebe64ec... Merge branch 'master' into frontend_Sam
         if (ContextCompat.checkSelfPermission(WriteMessageActivity.this,
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
 

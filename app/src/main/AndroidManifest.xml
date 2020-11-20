@@ -8,8 +8,11 @@
     <!--  Adding Read External Storage Permission  -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+<<<<<<< HEAD
 =======
 >>>>>>> parent of d514bbc... Merge branch 'master' of https://github.com/AmberWow123/CSE110_Drifting
+=======
+>>>>>>> parent of ebe64ec... Merge branch 'master' into frontend_Sam
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
