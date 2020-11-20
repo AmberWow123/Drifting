@@ -7,27 +7,6 @@
     android:background="@color/cardview_light_background"
     tools:context=".ui.login.WriteMessageActivity">
 
-    <!--    ImageView on which image will be set   -->
-    <ImageView
-        android:id="@+id/image_view_added"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="72dp"
-        app:layout_constraintStart_toStartOf="@+id/guideline_text_left"
-        app:layout_constraintTop_toBottomOf="@+id/text_Video_Link" />
-
-    <!--  button to choose image  -->
-    <Button
-        android:id="@+id/button_Add_Image"
-        android:layout_width="14dp"
-        android:layout_height="14dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/ic_add_sign_button"
-        app:layout_constraintBottom_toTopOf="@+id/text_Video_Link"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_text_right"
-        app:layout_constraintTop_toTopOf="@+id/text_Image" />
-
     <TextView
         android:id="@+id/text_Video_Link"
         android:layout_width="0dp"
@@ -161,6 +140,15 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_text_left"
         app:layout_constraintTop_toBottomOf="@+id/text_InputMessage" />
 
+    <Button
+        android:id="@+id/button_Add_Image"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/ic_add_sign_button"
+        app:layout_constraintBottom_toTopOf="@+id/text_Video_Link"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_text_right"
+        app:layout_constraintTop_toTopOf="@+id/text_Image" />
 
     <Button
         android:id="@+id/button_send_button"
@@ -196,17 +184,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/text_Location"
         app:layout_constraintEnd_toStartOf="@+id/guideline_text_right"
         app:layout_constraintTop_toTopOf="@+id/text_Location" />
-
-    <TextView
-        android:id="@+id/text_is_anon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="TextView"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline_text_left"
-        app:layout_constraintTop_toBottomOf="@+id/text_Video_Link" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
