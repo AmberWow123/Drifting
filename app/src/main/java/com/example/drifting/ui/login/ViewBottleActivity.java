@@ -20,6 +20,7 @@ public class ViewBottleActivity extends AppCompatActivity {
         int width=dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(width*0.8), (int)(height*0.8));
+        // set canvas width and height.
+        getWindow().setLayout((int)(width*1), (int)(height*0.75));
     }
 }
