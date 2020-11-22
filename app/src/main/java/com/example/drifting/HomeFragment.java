@@ -23,6 +23,8 @@ import java.util.Hashtable;
 import java.util.Random;
 import java.util.Vector;
 
+import backend.util.database.Bottle_back;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link HomeFragment#newInstance} factory method to
@@ -38,6 +40,7 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    public static Bottle currBottle;
 
     protected View mView;
     final public int BOTTLE_MAX = 7;
@@ -74,6 +77,7 @@ public class HomeFragment extends Fragment {
 
     static boolean[] availableLocation =  {false,false,false,false,false,false,false};
     static Vector<Bottle> bottleList = new Vector<Bottle>();
+
 
 
 
@@ -127,7 +131,7 @@ public class HomeFragment extends Fragment {
             bottleView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    currBottle = myBottle;
                     startActivity(new Intent(getActivity(), ViewBottleActivity.class));
                     availableLocation[myBottle.avail_index] = false;
                     myBottle.bottleAnimation.stop();
@@ -145,9 +149,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (bottleList.size() < BOTTLE_MAX) {
-                    Bottle bottle = new Bottle("123", bottleList.size());
+                    int randomNum;
+                    Random rand = new Random();
+                    randomNum = rand.nextInt(10);
+                    Bottle bottle = new Bottle(randomNum+"", bottleList.size());
                     bottle.setVisible();
                     bottleList.add(bottle);
+                    Log.d(" Bottle content is :", " " + randomNum);
                     Log.d(" BottleList size is :", " " + bottleList.size());
                     Log.d(" vector contains ", bottleList.toString());
                 }
@@ -167,19 +175,60 @@ public class HomeFragment extends Fragment {
 
     public class Bottle{
 
-        Bottle self;
-        String message;
-        ImageView bottleView;
-        int imageSrc;
-        int avail_index;
-        int bottle_index;
-        int locationID;
-        AnimationDrawable bottleAnimation;
+        public Bottle self;
+        public String message;
+        public ImageView bottleView;
+        public int imageSrc;
+        public int avail_index;
+        public String fromUser;
+        public int bottle_index;
+        public int locationID;
+        public String city;
+        public AnimationDrawable bottleAnimation;
 
+        // This a constructor  FOR TESTING AND DEBUG
         // construct with a message and bottle index
         public Bottle(String msg, int bottle_index){
+            // setting for debug
+            fromUser = "Gary";
+            city = "San Francisco";
+            //
+
             self = this;
             message = msg;
+            this.bottle_index = bottle_index;
+            locationID = getRandomBottleLocation();
+            bottleView =  getView().findViewById(locationID);
+            imageSrc = getRandomBottleImg();
+            bottleView.setBackgroundResource(imageSrc);
+
+
+            bottleAnimation = (AnimationDrawable) bottleView.getBackground();
+            bottleAnimation.start();
+
+            bottleView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    currBottle = self;
+                    startActivity(new Intent(getActivity(), ViewBottleActivity.class));
+                    availableLocation[avail_index] = false;
+                    bottleAnimation.stop();
+                    bottleView.setVisibility(View.GONE);
+                    bottleList.remove(self);
+
+                    Log.d(" BottleList size is :" , " " + bottleList.size());
+                    Log.d(" vector contains ", bottleList.toString());
+                }
+            });
+
+        }
+
+        // ACTUAL CONSTRUCTOR: construct with a bottle_back and bottle index
+        public Bottle(Bottle_back bottleBack, int bottle_index){
+            self = this;
+            message = bottleBack.message;
+            city = bottleBack.city;
             this.bottle_index = bottle_index;
             locationID = getRandomBottleLocation();
             bottleView =  getView().findViewById(locationID);
@@ -204,7 +253,6 @@ public class HomeFragment extends Fragment {
                     Log.d(" vector contains ", bottleList.toString());
                 }
             });
-
         }
 
         public int getRandomBottleImg(){
