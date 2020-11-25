@@ -22,7 +22,7 @@ public class SetDatabase {
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReference();
 
-    private static Pair<String,String> parseName(String filename) {
+    public static Pair<String,String> parseName(String filename) {
         int i = filename.lastIndexOf('.');
         if (i > 0 && i < filename.length() - 1) {
             return new Pair<String, String>(filename.substring(0,i), filename.substring(i+1));
