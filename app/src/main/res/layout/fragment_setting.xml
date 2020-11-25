@@ -1,129 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingFragment"
+    android:background="@drawable/background"
     android:fitsSystemWindows="true"
-    android:background="@drawable/profilebg"
-    >
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/left_guideline_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+    tools:context=".SettingFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/right_guideline_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="1.0" />
-
-    <TextView
-        android:id="@+id/profile_small_bg"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:width="1dp"
-        android:background="#000000"
-        android:color="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/picguideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="210dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/profcontent_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.36" />
+        app:layout_constraintGuide_percent="0.07" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/profcontent_guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.62106705" />
+        app:layout_constraintGuide_percent="0.03" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/profcontent_guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75239396" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/profcontent_guideline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.88" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/profcontent_guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.49" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="1.0" />
-
-    <ViewSwitcher
-        android:id="@+id/my_switcher"
-        android:layout_width="169dp"
-        android:layout_height="38dp"
-        android:layout_marginBottom="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/profile_small_bg"
-        app:layout_constraintEnd_toStartOf="@+id/right_guideline_profile"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:id="@+id/username_view"
-            android:layout_width="167dp"
-            android:layout_height="match_parent"
-            android:background="#A6E9F8C6"
-            android:backgroundTint="#FBFBFB"
-            android:ems="10"
-            android:gravity="center_horizontal"
-            android:textColor="#000000"
-            android:textColorHint="#000000"
-            android:textSize="30sp" />
-
-        <EditText
-            android:id="@+id/username_edit"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="#A6E9F8C6"
-            android:backgroundTint="#FFF9F9"
-            android:ems="10"
-            android:gravity="center_horizontal"
-            android:hint="username"
-            android:textColor="#000000"
-            android:textSize="30sp" />
-
-    </ViewSwitcher>
-
+    <!--
     <TextView
         android:id="@+id/description"
         android:layout_width="0dp"
@@ -137,63 +37,14 @@
         app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/profcontent_guideline"
         app:layout_constraintVertical_bias="0.507" />
-
-    <TextView
-        android:id="@+id/email"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Email"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/profcontent_guideline3"
-        app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline2"
-        app:layout_constraintVertical_bias="0.562" />
-
-    <TextView
-        android:id="@+id/gender"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Gender"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/profcontent_guideline4"
-        app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3" />
-
-    <TextView
-        android:id="@+id/age"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Age"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/profcontent_guideline5"
-        app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline4" />
-
-    <TextView
-        android:id="@+id/country"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Country"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
-        app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline5" />
+    -->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.41" />
+        app:layout_constraintGuide_percent="0.93" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -201,8 +52,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05" />
-
+        app:layout_constraintGuide_begin="-66dp" />
+    <!--
     <ViewSwitcher
         android:id="@+id/my_switcher_description"
         android:layout_width="0dp"
@@ -230,163 +81,488 @@
             android:textColor="#FFFFFF" />
 
     </ViewSwitcher>
+    -->
 
-    <ViewSwitcher
-        android:id="@+id/my_switcher_email"
-        android:layout_width="0dp"
-        android:layout_height="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/profcontent_guideline3"
-        app:layout_constraintEnd_toStartOf="@+id/right_guideline_profile"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline2">
-
-        <TextView
-            android:id="@+id/email_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/email_text_edit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ABFFFFFF"
-            android:hint="email"
-            android:textColor="#FFFFFF" />
-
-    </ViewSwitcher>
-
-    <ViewSwitcher
-        android:id="@+id/my_switcher_gender"
-        android:layout_width="0dp"
-        android:layout_height="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/profcontent_guideline4"
-        app:layout_constraintEnd_toStartOf="@+id/right_guideline_profile"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3">
-
-        <TextView
-            android:id="@+id/gender_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/gender_text_edit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ABFFFFFF"
-            android:hint="gender"
-            android:textColor="#FFFFFF" />
-
-    </ViewSwitcher>
-
-    <ViewSwitcher
-        android:id="@+id/my_switcher_age"
-        android:layout_width="0dp"
-        android:layout_height="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/profcontent_guideline5"
-        app:layout_constraintEnd_toStartOf="@+id/right_guideline_profile"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline4">
-
-        <TextView
-            android:id="@+id/age_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/age_text_edit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ABFFFFFF"
-            android:hint="age"
-            android:textColor="#FFFFFF" />
-
-    </ViewSwitcher>
-
-    <ViewSwitcher
-        android:id="@+id/my_switcher_country"
-        android:layout_width="0dp"
-        android:layout_height="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline3"
-        app:layout_constraintEnd_toStartOf="@+id/right_guideline_profile"
-        app:layout_constraintStart_toStartOf="@+id/guideline5"
-        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline5">
-
-        <TextView
-            android:id="@+id/country_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
-
-        <EditText
-            android:id="@+id/country_text_edit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ABFFFFFF"
-            android:hint="country"
-            android:textColor="#FFFFFF" />
-
-
-    </ViewSwitcher>
-
-    <Button
-        android:id="@+id/editbutton"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:background="@drawable/editbutton"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/picguideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="@+id/left_guideline_profile"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.697" />
-
+    <!--
     <Button
         android:id="@+id/settingbutton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="8dp"
         android:background="@android:drawable/ic_menu_sort_by_size"
-        app:layout_constraintBottom_toTopOf="@+id/picguideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
+    -->
+
+    <ImageView
+        android:id="@+id/profile_background"
+        android:layout_width="356dp"
+        android:layout_height="392dp"
+        android:background="@drawable/profile_background"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3"
+        app:layout_constraintVertical_bias="0.33999997" />
+
+
+    <ImageView
+        android:id="@+id/avatar_background"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentTop="false"
+        android:background="@drawable/avatar_background"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/profile_page_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3"
+        app:layout_constraintVertical_bias="0.521" />
 
     <ImageView
         android:id="@+id/profile_image"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/picguideline"
-        app:layout_constraintEnd_toStartOf="@+id/right_guideline_profile"
-        app:layout_constraintHorizontal_bias="0.498"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/avatar"
+        android:elevation="6dp"
+        app:layout_constraintBottom_toTopOf="@+id/profile_page_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3"
+        app:layout_constraintVertical_bias="0.521" />
 
     <Button
         android:id="@+id/change_avatar"
         android:layout_width="120dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="4dp"
-        android:text="Change Avatar"
-        android:textSize="10sp"
-        app:layout_constraintBottom_toTopOf="@+id/my_switcher"
-        app:layout_constraintEnd_toStartOf="@+id/right_guideline_profile"
+        android:layout_height="120dp"
+        android:background="#00FFFFFF"
+        android:drawableBottom="@drawable/blank"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/profile_page_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3"
+        app:layout_constraintVertical_bias="0.521" />
+
+    <TableLayout
+        android:id="@+id/profile_page_layout"
+        android:layout_width="323dp"
+        android:layout_height="307dp"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_background"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
+        app:layout_constraintTop_toTopOf="@+id/profile_background"
+        app:layout_constraintVertical_bias="0.611">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="85dp"
+                android:layout_height="50dp"
+                android:elevation="5dp"
+                android:fontFamily="@font/poppins"
+                android:gravity="center_vertical"
+                android:text="userID"
+                android:textColor="#A4A4A4"
+                android:textSize="13sp" />
+
+            <ViewSwitcher
+                android:id="@+id/my_switcher"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content"
+                android:elevation="5dp">
+
+                <TextView
+                    android:id="@+id/username_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:elevation="5dp"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center_vertical"
+                    android:textColor="#a4a4a4"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/username_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#dcdcdc"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Please enter useID"
+                    android:importantForAutofill="no"
+                    android:inputType="textNoSuggestions|text"
+                    android:textColor="#a4a4a4"
+                    android:textColorHint="#a4a4a4"
+                    android:textSize="13sp" />
+
+            </ViewSwitcher>
+            <!--
+            <Button
+                android:id="@+id/username_edit_button"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/ic_actions_emultiple_edit"
+                android:backgroundTint="#a4a4a4" />
+            -->
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="85dp"
+                android:layout_height="50dp"
+                android:elevation="4dp"
+                android:fontFamily="@font/poppins"
+                android:gravity="center_vertical"
+                android:text="Email"
+                android:textColor="#a4a4a4"
+                android:textSize="13sp" />
+
+            <ViewSwitcher
+                android:id="@+id/my_switcher_email"
+                android:layout_width="190dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/email_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:elevation="5dp"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center_vertical"
+                    android:textColor="#a4a4a4"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/email_text_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#dcdcdc"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Please enter your email"
+                    android:inputType="textEmailAddress"
+                    android:textColor="#a4a4a4"
+                    android:textColorHint="#A4A4A4"
+                    android:textSize="13sp" />
+
+            </ViewSwitcher>
+            <!--
+            <Button
+                android:id="@+id/edit_email_button"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/ic_actions_emultiple_edit"
+                android:backgroundTint="#a4a4a4" />
+            -->
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/gender"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:elevation="5dp"
+                android:fontFamily="@font/poppins"
+                android:gravity="center_vertical"
+                android:text="Gender"
+                android:textColor="#a4a4a4"
+                android:textSize="13sp" />
+
+            <ViewSwitcher
+                android:id="@+id/my_switcher_gender"
+                android:layout_width="153dp"
+                android:layout_height="wrap_content"
+                android:elevation="5dp">
+
+                <TextView
+                    android:id="@+id/gender_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center_vertical"
+                    android:textColor="#a4a4a4"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/gender_text_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#dcdcdc"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Please enter your gender"
+                    android:importantForAutofill="no"
+                    android:inputType="textNoSuggestions|text"
+                    android:textColor="#a4a4a4"
+                    android:textColorHint="#a4a4a4"
+                    android:textSize="13sp" />
+
+            </ViewSwitcher>
+            <!--
+            <Button
+                android:id="@+id/edit_gender_button"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/ic_actions_emultiple_edit"
+                android:backgroundTint="#a4a4a4" />
+            -->
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/age"
+                android:layout_width="85dp"
+                android:layout_height="50dp"
+                android:elevation="5dp"
+                android:fontFamily="@font/poppins"
+                android:gravity="center_vertical"
+                android:text="Age"
+                android:textColor="#a4a4a4"
+                android:textSize="13sp" />
+
+            <ViewSwitcher
+                android:id="@+id/my_switcher_age"
+                android:layout_width="153dp"
+                android:layout_height="wrap_content"
+                android:elevation="5dp">
+
+                <TextView
+                    android:id="@+id/age_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center_vertical"
+                    android:textColor="#a4a4a4"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/age_text_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#dcdcdc"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Please enter your age"
+                    android:importantForAutofill="no"
+                    android:inputType="numberSigned|number"
+                    android:textColor="#a4a4a4"
+                    android:textColorHint="#a4a4a4"
+                    android:textSize="13sp" />
+
+            </ViewSwitcher>
+            <!--
+            <Button
+                android:id="@+id/edit_age_button"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/ic_actions_emultiple_edit"
+                android:backgroundTint="#a4a4a4" />
+            -->
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/country"
+                android:layout_width="84dp"
+                android:layout_height="50dp"
+                android:elevation="5dp"
+                android:fontFamily="@font/poppins"
+                android:gravity="center_vertical"
+                android:text="Country"
+                android:textColor="#a4a4a4"
+                android:textSize="13sp" />
+
+            <ViewSwitcher
+                android:id="@+id/my_switcher_country"
+                android:layout_width="153dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/country_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center_vertical"
+                    android:textColor="#a4a4a4"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/country_text_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:autofillHints=""
+                    android:background="#dcdcdc"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Please enter your country"
+                    android:inputType="textNoSuggestions|text"
+                    android:textColor="#a4a4a4"
+                    android:textColorHint="#a4a4a4"
+                    android:textSize="13sp" />
+
+
+            </ViewSwitcher>
+            <!--
+            <Button
+                android:id="@+id/edit_country_button"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/ic_actions_emultiple_edit"
+                android:backgroundTint="#a4a4a4" />
+            -->
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/privacy"
+                android:layout_width="85dp"
+                android:layout_height="50dp"
+                android:elevation="5dp"
+                android:fontFamily="@font/poppins"
+                android:gravity="center_vertical"
+                android:text="Privacy"
+                android:textColor="#a4a4a4"
+                android:textSize="13sp" />
+
+            <Spinner
+                android:id="@+id/spinner1"
+                style="@style/SpinnerTheme"
+                android:popupBackground="#222222"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:spinnerMode="dropdown" />
+        </TableRow>
+
+    </TableLayout>
+
+    <ImageView
+        android:id="@+id/line_1"
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:elevation="6dp"
+        android:src="@drawable/line"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_background"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
+        app:layout_constraintTop_toTopOf="@+id/profile_background"
+        app:layout_constraintVertical_bias="0.245" />
+
+    <ImageView
+        android:id="@+id/line_3"
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:elevation="6dp"
+        android:src="@drawable/line"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_background"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
+        app:layout_constraintTop_toTopOf="@+id/profile_background"
+        app:layout_constraintVertical_bias="0.375" />
+
+    <ImageView
+        android:id="@+id/line_2"
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:elevation="6dp"
+        android:src="@drawable/line"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_background"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
+        app:layout_constraintTop_toTopOf="@+id/profile_background"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <ImageView
+        android:id="@+id/line_4"
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:elevation="6dp"
+        android:src="@drawable/line"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_background"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
+        app:layout_constraintTop_toTopOf="@+id/profile_background"
+        app:layout_constraintVertical_bias="0.63" />
+
+    <ImageView
+        android:id="@+id/line_5"
+        android:layout_width="325dp"
+        android:layout_height="wrap_content"
+        android:elevation="6dp"
+        android:src="@drawable/line"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_background"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
+        app:layout_constraintTop_toTopOf="@+id/profile_background"
+        app:layout_constraintVertical_bias="0.76" />
+
+    <Button
+        android:id="@+id/log_out_button"
+        android:layout_width="165dp"
+        android:layout_height="47dp"
+        android:background="@drawable/log_out_button"
+        android:fontFamily="@font/poppins"
+        android:text="Log Out"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_background" />
+
+    <Button
+        android:id="@+id/reset_password_button"
+        android:layout_width="112dp"
+        android:layout_height="26dp"
+        android:background="#00FFFFFF"
+        android:text="Reset Password"
+        android:textAllCaps="false"
+        android:textColor="#a4a4a4"
+        android:textIsSelectable="false"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/log_out_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_background"
+        app:layout_constraintVertical_bias="0.90999997" />
+
+    <Button
+        android:id="@+id/editbutton"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:background="@drawable/ic_actions_emultiple_edit"
+        android:backgroundTint="#A4A4A4"
+        app:layout_constraintBottom_toTopOf="@+id/profile_background"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="0.258"
+        app:layout_constraintStart_toEndOf="@+id/avatar_background"
+        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
