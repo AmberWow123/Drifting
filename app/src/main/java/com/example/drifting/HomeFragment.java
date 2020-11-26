@@ -22,19 +22,15 @@ import java.util.Vector;
 
 import backend.util.database.Bottle_back;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class HomeFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
+
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
     private String mParam2;
     public static Bottle currBottle;
@@ -46,15 +42,6 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Home.
-     */
-    // TODO: Rename and change types and number of parameters
     public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -100,6 +87,15 @@ public class HomeFragment extends Fragment {
         return rootView;
     }
 
+
+    /**
+     *      onViewCreated() is the class where changes to the view are defined. DO NOT make
+     *  changes to any View Elements (Button, TextView, etc.) outside of onViewCreated() due
+     *  to the life cycle of Fragments.
+     *
+     *      E.g. If you want to set the text of a TextView, do it here. The line of code
+     *  "findViewById()" only works if it is written in this method.
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -108,6 +104,9 @@ public class HomeFragment extends Fragment {
         final Button writeMessageButton = getView().findViewById(R.id.compose_button);
 
 
+        /**
+         *  We have a static Vector, a list of bottles, stored in bottleList.
+         */
         ImageView[] bottles = new ImageView[7];
         for (int i = 0; i < bottleAry.length; i++){
             bottles[i] = getView().findViewById(bottleAry[i]);
@@ -115,6 +114,11 @@ public class HomeFragment extends Fragment {
         }
 
         // **** codes below must change in correspondence to Bottle's constructor ****
+        /**
+         * The lines below tell Android to create every single bottle stored in the bottleList.
+         * The listener for each bottle must set up individually. Therefore any changes to the
+         * Bottle Class must be duplicated here.
+         */
         Log.e(" mView : ", mView.toString());
         for (int i = 0; i < bottleList.size(); i ++) {
             Bottle myBottle = bottleList.get(i);
@@ -142,6 +146,9 @@ public class HomeFragment extends Fragment {
         }
         // **** **** **** **** **** **** **** **** **** **** **** **** **** ****
 
+        /**
+         *  the generate button is for debugging purpose.
+         */
         generate_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,6 +167,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        /**
+         * write a new message.
+         */
         writeMessageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,6 +183,12 @@ public class HomeFragment extends Fragment {
 
     public class Bottle{
 
+        /**
+         *  there sre more properties to be added
+         *  Note:
+         *      LocationID is not the user location. please refer to city
+         *      fromUser is the thrower's name (this should be changed to user ID)
+         */
         public Bottle self;
         public String message;
         public ImageView bottleView;
@@ -185,6 +201,10 @@ public class HomeFragment extends Fragment {
         public AnimationDrawable bottleAnimation;
         public String comment;
 
+
+        /**
+         * This constructor is not for deployment. Please refer to the other constructor
+         */
         // This a constructor  FOR TESTING AND DEBUG
         // construct with a message and bottle index
         public Bottle(String msg, int bottle_index){
@@ -223,6 +243,11 @@ public class HomeFragment extends Fragment {
 
         }
 
+        /**
+         * This is the constructor that should be implemented with backend. It takes a
+         * bottle_back object and creates a bottle for the frontend. For bottle_index just
+         * pass in bottleList.size(). 
+         */
         // ACTUAL CONSTRUCTOR: construct with a bottle_back and bottle index
         public Bottle(Bottle_back bottleBack, int bottle_index){
             self = this;
