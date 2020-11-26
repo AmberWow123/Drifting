@@ -154,7 +154,8 @@
 
                 <!-- below is the where sample comments insert -->
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/comment_field_textview"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_light"
                     android:text="“Best professor at the CSE department”"
@@ -166,8 +167,23 @@
                     >
                 </TextView>
 
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="100dp"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    >
+                </TextView>
 
-
+                <Button
+                    android:id="@+id/throw_back_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="Throw it back!"
+                    android:fontFamily="@font/roboto_light"
+                    android:background="@drawable/throwback"/>
 
 
             </LinearLayout>

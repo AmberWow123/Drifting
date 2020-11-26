@@ -28,6 +28,7 @@ public class ViewBottleActivity extends AppCompatActivity {
         String msg = HomeFragment.currBottle.message;
         String fromUser = HomeFragment.currBottle.fromUser;
         String city = HomeFragment.currBottle.city;
+        String comment = HomeFragment.currBottle.comment;
 
         TextView messageView = findViewById(R.id.bottle_message_textview);
         messageView.setText(msg);
@@ -37,6 +38,9 @@ public class ViewBottleActivity extends AppCompatActivity {
 
         TextView locationView = findViewById(R.id.location_var_textview);
         locationView.setText(city);
+
+        TextView commentView = findViewById(R.id.comment_field_textview);
+        commentView.setText(comment);
 
     }
 }

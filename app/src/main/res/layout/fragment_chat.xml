@@ -14,4 +14,18 @@
         android:text="Hello! Chats here!"
         android:textSize="36sp" />
 
+    <Button
+        android:id="@+id/debug_chat_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="291dp"
+        android:layout_marginBottom="683dp"
+        android:text="chat_Button" />
+
 </RelativeLayout>

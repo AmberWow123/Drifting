@@ -153,6 +153,7 @@ public class HomeFragment extends Fragment {
                     Random rand = new Random();
                     randomNum = rand.nextInt(10);
                     Bottle bottle = new Bottle(randomNum+"", bottleList.size());
+                    bottle.comment = "filler comment";
                     bottle.setVisible();
                     bottleList.add(bottle);
                     Log.d(" Bottle content is :", " " + randomNum);
@@ -185,6 +186,7 @@ public class HomeFragment extends Fragment {
         public int locationID;
         public String city;
         public AnimationDrawable bottleAnimation;
+        public String comment;
 
         // This a constructor  FOR TESTING AND DEBUG
         // construct with a message and bottle index
