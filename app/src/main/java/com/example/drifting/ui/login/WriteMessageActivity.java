@@ -123,7 +123,7 @@ public class WriteMessageActivity extends AppCompatActivity {
         });
 
         // throw the bottle when "send" is clicked
-        sendBtn.setOnClickListener((new View.OnClickListener(){
+        sendBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
@@ -134,14 +134,17 @@ public class WriteMessageActivity extends AppCompatActivity {
                 // anonymous case
                 if(whether_anonymous[0] > 0) {
                     //create a new bottle object
-                    String userID = "NOTAVAILABLE";
-                    //generate a random number
-                    int upperbound = 10;
-                    Random rand = new Random();
-                    int int_random = rand.nextInt(upperbound);
-                    String random_int = Integer.toString(int_random);
-                    String bottleID = (userID + timeStamp + random_int).trim();
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID);
+//                    String userID = "NOTAVAILABLE";
+//                    //generate a random number
+//                    int upperbound = 10;
+//                    Random rand = new Random();
+//                    int int_random = rand.nextInt(upperbound);
+//                    String random_int = Integer.toString(int_random);
+//                    String bottleID = (userID + timeStamp + random_int).trim();
+                    String userID = fAuth.getUid();
+                    String bottleID = (userID + timeStamp).trim();
+                    String city = locationText.getText().toString();
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, true, city);
                     SetDatabase set = new SetDatabase();
                     set.addNewBottle(this_bottle);
                 }
@@ -149,7 +152,8 @@ public class WriteMessageActivity extends AppCompatActivity {
                 else{
                     String userID = fAuth.getUid();
                     String bottleID = (userID + timeStamp).trim();
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID);
+                    String city = locationText.getText().toString();
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, false, city);
                     SetDatabase set = new SetDatabase();
                     set.addNewBottle(this_bottle);
                 }
@@ -158,7 +162,7 @@ public class WriteMessageActivity extends AppCompatActivity {
                 Toast.makeText(WriteMessageActivity.this, "Yay you just throw a bottle! :D", Toast.LENGTH_SHORT).show();
                 openHomepageActivity();
             }
-        }));
+        });
 
         // adding image
         added_image_view = findViewById(R.id.image_view_added);

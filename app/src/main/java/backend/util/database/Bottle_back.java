@@ -18,6 +18,8 @@ public class Bottle_back{
      public String message;
      public String bottleID;
      public String userID;
+     public Boolean isAnonymous;
+     public String city;
 //    ImageView bottleView;
 //    int imageSrc;
 //    int avail_index;
@@ -26,11 +28,13 @@ public class Bottle_back{
 //    AnimationDrawable bottleAnimation;
 
     // construct with a message and bottle index
-    public Bottle_back(String msg, String bottleID, String userID){
+    public Bottle_back(String msg, String bottleID, String userID, Boolean isAnonymous, String city){
         self = this;
         this.message = msg;
         this.bottleID= bottleID;
         this.userID = userID;
+        this.isAnonymous = isAnonymous;
+        this.city = city;
 //        locationID = getRandomBottleLocation();
 //        bottleView =  getView().findViewById(locationID);
 //        imageSrc = getRandomBottleImg();
