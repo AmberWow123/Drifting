@@ -1,22 +1,30 @@
 package com.example.drifting.ui.login;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.drifting.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+
+import backend.util.connectivity.ConnectionChecker;
+import backend.util.database.EnumD;
+import backend.util.database.SetDatabase;
+import backend.util.database.UserProfile;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -28,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        Context context = getApplicationContext();
 
         //correspond those buttons/texts
         mEmail = findViewById(R.id.username_register);
@@ -37,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
 
         //TODO: add these code after we have sign out button
-//        //check if the user is already logged in
+       //check if the user is already logged in
 //        if(fAuth.getCurrentUser() != null){
 //            startActivity(new Intent(getApplicationContext(), MainActivity.class));
 //            finish();
@@ -46,9 +55,16 @@ public class RegisterActivity extends AppCompatActivity {
         mRegisterBtn.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean isConnected = ConnectionChecker.isInternetConnected(getApplicationContext());
+
+                if(!isConnected){
+                    Toast.makeText(getApplicationContext(), "Please check Internet connection", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
-                String password_re = mPassword.getText().toString().trim();
+                String password_re = mRePassword.getText().toString().trim();
 
                 //valid checks
                 if(TextUtils.isEmpty(email)){
@@ -75,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(TextUtils.equals(password, password_re)){
+                if(!TextUtils.equals(password, password_re)){
                     mRePassword.setError("Please enter same passwords! :(");
                 }
 
@@ -85,10 +101,21 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(RegisterActivity.this, "Yay User Created! :D", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                            UserProfile userProfile = new UserProfile(fAuth.getUid(), email, null,null,null, EnumD.gender.NOTSPECIFIED,null);
+                            SetDatabase set = new SetDatabase();
+                            set.addNewUser(userProfile);
                         }
                         else{
-                            Toast.makeText(RegisterActivity.this, "Oh man there is an Error... :(", Toast.LENGTH_SHORT).show();
+                            try{
+                                throw task.getException();
+                            } catch (Exception e) {
+                                if(e instanceof FirebaseAuthUserCollisionException)
+                                    Toast.makeText(RegisterActivity.this, "The email already exists! :(", Toast.LENGTH_LONG).show();
+                                else{
+                                    Toast.makeText(RegisterActivity.this, "An unknown error has occurred! :(", Toast.LENGTH_LONG).show();
+                                }
+                            } ;
                         }
                     }
                 });

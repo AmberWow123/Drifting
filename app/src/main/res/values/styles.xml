@@ -1,0 +1,38 @@
+<resources>
+
+    <color name="windowBackground">
+    </color>
+    <style name="Widget.Theme.Drifting.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="Widget.Theme.Drifting.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
+    </style>
+
+    <style name="CustomThemePOP" parent="Theme.AppCompat">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+
+    </style>
+
+    <style name="SwitchTheme" parent="Theme.AppCompat.Light">
+        <item name="android:colorControlActivated">#3879F8</item>
+    </style>
+
+    <style name="SpinnerTheme" parent="android:Widget.Spinner">
+        <item name="android:background">@drawable/bg_spinner</item>
+    </style>
+    <style name="customThemeTrans" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+</resources>
