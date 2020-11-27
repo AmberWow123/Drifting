@@ -192,6 +192,7 @@ public class HomeFragment extends Fragment {
                                     Log.d(" Bottle content is :", " " + bottle_get.message);
                                     Log.d(" BottleList size is :", " " + bottleList.size());
                                     Log.d(" vector contains ", bottleList.toString());
+                                    reference.removeEventListener(this);
                                     break;
                                 }
                             }
@@ -308,7 +309,7 @@ public class HomeFragment extends Fragment {
             bottleView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    currBottle = self;
                     startActivity(new Intent(getActivity(), ViewBottleActivity.class));
                     availableLocation[avail_index] = false;
                     bottleAnimation.stop();
