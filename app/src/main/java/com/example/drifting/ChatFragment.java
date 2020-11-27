@@ -72,28 +72,6 @@ public class ChatFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-//        // create the chat rooms
-//        createExampleList();
-////        buildRecyclerView();
-//
-//        EditText name_to_search = getView().findViewById(R.id.search_field);
-//        name_to_search.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                filter(s.toString());
-//            }
-//        });
     }
 
     private void filter(String text) {
@@ -123,18 +101,6 @@ public class ChatFragment extends Fragment {
         exampleList.add(new ExampleItem( R.drawable.avatar, "Samuel", "laaaaaa >.<", "19:00"));
     }
 
-//    private void buildRecyclerView() {
-//
-//        recyclerView = getView().findViewById(R.id.recycler_View);
-//
-//        recyclerView.setHasFixedSize(true);
-//        layoutManager = new LinearLayoutManager(getActivity());
-//        adapter = new ExampleAdapter(exampleList);
-//
-//        recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setAdapter(adapter);
-//    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -146,6 +112,7 @@ public class ChatFragment extends Fragment {
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_View);
 
+        // create all the chat rooms (like all the friends the user had added before)
         createExampleList();
 
         adapter = new ExampleAdapter(exampleList);
@@ -165,6 +132,8 @@ public class ChatFragment extends Fragment {
 
 
         EditText name_to_search = getView().findViewById(R.id.search_field);
+
+        // as anything typed in the search field, it will search for that input
         name_to_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
