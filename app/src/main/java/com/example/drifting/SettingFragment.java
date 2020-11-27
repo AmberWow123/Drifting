@@ -154,7 +154,14 @@ public class SettingFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, R.id.dropdown_item, items);
         dropdown.setAdapter(adapter);
 
+
         if(savedInstanceState != null) {
+            name = savedInstanceState.getString("name");
+            gender = savedInstanceState.getString("gender");
+            age = savedInstanceState.getString("age");
+            email = savedInstanceState.getString("email");
+            country = savedInstanceState.getString("country");
+
             ViewSwitcher nameSwitcher = getView().findViewById(R.id.my_switcher);
             TextView nameTV = nameSwitcher.findViewById(R.id.username_view);
             nameTV.setText(name);
