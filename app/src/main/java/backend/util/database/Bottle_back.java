@@ -9,7 +9,6 @@ import android.widget.ImageView;
 
 import com.example.drifting.HomeFragment;
 import com.example.drifting.ui.login.ViewBottleActivity;
-
 import java.util.Random;
 
 public class Bottle_back{
@@ -20,32 +19,57 @@ public class Bottle_back{
      public String userID;
      public Boolean isAnonymous;
      public String city;
-//    ImageView bottleView;
-//    int imageSrc;
-//    int avail_index;
+     public String comment;
+     public Boolean isViewed = false;
 
-//    int locationID;
-//    AnimationDrawable bottleAnimation;
+     public Bottle_back(){
+     }
 
     // construct with a message and bottle index
-    public Bottle_back(String msg, String bottleID, String userID, Boolean isAnonymous, String city){
+    public Bottle_back(String msg, String bottleID, String userID, Boolean isAnonymous, String city, String comment){
         self = this;
         this.message = msg;
         this.bottleID= bottleID;
         this.userID = userID;
         this.isAnonymous = isAnonymous;
         this.city = city;
-//        locationID = getRandomBottleLocation();
-//        bottleView =  getView().findViewById(locationID);
-//        imageSrc = getRandomBottleImg();
-//        bottleView.setBackgroundResource(imageSrc);
-//        bottleAnimation = (AnimationDrawable) bottleView.getBackground();
-//        bottleAnimation.start();
-
+        this.comment = comment;
+        this.isViewed = false;
     }
 
-//    public void setVisible(){
-//        bottleView.setVisibility(View.VISIBLE);
-//    }
+    public String getMessage(){
+        return message;
+    }
 
+    public String getUserID(){
+        return userID;
+    }
+
+    public String getCity(){
+        return city;
+    }
+
+    public String getBottleID(){
+         return bottleID;
+    }
+
+    public Boolean getIsAnonymous(){
+         return isAnonymous;
+    }
+
+    public Boolean getIsViewed(){
+         return isViewed;
+    }
+
+    public String getComment(){
+        return comment;
+    }
+
+    public void setComment(String comment){
+        this.comment = comment;
+    }
+
+    public void setIsViewed(Boolean isViewed){
+         this.isViewed = isViewed;
+    }
 }

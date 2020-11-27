@@ -60,6 +60,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
                 if(!email.contains("@")){
                     mEmail.setError("A valid email is needed!");
+                    return;
                 }
 
                 //send user a password reset

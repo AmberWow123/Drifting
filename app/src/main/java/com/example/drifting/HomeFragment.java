@@ -267,6 +267,7 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 
+                    currBottle = self;
                     startActivity(new Intent(getActivity(), ViewBottleActivity.class));
                     availableLocation[avail_index] = false;
                     bottleAnimation.stop();
