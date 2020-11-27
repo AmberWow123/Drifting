@@ -166,7 +166,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/username"
+                android:id="@+id/username_view"
                 android:layout_width="85dp"
                 android:layout_height="50dp"
                 android:elevation="5dp"
@@ -521,7 +521,7 @@
         app:layout_constraintVertical_bias="0.76" />
 
     <Button
-        android:id="@+id/log_out_button"
+        android:id="@+id/add_friend_button"
         android:layout_width="165dp"
         android:layout_height="47dp"
         android:background="@drawable/log_out_button"
@@ -545,7 +545,7 @@
         android:textColor="#a4a4a4"
         android:textIsSelectable="false"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/log_out_button"
+        app:layout_constraintBottom_toTopOf="@+id/add_friend_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
