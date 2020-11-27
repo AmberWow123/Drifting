@@ -145,7 +145,7 @@ public class SettingFragment extends Fragment {
         settingbutton = getView().findViewById(R.id.settingbutton);
         profileImage = getView().findViewById(R.id.profile_image);
         changeProfileImage = getView().findViewById(R.id.change_avatar);
-        logout_button = getView().findViewById(R.id.log_out_button);
+        logout_button = getView().findViewById(R.id.add_friend_button);
         reset_password = getView().findViewById(R.id.reset_password_button);
 
         //get the spinner from the xml.
