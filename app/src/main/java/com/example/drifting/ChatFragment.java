@@ -2,11 +2,24 @@ package com.example.drifting;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.example.drifting.ui.login.ExampleAdapter;
+import com.example.drifting.ui.login.ExampleItem;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +36,12 @@ public class ChatFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private ArrayList<ExampleItem> exampleList;
+
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private ExampleAdapter adapter;
 
     public ChatFragment() {
         // Required empty public constructor
@@ -53,12 +72,114 @@ public class ChatFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+//        // create the chat rooms
+//        createExampleList();
+////        buildRecyclerView();
+//
+//        EditText name_to_search = getView().findViewById(R.id.search_field);
+//        name_to_search.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                filter(s.toString());
+//            }
+//        });
     }
+
+    private void filter(String text) {
+        ArrayList<ExampleItem> filteredList = new ArrayList<>();
+
+        for (ExampleItem item : exampleList) {
+            if (item.getName().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+
+        adapter.filterList(filteredList);
+    }
+
+    private void createExampleList() {
+        exampleList = new ArrayList<>();
+
+        // TODO: backend might use a loop to create all the needed chat rooms here (or whatever applies)
+        exampleList.add(new ExampleItem( R.drawable.avatar, "Amber", "yooooo! Lets go get some boba >.<", "12:00"));
+        exampleList.add(new ExampleItem( R.drawable.avatar, "Sam", "How are you? >.<", "13:00"));
+        exampleList.add(new ExampleItem( R.drawable.avatar, "Jiaming", "I am fine! Thank you! And you? >.<", "14:00"));
+        exampleList.add(new ExampleItem( R.drawable.avatar, "Tao Jin", "Just finished my midterm >.<", "15:00"));
+        exampleList.add(new ExampleItem( R.drawable.avatar, "Lucky", "yaaaaaa >.<", "17:00"));
+        exampleList.add(new ExampleItem( R.drawable.avatar, "Vickie", "haaaaaa >.<", "18:00"));
+        exampleList.add(new ExampleItem( R.drawable.avatar, "Samuel", "laaaaaa >.<", "19:00"));
+    }
+
+//    private void buildRecyclerView() {
+//
+//        recyclerView = getView().findViewById(R.id.recycler_View);
+//
+//        recyclerView.setHasFixedSize(true);
+//        layoutManager = new LinearLayoutManager(getActivity());
+//        adapter = new ExampleAdapter(exampleList);
+//
+//        recyclerView.setLayoutManager(layoutManager);
+//        recyclerView.setAdapter(adapter);
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+//        final Button searchButton = getView().findViewById(R.id.search_button);
+//        final EditText input_friend_to_search = getView().findViewById(R.id.search_field);
+
+        View view = inflater.inflate(R.layout.fragment_chat, container, false);
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_View);
+
+        createExampleList();
+
+        adapter = new ExampleAdapter(exampleList);
+
+        recyclerView.setAdapter(adapter);
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat, container, false);
+        return view;
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+
+        EditText name_to_search = getView().findViewById(R.id.search_field);
+        name_to_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
+    }
+
+
 }
