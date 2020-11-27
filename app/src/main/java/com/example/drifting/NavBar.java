@@ -1,13 +1,11 @@
 package com.example.drifting;
 
+import android.os.Bundle;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -23,6 +21,8 @@ public class NavBar extends AppCompatActivity {
 
         BottomNavigationView bottomNav=findViewById(R.id.bottomNav);
 
+        bottomNav.getMenu().getItem(2).setChecked(true);
+
         bottomNav.setOnNavigationItemSelectedListener(bottomNavMethod);
         getSupportFragmentManager().beginTransaction().replace(R.id.container, new HomeFragment()).commit();
 
@@ -37,6 +37,10 @@ public class NavBar extends AppCompatActivity {
 
             switch (menuItem.getItemId())
             {
+                case R.id.chat:
+                    fragment = new ChatFragment();
+                    break;
+
                 case R.id.setting:
                     fragment = new SettingFragment();
                     break;
@@ -45,13 +49,14 @@ public class NavBar extends AppCompatActivity {
                     fragment = new HomeFragment();
                     break;
 
-                case R.id.chat:
-                    fragment = new ChatFragment();
+                case R.id.bag:
+                    fragment = new BagFragment();
                     break;
 
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).detach(fragment).commitNowAllowingStateLoss();
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).attach(fragment).commitNowAllowingStateLoss();
+
             return true;
         }
     };
