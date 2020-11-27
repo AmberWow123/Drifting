@@ -96,5 +96,6 @@ public class ViewBottleActivity extends AppCompatActivity {
             }
         });
 
+        // set viewed to false
     }
 }
