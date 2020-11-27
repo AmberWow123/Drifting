@@ -9,7 +9,6 @@ import android.widget.ImageView;
 
 import com.example.drifting.HomeFragment;
 import com.example.drifting.ui.login.ViewBottleActivity;
-
 import java.util.Random;
 
 public class Bottle_back{
