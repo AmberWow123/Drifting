@@ -144,7 +144,7 @@ public class WriteMessageActivity extends AppCompatActivity {
                     String userID = fAuth.getUid();
                     String bottleID = (userID + timeStamp).trim();
                     String city = locationText.getText().toString();
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, true, city);
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, true, city, null);
                     SetDatabase set = new SetDatabase();
                     set.addNewBottle(this_bottle);
                 }
@@ -153,7 +153,7 @@ public class WriteMessageActivity extends AppCompatActivity {
                     String userID = fAuth.getUid();
                     String bottleID = (userID + timeStamp).trim();
                     String city = locationText.getText().toString();
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, false, city);
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, false, city, null);
                     SetDatabase set = new SetDatabase();
                     set.addNewBottle(this_bottle);
                 }
@@ -303,9 +303,7 @@ public class WriteMessageActivity extends AppCompatActivity {
                                         }
                                     }
                                 };
-
                                 fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
-
                             }
                         }
                     });
@@ -359,7 +357,6 @@ public class WriteMessageActivity extends AppCompatActivity {
                                         }
                                     }
                                 });
-
 
                     //    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                     //    Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -442,7 +439,6 @@ public class WriteMessageActivity extends AppCompatActivity {
     // get closest city name
     public String hereLocation(double lat, double lon){
         String curCity = "";
-
         Geocoder geocoder = new Geocoder(WriteMessageActivity.this, Locale.getDefault());
         List<Address> addressList;
         try{
