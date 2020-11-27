@@ -115,8 +115,8 @@ public class HomeFragment extends Fragment {
 
         // **** codes below must change in correspondence to Bottle's constructor ****
         /**
-         * The lines below tell Android to create every single bottle stored in the bottleList.
-         * The listener for each bottle must set up individually. Therefore any changes to the
+         * The lines below tell Android to render every single bottle stored in the bottleList.
+         * The listener for each bottle must be set up individually. Therefore any changes to the
          * Bottle Class must be duplicated here.
          */
         Log.e(" mView : ", mView.toString());
@@ -147,7 +147,7 @@ public class HomeFragment extends Fragment {
         // **** **** **** **** **** **** **** **** **** **** **** **** **** ****
 
         /**
-         *  the generate button is for debugging purpose.
+         *  the generate button is for debugging purposes.
          */
         generate_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,7 +187,7 @@ public class HomeFragment extends Fragment {
          *  there sre more properties to be added
          *  Note:
          *      LocationID is not the user location. please refer to city
-         *      fromUser is the thrower's name (this should be changed to user ID)
+         *      fromUser is the thrower's name (TODO: this should be changed to user ID)
          */
         public Bottle self;
         public String message;

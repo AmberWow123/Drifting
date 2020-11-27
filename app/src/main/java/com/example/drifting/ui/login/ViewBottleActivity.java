@@ -42,5 +42,6 @@ public class ViewBottleActivity extends AppCompatActivity {
         TextView commentView = findViewById(R.id.comment_field_textview);
         commentView.setText(comment);
 
+        // set viewed to false
     }
 }
