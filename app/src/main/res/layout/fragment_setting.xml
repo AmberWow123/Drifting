@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
+    android:elevation="4dp"
     android:fitsSystemWindows="true"
     tools:context=".SettingFragment">
 
@@ -98,7 +99,6 @@
         android:layout_width="356dp"
         android:layout_height="392dp"
         android:background="@drawable/profile_background"
-        android:elevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -450,10 +450,10 @@
             <Spinner
                 android:id="@+id/spinner1"
                 style="@style/SpinnerTheme"
-                android:popupBackground="#222222"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
+                android:popupBackground="#222222"
                 android:spinnerMode="dropdown" />
         </TableRow>
 
@@ -556,13 +556,13 @@
         android:id="@+id/editbutton"
         android:layout_width="28dp"
         android:layout_height="28dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/ic_actions_emultiple_edit"
         android:backgroundTint="#A4A4A4"
-        app:layout_constraintBottom_toTopOf="@+id/profile_background"
+        android:elevation="10dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintHorizontal_bias="0.258"
         app:layout_constraintStart_toEndOf="@+id/avatar_background"
-        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/profile_background" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
