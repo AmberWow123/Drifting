@@ -113,6 +113,7 @@ public class ChatFragment extends Fragment {
 
         // TODO: backend might use a loop to create all the needed chat rooms here (or whatever applies)
         // TODO: backend might want to sort the chat rooms by time.
+        // TODO: time: ex. "15:00" for today; otherwise, "Monday" or "11/23" instead
         exampleList.add(new ExampleItem( R.drawable.avatar, "Amber", "yooooo! Lets go get some boba >.<", "12:00"));
         exampleList.add(new ExampleItem( R.drawable.avatar, "Sam", "How are you? >.<", "13:00"));
         exampleList.add(new ExampleItem( R.drawable.avatar, "Jiaming", "I am fine! Thank you! And you? >.<", "14:00"));
