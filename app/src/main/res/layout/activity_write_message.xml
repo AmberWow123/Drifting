@@ -51,6 +51,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_Video_Link" />
 
+    <ImageView
+        android:id="@+id/text_Video_Link_bg_fix"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/border6"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/text_Video_Link_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_Video_Link_bg" />
+
     <Button
         android:id="@+id/button_Add_Video_Link"
         android:layout_width="14dp"
@@ -96,6 +109,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/Anonymous" />
 
+    <ImageView
+        android:id="@+id/Anonymous_bg_fix"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/border6"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/Anonymous_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Anonymous_bg" />
+
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -136,6 +162,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_InputMessage" />
+
+    <ImageView
+        android:id="@+id/text_InputMessage_bg_fix"
+        android:layout_width="0dp"
+        android:layout_height="190dp"
+
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/border6"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/text_InputMessage_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_InputMessage_bg" />
 
     <TextView
         android:id="@+id/text_NewBottle"
