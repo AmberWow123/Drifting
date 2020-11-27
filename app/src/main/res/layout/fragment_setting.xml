@@ -172,7 +172,7 @@
                 android:elevation="5dp"
                 android:fontFamily="@font/poppins"
                 android:gravity="center_vertical"
-                android:text="userID"
+                android:text="Name"
                 android:textColor="#A4A4A4"
                 android:textSize="13sp" />
 
@@ -198,7 +198,7 @@
                     android:layout_height="match_parent"
                     android:background="#dcdcdc"
                     android:fontFamily="@font/poppins"
-                    android:hint="Please enter useID"
+                    android:hint="Please enter use name"
                     android:importantForAutofill="no"
                     android:inputType="textNoSuggestions|text"
                     android:textColor="#a4a4a4"

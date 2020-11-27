@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import androidx.annotation.NonNull;
@@ -23,6 +25,25 @@ import androidx.fragment.app.Fragment;
 import com.example.drifting.ui.login.ForgotPasswordActivity;
 import com.example.drifting.ui.login.LoginActivity;
 
+
+import com.example.drifting.ui.login.SettingActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.google.firebase.auth.FirebaseUser;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
+
+
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,6 +93,16 @@ public class SettingFragment extends Fragment {
     Button changeProfileImage;
 
 
+    String currentUserId;
+    //firebase
+    private FirebaseAuth mAuth;
+    private DatabaseReference UserRef;
+    FirebaseUser firebaseUser;
+
+
+
+
+
 
     public SettingFragment() {
         // Required empty public constructor
@@ -97,13 +128,22 @@ public class SettingFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
+
+//        mAuth = FirebaseAuth.getInstance();
+//        currentUserId = mAuth.getCurrentUser().getUid();
+
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
     }
+
+
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -115,19 +155,62 @@ public class SettingFragment extends Fragment {
         outState.putString("age", age);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_setting, container, false);
-
-        mView = rootView;
-        return rootView;
-    }
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//        // Inflate the layout for this fragment
+//        View rootView = inflater.inflate(R.layout.fragment_setting, container, false);
+//
+//        mView = rootView;
+//        return rootView;
+//    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
+
+        ViewSwitcher nameSwitcher = getView().findViewById(R.id.my_switcher);
+        TextView nameTV = nameSwitcher.findViewById(R.id.username_view);
+
+        ViewSwitcher genderSwitcher = getView().findViewById(R.id.my_switcher_gender);
+        TextView genTV = genderSwitcher.findViewById(R.id.gender_text_view);
+
+        ViewSwitcher age_switcher = getView().findViewById(R.id.my_switcher_age);
+        TextView ageTV = age_switcher.findViewById(R.id.age_text_view);
+
+        ViewSwitcher email_switcher = getView().findViewById(R.id.my_switcher_email);
+        TextView email_TV = email_switcher.findViewById(R.id.email_text_view);
+
+
+        ViewSwitcher coun_switcher = getView().findViewById(R.id.my_switcher_country);
+        TextView coun_TV = coun_switcher.findViewById(R.id.country_text_view);
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(firebaseUser.getUid());
+
+        UserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                name = snapshot.child("user_name").getValue().toString();
+                gender = snapshot.child("user_gender").getValue().toString();
+                country = snapshot.child("user_country").getValue().toString();
+                age = snapshot.child("user_age").getValue().toString();
+                email = snapshot.child("user_email").getValue().toString();
+
+                nameTV.setText(name);
+                genTV.setText(gender);
+                ageTV.setText(age);
+                email_TV.setText(email);
+                coun_TV.setText(country);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         editButton = getView().findViewById(R.id.editbutton);
         /*
         editUsernameButton = getView().findViewById(R.id.username_edit_button);
@@ -155,33 +238,55 @@ public class SettingFragment extends Fragment {
         dropdown.setAdapter(adapter);
 
 
-        if(savedInstanceState != null) {
-            name = savedInstanceState.getString("name");
-            gender = savedInstanceState.getString("gender");
-            age = savedInstanceState.getString("age");
-            email = savedInstanceState.getString("email");
-            country = savedInstanceState.getString("country");
+//        if(savedInstanceState != null) {
+//
+//
 
-            ViewSwitcher nameSwitcher = getView().findViewById(R.id.my_switcher);
-            TextView nameTV = nameSwitcher.findViewById(R.id.username_view);
-            nameTV.setText(name);
+//            ViewSwitcher nameSwitcher = getView().findViewById(R.id.my_switcher);
+//            TextView nameTV = nameSwitcher.findViewById(R.id.username_view);
+//
+//            ViewSwitcher genderSwitcher = getView().findViewById(R.id.my_switcher_gender);
+//            TextView genTV = genderSwitcher.findViewById(R.id.gender_text_view);
+//
+//            ViewSwitcher age_switcher = getView().findViewById(R.id.my_switcher_age);
+//            TextView ageTV = age_switcher.findViewById(R.id.age_text_view);
+//
+//            ViewSwitcher email_switcher = getView().findViewById(R.id.my_switcher_email);
+//            TextView email_TV = email_switcher.findViewById(R.id.email_text_view);
+//
+//
+//            ViewSwitcher coun_switcher = getView().findViewById(R.id.my_switcher_country);
+//            TextView coun_TV = coun_switcher.findViewById(R.id.country_text_view);
+//
+//            firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//
+//            UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(firebaseUser.getUid());
+//
+//            UserRef.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    name = snapshot.child("user_name").getValue().toString();
+//                    gender = snapshot.child("user_gender").getValue().toString();
+//                    country = snapshot.child("user_country").getValue().toString();
+//                    age = snapshot.child("user_age").getValue().toString();
+//                    email = snapshot.child("user_email").getValue().toString();
+//
+//                    nameTV.setText(name);
+//                    genTV.setText(gender);
+//                    ageTV.setText(age);
+//                    email_TV.setText(email);
+//                    coun_TV.setText(country);
+//                }
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                }
+//            });
 
-            ViewSwitcher genderSwitcher = getView().findViewById(R.id.my_switcher_gender);
-            TextView genTV = genderSwitcher.findViewById(R.id.gender_text_view);
-            genTV.setText(gender);
 
-            ViewSwitcher age_switcher = getView().findViewById(R.id.my_switcher_age);
-            TextView ageTV = age_switcher.findViewById(R.id.age_text_view);
-            ageTV.setText(age);
 
-            ViewSwitcher email_switcher = getView().findViewById(R.id.my_switcher_email);
-            TextView email_TV = email_switcher.findViewById(R.id.email_text_view);
-            email_TV.setText(email);
 
-            ViewSwitcher coun_switcher = getView().findViewById(R.id.my_switcher_country);
-            TextView coun_TV = coun_switcher.findViewById(R.id.country_text_view);
-            coun_TV.setText(country);
-        }
+//        }
 
 
 
@@ -190,6 +295,8 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent openGallaryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                openGallaryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                openGallaryIntent.setType("image/*");
                 startActivityForResult(openGallaryIntent, 1000);
             }
         });
@@ -232,6 +339,8 @@ public class SettingFragment extends Fragment {
                 TextView coun_TV = coun_switcher.findViewById(R.id.country_text_view);
                 coun_TV.setText(coun_Edit.getText().toString());
                 country = coun_TV.toString();
+
+
             }
         });
 
@@ -325,6 +434,8 @@ public class SettingFragment extends Fragment {
         if (requestCode == 1000){
             if (resultCode  == Activity.RESULT_OK){
                 Uri imageUri = data.getData();
+//                CropImage.activity()
+//                        .setGuidelines(CropImageView, Gui)
                 profileImage.setImageURI(imageUri);
             }
         }

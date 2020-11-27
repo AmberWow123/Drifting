@@ -80,11 +80,11 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //auto login
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        if(firebaseUser != null){
-            openHomepageActivity();
-        }
+//        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//
+//        if(firebaseUser != null){
+//            openHomepageActivity();
+//        }
 
         loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
             @Override
