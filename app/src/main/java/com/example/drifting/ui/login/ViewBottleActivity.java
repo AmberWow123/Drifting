@@ -1,10 +1,14 @@
 package com.example.drifting.ui.login;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.drifting.HomeFragment;
@@ -37,63 +41,36 @@ public class ViewBottleActivity extends AppCompatActivity {
         // set canvas width and height.
         getWindow().setLayout((int)(width*1), (int)(height*0.75));
 
-        //get database reference
+        String msg = HomeFragment.currBottle.message;
+        String fromUser = HomeFragment.currBottle.fromUser;
+        String city = HomeFragment.currBottle.city;
+        String comment = HomeFragment.currBottle.comment;
+        String bottleID = HomeFragment.currBottle.bottleID;
+
+
+        TextView messageView = findViewById(R.id.bottle_message_textview);
+        messageView.setText(msg);
+
+        TextView fromUserView = findViewById(R.id.from_var_textview);
+        fromUserView.setText(fromUser);
+
+        TextView locationView = findViewById(R.id.location_var_textview);
+        locationView.setText(city);
+
+        TextView commentView = findViewById(R.id.comment_field_textview);
+        commentView.setText(comment);
+        //------------------------------------------------------------------------
+
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
-        //get current userID
-        FirebaseAuth fAuth;
-        fAuth = FirebaseAuth.getInstance();
+        DatabaseReference this_bottle_data = reference.child(bottleID);
+        Map<String, Object> bottle_update = new HashMap<>();
+        bottle_update.put("isViewed", true);
+        this_bottle_data.updateChildren(bottle_update);
+    }
 
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                    Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
-                    String bottleId = this_bottle.getBottleID();
-                    String userID = fAuth.getUid();
-                    //check if the bottle is viewed
-                    if(this_bottle.getIsViewed()) {
-                        continue;
-                    }
-
-                    if(this_bottle.getUserID().equals(userID)){
-                        continue;
-                    }
-
-                    else {
-                        String msg = this_bottle.getMessage();
-                        String fromUser = this_bottle.getUserID();
-                        String city = this_bottle.getCity();
-                        String comment = "This is a comment test";
-
-                        TextView messageView = findViewById(R.id.bottle_message_textview);
-                        messageView.setText(msg);
-
-                        TextView fromUserView = findViewById(R.id.from_var_textview);
-                        fromUserView.setText(fromUser);
-
-                        TextView locationView = findViewById(R.id.location_var_textview);
-                        locationView.setText(city);
-
-                        TextView commentView = findViewById(R.id.comment_field_textview);
-                        commentView.setText(comment);
-
-                        DatabaseReference this_bottle_data = reference.child(bottleId);
-                        Map<String, Object> bottle_update = new HashMap<>();
-                        bottle_update.put("isViewed", true);
-                        this_bottle_data.updateChildren(bottle_update);
-
-                        break;
-                    }
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
+    @Nullable
+    @Override
+    public View onCreatePanelView(int featureId) {
+        return super.onCreatePanelView(featureId);
     }
 }

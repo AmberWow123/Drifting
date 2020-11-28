@@ -16,6 +16,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.drifting.ui.login.ViewBottleActivity;
 import com.example.drifting.ui.login.WriteMessageActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Random;
 import java.util.Vector;
@@ -34,6 +40,7 @@ public class HomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     public static Bottle currBottle;
+    public static Bottle bottle_get;
 
     protected View mView;
     final public int BOTTLE_MAX = 7;
@@ -115,8 +122,8 @@ public class HomeFragment extends Fragment {
 
         // **** codes below must change in correspondence to Bottle's constructor ****
         /**
-         * The lines below tell Android to create every single bottle stored in the bottleList.
-         * The listener for each bottle must set up individually. Therefore any changes to the
+         * The lines below tell Android to render every single bottle stored in the bottleList.
+         * The listener for each bottle must be set up individually. Therefore any changes to the
          * Bottle Class must be duplicated here.
          */
         Log.e(" mView : ", mView.toString());
@@ -147,22 +154,56 @@ public class HomeFragment extends Fragment {
         // **** **** **** **** **** **** **** **** **** **** **** **** **** ****
 
         /**
-         *  the generate button is for debugging purpose.
+         *  the generate button is for debugging purposes.
          */
         generate_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (bottleList.size() < BOTTLE_MAX) {
-                    int randomNum;
-                    Random rand = new Random();
-                    randomNum = rand.nextInt(10);
-                    Bottle bottle = new Bottle(randomNum+"", bottleList.size());
-                    bottle.comment = "filler comment";
-                    bottle.setVisible();
-                    bottleList.add(bottle);
-                    Log.d(" Bottle content is :", " " + randomNum);
-                    Log.d(" BottleList size is :", " " + bottleList.size());
-                    Log.d(" vector contains ", bottleList.toString());
+                    //get database reference
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
+                    //get current userID
+                    FirebaseAuth fAuth;
+                    fAuth = FirebaseAuth.getInstance();
+
+                    reference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
+                                //String bottleID = this_bottle.getBottleID();
+                                String userID = fAuth.getUid();
+
+                                //check if the bottle is viewed
+                                if(this_bottle.getIsViewed()) {
+                                    continue;
+                                }
+
+                                //check if the bottle is from the same user
+                                if(this_bottle.getUserID().equals(userID)){
+                                    continue;
+                                }
+
+                                else {
+                                    bottle_get = new Bottle(this_bottle, bottleList.size());
+                                    bottle_get.comment = "filler comment";
+                                    bottle_get.setVisible();
+                                    bottleList.add(bottle_get);
+                                    Log.d(" Bottle content is :", " " + bottle_get.message);
+                                    Log.d(" BottleList size is :", " " + bottleList.size());
+                                    Log.d(" vector contains ", bottleList.toString());
+                                    reference.removeEventListener(this);
+                                    break;
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                    Log.d(" BottleList size is gg:", " " + bottleList.size());
                 }
             }
         });
@@ -187,10 +228,11 @@ public class HomeFragment extends Fragment {
          *  there sre more properties to be added
          *  Note:
          *      LocationID is not the user location. please refer to city
-         *      fromUser is the thrower's name (this should be changed to user ID)
+         *      fromUser is the thrower's name (TODO: this should be changed to user ID)
          */
         public Bottle self;
         public String message;
+        public String bottleID;
         public ImageView bottleView;
         public int imageSrc;
         public int avail_index;
@@ -253,6 +295,7 @@ public class HomeFragment extends Fragment {
             self = this;
             message = bottleBack.message;
             city = bottleBack.city;
+            bottleID = bottleBack.getBottleID();
             this.bottle_index = bottle_index;
             locationID = getRandomBottleLocation();
             bottleView =  getView().findViewById(locationID);
@@ -266,7 +309,7 @@ public class HomeFragment extends Fragment {
             bottleView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    currBottle = self;
                     startActivity(new Intent(getActivity(), ViewBottleActivity.class));
                     availableLocation[avail_index] = false;
                     bottleAnimation.stop();

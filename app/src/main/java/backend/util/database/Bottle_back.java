@@ -28,7 +28,8 @@ public class Bottle_back{
      }
 
     // construct with a message and bottle index
-    public Bottle_back(String msg, String bottleID, String userID, Boolean isAnonymous, String city, double latitude, double longitude, String comment){
+    public Bottle_back(String msg, String bottleID, String userID, Boolean isAnonymous, String city, double latitude, double longitude, String comment， Boolean viewed){
+
         self = this;
         this.message = msg;
         this.bottleID= bottleID;
@@ -38,7 +39,7 @@ public class Bottle_back{
         this.latitude = latitude;
         this.longitude = longitude;
         this.comment = comment;
-        this.isViewed = false;
+        this.isViewed = viewed;
     }
 
     public String getMessage(){

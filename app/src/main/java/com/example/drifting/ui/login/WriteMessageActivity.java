@@ -147,7 +147,9 @@ public class WriteMessageActivity extends AppCompatActivity {
                     String userID = fAuth.getUid();
                     String bottleID = (userID + timeStamp).trim();
                     String city = locationText.getText().toString();
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, true, city, latitude[0], longitude[0], null);
+
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, true, city, latitude[0], longitude[0], null, false);
+
                     SetDatabase set = new SetDatabase();
                     set.addNewBottle(this_bottle);
                 }
@@ -156,7 +158,9 @@ public class WriteMessageActivity extends AppCompatActivity {
                     String userID = fAuth.getUid();
                     String bottleID = (userID + timeStamp).trim();
                     String city = locationText.getText().toString();
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, false, city, latitude[0], longitude[0], null);
+
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, false, city, latitude[0], longitude[0], null, false);
+
                     SetDatabase set = new SetDatabase();
                     set.addNewBottle(this_bottle);
                 }
