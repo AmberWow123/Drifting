@@ -174,7 +174,6 @@ public class SettingFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, R.id.dropdown_item, items);
         dropdown.setAdapter(adapter);
 
-
         if (savedInstanceState != null) {
             name = savedInstanceState.getString("name");
             gender = savedInstanceState.getString("gender");
