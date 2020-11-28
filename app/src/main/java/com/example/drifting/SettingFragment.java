@@ -210,6 +210,8 @@ public class SettingFragment extends Fragment {
         coun_1TV.setText(country);
 
 
+
+
         if(savedInstanceState != null) {
             name = savedInstanceState.getString("name");
             gender = savedInstanceState.getString("gender");
@@ -385,6 +387,8 @@ public class SettingFragment extends Fragment {
             if (resultCode  == Activity.RESULT_OK){
                 Uri imageUri = data.getData();
                 profileImage.setImageURI(imageUri);
+                SetDatabase set = new SetDatabase();
+                set.uploadAvatars(firebaseUser.getUid(),imageUri);
             }
         }
     }

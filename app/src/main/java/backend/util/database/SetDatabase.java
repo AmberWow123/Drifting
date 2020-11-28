@@ -43,7 +43,23 @@ public class SetDatabase {
         bottlesRef.child(String.valueOf(this_bottle.bottleID)).setValue(this_bottle);
     }
 
-    public void uploadAvatars(String user_id, String path) {}
+    public void uploadAvatars(String user_id, Uri file) {
+        StorageReference targetRef =  storageRef.child("avatars/" + user_id + "/" + file.getLastPathSegment());
+
+        UploadTask uploadTask = targetRef.putFile(file);
+
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+            }
+        });
+    }
 
     public void uploadBottleFile(String path, String bottle_id, boolean isVideo) {
         Uri file = Uri.fromFile(new File(path));
