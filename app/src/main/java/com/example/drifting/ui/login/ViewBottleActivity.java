@@ -41,12 +41,12 @@ public class ViewBottleActivity extends AppCompatActivity {
         // set canvas width and height.
         getWindow().setLayout((int)(width*1), (int)(height*0.75));
 
-        //-------------------------------------------------------------------------
         String msg = HomeFragment.currBottle.message;
         String fromUser = HomeFragment.currBottle.fromUser;
         String city = HomeFragment.currBottle.city;
         String comment = HomeFragment.currBottle.comment;
         String bottleID = HomeFragment.currBottle.bottleID;
+
 
         TextView messageView = findViewById(R.id.bottle_message_textview);
         messageView.setText(msg);
