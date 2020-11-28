@@ -3,11 +3,6 @@ package com.example.drifting;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,29 +10,37 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.drifting.ui.login.ViewBottleActivity;
 import com.example.drifting.ui.login.WriteMessageActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.Random;
 import java.util.Vector;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import backend.util.database.Bottle_back;
+
+
 public class HomeFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
+
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+
     private String mParam1;
     private String mParam2;
+    public static Bottle currBottle;
+    public static Bottle bottle_get;
 
     protected View mView;
     final public int BOTTLE_MAX = 7;
@@ -46,15 +49,6 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Home.
-     */
-    // TODO: Rename and change types and number of parameters
     public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -74,6 +68,7 @@ public class HomeFragment extends Fragment {
 
     static boolean[] availableLocation =  {false,false,false,false,false,false,false};
     static Vector<Bottle> bottleList = new Vector<Bottle>();
+
 
 
 
@@ -99,6 +94,15 @@ public class HomeFragment extends Fragment {
         return rootView;
     }
 
+
+    /**
+     *      onViewCreated() is the class where changes to the view are defined. DO NOT make
+     *  changes to any View Elements (Button, TextView, etc.) outside of onViewCreated() due
+     *  to the life cycle of Fragments.
+     *
+     *      E.g. If you want to set the text of a TextView, do it here. The line of code
+     *  "findViewById()" only works if it is written in this method.
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -107,6 +111,9 @@ public class HomeFragment extends Fragment {
         final Button writeMessageButton = getView().findViewById(R.id.compose_button);
 
 
+        /**
+         *  We have a static Vector, a list of bottles, stored in bottleList.
+         */
         ImageView[] bottles = new ImageView[7];
         for (int i = 0; i < bottleAry.length; i++){
             bottles[i] = getView().findViewById(bottleAry[i]);
@@ -114,6 +121,11 @@ public class HomeFragment extends Fragment {
         }
 
         // **** codes below must change in correspondence to Bottle's constructor ****
+        /**
+         * The lines below tell Android to render every single bottle stored in the bottleList.
+         * The listener for each bottle must be set up individually. Therefore any changes to the
+         * Bottle Class must be duplicated here.
+         */
         Log.e(" mView : ", mView.toString());
         for (int i = 0; i < bottleList.size(); i ++) {
             Bottle myBottle = bottleList.get(i);
@@ -127,7 +139,7 @@ public class HomeFragment extends Fragment {
             bottleView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    currBottle = myBottle;
                     startActivity(new Intent(getActivity(), ViewBottleActivity.class));
                     availableLocation[myBottle.avail_index] = false;
                     myBottle.bottleAnimation.stop();
@@ -141,19 +153,64 @@ public class HomeFragment extends Fragment {
         }
         // **** **** **** **** **** **** **** **** **** **** **** **** **** ****
 
+        /**
+         *  the generate button is for debugging purposes.
+         */
         generate_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (bottleList.size() < BOTTLE_MAX) {
-                    Bottle bottle = new Bottle("123", bottleList.size());
-                    bottle.setVisible();
-                    bottleList.add(bottle);
-                    Log.d(" BottleList size is :", " " + bottleList.size());
-                    Log.d(" vector contains ", bottleList.toString());
+                    //get database reference
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
+                    //get current userID
+                    FirebaseAuth fAuth;
+                    fAuth = FirebaseAuth.getInstance();
+
+                    reference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
+                                //String bottleID = this_bottle.getBottleID();
+                                String userID = fAuth.getUid();
+
+                                //check if the bottle is viewed
+                                if(this_bottle.getIsViewed()) {
+                                    continue;
+                                }
+
+                                //check if the bottle is from the same user
+                                if(this_bottle.getUserID().equals(userID)){
+                                    continue;
+                                }
+
+                                else {
+                                    bottle_get = new Bottle(this_bottle, bottleList.size());
+                                    bottle_get.comment = "filler comment";
+                                    bottle_get.setVisible();
+                                    bottleList.add(bottle_get);
+                                    Log.d(" Bottle content is :", " " + bottle_get.message);
+                                    Log.d(" BottleList size is :", " " + bottleList.size());
+                                    Log.d(" vector contains ", bottleList.toString());
+                                    reference.removeEventListener(this);
+                                    break;
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                    Log.d(" BottleList size is gg:", " " + bottleList.size());
                 }
             }
         });
 
+        /**
+         * write a new message.
+         */
         writeMessageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,17 +224,37 @@ public class HomeFragment extends Fragment {
 
     public class Bottle{
 
-        Bottle self;
-        String message;
-        ImageView bottleView;
-        int imageSrc;
-        int avail_index;
-        int bottle_index;
-        int locationID;
-        AnimationDrawable bottleAnimation;
+        /**
+         *  there sre more properties to be added
+         *  Note:
+         *      LocationID is not the user location. please refer to city
+         *      fromUser is the thrower's name (TODO: this should be changed to user ID)
+         */
+        public Bottle self;
+        public String message;
+        public String bottleID;
+        public ImageView bottleView;
+        public int imageSrc;
+        public int avail_index;
+        public String fromUser;
+        public int bottle_index;
+        public int locationID;
+        public String city;
+        public AnimationDrawable bottleAnimation;
+        public String comment;
 
+
+        /**
+         * This constructor is not for deployment. Please refer to the other constructor
+         */
+        // This a constructor  FOR TESTING AND DEBUG
         // construct with a message and bottle index
         public Bottle(String msg, int bottle_index){
+            // setting for debug
+            fromUser = "Gary";
+            city = "San Francisco";
+            //
+
             self = this;
             message = msg;
             this.bottle_index = bottle_index;
@@ -194,6 +271,7 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 
+                    currBottle = self;
                     startActivity(new Intent(getActivity(), ViewBottleActivity.class));
                     availableLocation[avail_index] = false;
                     bottleAnimation.stop();
@@ -205,6 +283,43 @@ public class HomeFragment extends Fragment {
                 }
             });
 
+        }
+
+        /**
+         * This is the constructor that should be implemented with backend. It takes a
+         * bottle_back object and creates a bottle for the frontend. For bottle_index just
+         * pass in bottleList.size(). 
+         */
+        // ACTUAL CONSTRUCTOR: construct with a bottle_back and bottle index
+        public Bottle(Bottle_back bottleBack, int bottle_index){
+            self = this;
+            message = bottleBack.message;
+            city = bottleBack.city;
+            bottleID = bottleBack.getBottleID();
+            this.bottle_index = bottle_index;
+            locationID = getRandomBottleLocation();
+            bottleView =  getView().findViewById(locationID);
+            imageSrc = getRandomBottleImg();
+            bottleView.setBackgroundResource(imageSrc);
+
+
+            bottleAnimation = (AnimationDrawable) bottleView.getBackground();
+            bottleAnimation.start();
+
+            bottleView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    currBottle = self;
+                    startActivity(new Intent(getActivity(), ViewBottleActivity.class));
+                    availableLocation[avail_index] = false;
+                    bottleAnimation.stop();
+                    bottleView.setVisibility(View.GONE);
+                    bottleList.remove(self);
+
+                    Log.d(" BottleList size is :" , " " + bottleList.size());
+                    Log.d(" vector contains ", bottleList.toString());
+                }
+            });
         }
 
         public int getRandomBottleImg(){
