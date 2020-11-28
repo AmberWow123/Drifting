@@ -50,7 +50,6 @@ public class ViewBottleActivity extends AppCompatActivity {
                     Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
                     String bottleId = this_bottle.getBottleID();
                     String userID = fAuth.getUid();
-
                     //check if the bottle is viewed
                     if(this_bottle.getIsViewed()) {
                         continue;
