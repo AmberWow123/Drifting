@@ -22,6 +22,12 @@ import androidx.fragment.app.Fragment;
 
 import com.example.drifting.ui.login.ViewBottleActivity;
 import com.example.drifting.ui.login.WriteMessageActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import com.google.android.gms.location.*;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,6 +58,7 @@ public class HomeFragment extends Fragment {
     private String mParam2;
     private int nextBottleIndex = 0;
     public static Bottle currBottle;
+    public static Bottle bottle_get;
 
     private BottleProvider provider;
 
@@ -174,8 +181,8 @@ public class HomeFragment extends Fragment {
 
         // **** codes below must change in correspondence to Bottle's constructor ****
         /**
-         * The lines below tell Android to create every single bottle stored in the bottleList.
-         * The listener for each bottle must set up individually. Therefore any changes to the
+         * The lines below tell Android to render every single bottle stored in the bottleList.
+         * The listener for each bottle must be set up individually. Therefore any changes to the
          * Bottle Class must be duplicated here.
          */
         Log.e(" mView : ", mView.toString());
@@ -215,7 +222,7 @@ public class HomeFragment extends Fragment {
         // **** **** **** **** **** **** **** **** **** **** **** **** **** ****
 
         /**
-         *  the generate button is for debugging purpose.
+         *  the generate button is for debugging purposes.
          */
         generate_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -327,10 +334,11 @@ public class HomeFragment extends Fragment {
          *  there sre more properties to be added
          *  Note:
          *      LocationID is not the user location. please refer to city
-         *      fromUser is the thrower's name (this should be changed to user ID)
+         *      fromUser is the thrower's name (TODO: this should be changed to user ID)
          */
         public Bottle self;
         public String message;
+        public String bottleID;
         public ImageView bottleView;
         public int imageSrc;
         public int avail_index;
@@ -393,6 +401,7 @@ public class HomeFragment extends Fragment {
             self = this;
             message = bottleBack.message;
             city = bottleBack.city;
+            bottleID = bottleBack.getBottleID();
             this.bottle_index = bottle_index;
             locationID = getRandomBottleLocation();
             bottleView =  getView().findViewById(locationID);
@@ -406,7 +415,7 @@ public class HomeFragment extends Fragment {
             bottleView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    currBottle = self;
                     startActivity(new Intent(getActivity(), ViewBottleActivity.class));
                     availableLocation[avail_index] = false;
                     bottleAnimation.stop();

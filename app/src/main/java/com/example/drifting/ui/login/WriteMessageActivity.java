@@ -155,6 +155,7 @@ public class WriteMessageActivity extends AppCompatActivity {
                             true, city, latitude[0], longitude[0], currTime.getTimestamp(),
                             null, false);
 
+
                     SetDatabase set = new SetDatabase();
                     set.addNewBottle(this_bottle);
                 }
@@ -168,6 +169,7 @@ public class WriteMessageActivity extends AppCompatActivity {
                     Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
                             false, city, latitude[0], longitude[0], currTime.getTimestamp(),
                             null, false);
+
 
                     SetDatabase set = new SetDatabase();
                     set.addNewBottle(this_bottle);
