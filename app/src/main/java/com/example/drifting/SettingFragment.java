@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.drifting.ui.login.ForgotPasswordActivity;
 import com.example.drifting.ui.login.LoginActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +32,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+import java.io.IOException;
 
 import backend.util.database.SetDatabase;
 import backend.util.database.UserProfile;
@@ -208,6 +217,49 @@ public class SettingFragment extends Fragment {
         ViewSwitcher coun_1switcher = getView().findViewById(R.id.my_switcher_country);
         TextView coun_1TV = coun_1switcher.findViewById(R.id.country_text_view);
         coun_1TV.setText(country);
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        String user_id = firebaseUser.getUid();
+        File datadir = Environment.getDataDirectory();
+
+        File sysdir = new File(datadir.getAbsolutePath() + "drifter/");
+        if(!sysdir.exists()) {
+            sysdir.mkdir();
+        }
+        File userdir = new File(datadir.getAbsolutePath() + "drifter/" + user_id + "/");
+        if(!userdir.exists()) {
+            userdir.mkdir();
+        }
+
+        StorageReference targetRef  = storageRef.child("avatars/" + user_id + "/avatar.jpg");
+        File file = new File(datadir.getAbsolutePath() + "drifter/" + user_id + "/avatar.jpg");
+        boolean exist = false;
+        try {
+            exist = file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (!exist) {
+            targetRef.getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    // Local temp file has been created
+                    Uri img = Uri.fromFile(file);
+                    profileImage.setImageURI(img);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
+        else {
+            Uri img = Uri.fromFile(file);
+            profileImage.setImageURI(img);
+        }
+
 
 
 

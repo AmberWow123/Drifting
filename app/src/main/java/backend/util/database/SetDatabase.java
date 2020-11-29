@@ -44,7 +44,7 @@ public class SetDatabase {
     }
 
     public void uploadAvatars(String user_id, Uri file) {
-        StorageReference targetRef =  storageRef.child("avatars/" + user_id + "/" + file.getLastPathSegment());
+        StorageReference targetRef =  storageRef.child("avatars/" + user_id + "/avatar.jpg");
 
         UploadTask uploadTask = targetRef.putFile(file);
 
