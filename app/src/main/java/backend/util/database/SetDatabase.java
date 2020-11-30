@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FileDownloadTask;
@@ -21,6 +22,7 @@ public class SetDatabase {
     private DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReference();
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
 
     public static Pair<String,String> parseName(String filename) {
         int i = filename.lastIndexOf('.');
@@ -44,7 +46,8 @@ public class SetDatabase {
     }
 
     public void uploadAvatars(String user_id, Uri file) {
-        StorageReference targetRef =  storageRef.child("avatars/" + user_id + "/avatar.jpg");
+        StorageReference targetRef = storageRef.child("avatars/" + user_id + ".jpg");
+        DatabaseReference targetdataRef = database.child("avatars/");
 
         UploadTask uploadTask = targetRef.putFile(file);
 
@@ -56,10 +59,21 @@ public class SetDatabase {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                String user_id = auth.getUid();
+                targetRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Uri downloadUrl = uri;
+                        targetdataRef.child(user_id + "/picture").setValue(uri.toString());
+                        //Do what you want with the url
+                    }
 
+                });
             }
         });
     }
+
+
 
     public void uploadBottleFile(String path, String bottle_id, boolean isVideo) {
         Uri file = Uri.fromFile(new File(path));
