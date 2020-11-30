@@ -44,7 +44,7 @@ public class BottleProvider {
     private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
     private FirebaseAuth fAuth = FirebaseAuth.getInstance();
     private boolean isFetchComplete = false;
-    public boolean locationLess = false;
+    public boolean locationLess = false;    // Change this to true to start the app in location-less mode
     public boolean isPopulateComplete = false;
 
     double latitude = 181.0;
@@ -139,9 +139,15 @@ public class BottleProvider {
     private boolean decideReachable(Bottle_back bottle) {
 
         long currTimestampMillis = timer.getTimestamp();
-        double bottleTravelRate = 13.0;
+        double bottleTravelRate = 13.0;     // Increase this variable to make the bottles drift faster. The unit is in degree/hour
 
-        if(bottleTravelRate / ((abs(bottle.latitude - latitude) + abs(bottle.longitude - longitude)) / ((double)currTimestampMillis / 1000.0 / 60.0 / 60.0 - (double)bottle.timestamp / 1000.0 / 60.0 / 60.0)) > 1.0){
+        double manhattanDistance = (abs(bottle.latitude - latitude) + abs(bottle.longitude - longitude));
+
+        if(manhattanDistance < 0.0001){     // Floating point operation: consider two locations the same if their manhattan distance
+                                            // is this small.
+            return true;
+        }
+        if(bottleTravelRate / ( manhattanDistance / ((double)currTimestampMillis / 1000.0 / 60.0 / 60.0 - (double)bottle.timestamp / 1000.0 / 60.0 / 60.0)) > 1.0){
             return true;
         }
         return false;

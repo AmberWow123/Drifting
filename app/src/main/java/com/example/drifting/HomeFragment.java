@@ -257,7 +257,6 @@ public class HomeFragment extends Fragment {
                         }
                     }
 
-
                     provider.serveNextBottles();
                 }
                 else {
