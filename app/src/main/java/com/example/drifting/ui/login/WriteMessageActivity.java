@@ -110,6 +110,9 @@ public class WriteMessageActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         final int[] whether_anonymous = {0};
 
+        final double[] latitude = {181.0};
+        final double[] longitude = {181.0};
+
         //check if the user switches to anonymous
         AnonymousBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -144,7 +147,9 @@ public class WriteMessageActivity extends AppCompatActivity {
                     String userID = fAuth.getUid();
                     String bottleID = (userID + timeStamp).trim();
                     String city = locationText.getText().toString();
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, true, city, null, false);
+
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, true, city, latitude[0], longitude[0], null, false);
+
                     SetDatabase set = new SetDatabase();
                     set.addNewBottle(this_bottle);
                 }
@@ -153,7 +158,9 @@ public class WriteMessageActivity extends AppCompatActivity {
                     String userID = fAuth.getUid();
                     String bottleID = (userID + timeStamp).trim();
                     String city = locationText.getText().toString();
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, false, city, null, false);
+
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, false, city, latitude[0], longitude[0], null, false);
+
                     SetDatabase set = new SetDatabase();
                     set.addNewBottle(this_bottle);
                 }
@@ -283,6 +290,8 @@ public class WriteMessageActivity extends AppCompatActivity {
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
                                 locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
+                                latitude[0] = location.getLatitude();
+                                longitude[0] = location.getLongitude();
                             } else {
                                 Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
 
@@ -298,6 +307,8 @@ public class WriteMessageActivity extends AppCompatActivity {
                                         for (Location mlocation : locationResult.getLocations()) {
                                             if (mlocation != null) {
                                                 locationText.setText(hereLocation(mlocation.getLatitude(), mlocation.getLongitude()));
+                                                latitude[0] = location.getLatitude();
+                                                longitude[0] = location.getLongitude();
                                                 fusedLocationProviderClient.removeLocationUpdates(locationCallback);
                                             }
                                         }

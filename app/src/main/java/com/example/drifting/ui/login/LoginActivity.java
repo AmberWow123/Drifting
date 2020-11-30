@@ -4,9 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -23,6 +22,7 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.example.drifting.NavBar;
 import com.example.drifting.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,10 +31,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.File;
+
 import backend.util.authentication.CredentialAuthenticator;
 import backend.util.connectivity.ConnectionChecker;
-
-import static java.lang.Thread.sleep;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -179,7 +179,7 @@ public class LoginActivity extends AppCompatActivity {
                    return;
                }
 
-               loadingBar.setVisibility(View.VISIBLE);
+
                CredentialAuthenticator ca = new CredentialAuthenticator();
                String feedback = ca.validate(usernameEditText.getText().toString(),
                        passwordEditText.getText().toString());
@@ -188,8 +188,8 @@ public class LoginActivity extends AppCompatActivity {
 
                FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-
                if(ca.isValid()) {
+                   loadingBar.setVisibility(View.VISIBLE);
                    Task task = mAuth.signInWithEmailAndPassword(usernameEditText.getText().toString(),
                            passwordEditText.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                        @Override
@@ -197,6 +197,7 @@ public class LoginActivity extends AppCompatActivity {
                            if (task.isSuccessful()) {
                                loadingBar.setVisibility((View.GONE));
                                Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
+
 
                                openHomepageActivity();
                            } else {
@@ -206,7 +207,6 @@ public class LoginActivity extends AppCompatActivity {
                        }
                    });
                }
-               loadingBar.setVisibility((View.GONE));
            }
        });
 
