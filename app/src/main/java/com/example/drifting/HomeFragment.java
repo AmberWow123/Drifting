@@ -315,7 +315,7 @@ public class HomeFragment extends Fragment {
                     bottleAnimation.stop();
                     bottleView.setVisibility(View.GONE);
                     bottleList.remove(self);
-
+//
                     Log.d(" BottleList size is :" , " " + bottleList.size());
                     Log.d(" vector contains ", bottleList.toString());
                 }
