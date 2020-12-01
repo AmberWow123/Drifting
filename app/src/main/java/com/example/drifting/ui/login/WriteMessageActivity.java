@@ -60,7 +60,7 @@ import java.util.Random;
 import backend.util.database.Bottle_back;
 import backend.util.database.EnumD;
 import backend.util.database.SetDatabase;
-import backend.util.database.UserProfile;
+import backend.util.time.DriftTime;
 
 public class WriteMessageActivity extends AppCompatActivity {
 
@@ -159,7 +159,12 @@ public class WriteMessageActivity extends AppCompatActivity {
                     String bottleID = (userID + timeStamp).trim();
                     String city = locationText.getText().toString();
 
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, true, city, latitude[0], longitude[0], null, false);
+
+                    DriftTime currTime = new DriftTime();
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
+                            true, city, latitude[0], longitude[0], currTime.getTimestamp(),
+                            null, false);
+
 
                     SetDatabase set = new SetDatabase();
                     set.addNewBottle(this_bottle);
@@ -170,7 +175,11 @@ public class WriteMessageActivity extends AppCompatActivity {
                     String bottleID = (userID + timeStamp).trim();
                     String city = locationText.getText().toString();
 
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, false, city, latitude[0], longitude[0], null, false);
+                    DriftTime currTime = new DriftTime();
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
+                            false, city, latitude[0], longitude[0], currTime.getTimestamp(),
+                            null, false);
+
 
                     SetDatabase set = new SetDatabase();
                     set.addNewBottle(this_bottle);
@@ -329,15 +338,15 @@ public class WriteMessageActivity extends AppCompatActivity {
                         }
                     });
 
-         //   LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-         //   Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-         //   try{
-         //       locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
-         //   }
-         //   catch (Exception e){
-         //       e.printStackTrace();
-         //       Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
-         //   }
+            //   LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            //   Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            //   try{
+            //       locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
+            //   }
+            //   catch (Exception e){
+            //       e.printStackTrace();
+            //       Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
+            //   }
         }
 
     }
@@ -379,15 +388,15 @@ public class WriteMessageActivity extends AppCompatActivity {
                                     }
                                 });
 
-                    //    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                    //    Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    //    try{
-                    //        locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
-                    //    }
-                    //    catch (Exception e){
-                    //        e.printStackTrace();
-                    //        Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
-                    //    }
+                        //    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                        //    Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        //    try{
+                        //        locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
+                        //    }
+                        //    catch (Exception e){
+                        //        e.printStackTrace();
+                        //        Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
+                        //    }
                     }
                 }
                 else {
