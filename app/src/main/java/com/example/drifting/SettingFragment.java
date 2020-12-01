@@ -40,25 +40,17 @@ public class SettingFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private static  String name = null;
-    private static  String age = null;
-    private static  String email = null;
-    private static  String gender = null;
-    private static  String country = null;
-
     private Spinner spinner;
     private static final String[] paths = {"item 1", "item 2", "item 3"};
 
     protected View mView;
 
     Button editButton;
-    /*
     Button editUsernameButton;
     Button editEmailButton;
     Button editAgeButton;
     Button editCountryButton;
     Button editGenderButton;
-     */
     Button logout_button;
     Button reset_password;
     EditText nameEdit;
@@ -105,15 +97,6 @@ public class SettingFragment extends Fragment {
 
     }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString("name", name);
-        outState.putString("gender", gender);
-        outState.putString("country", country);
-        outState.putString("email", email);
-        outState.putString("age", age);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -129,13 +112,12 @@ public class SettingFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         editButton = getView().findViewById(R.id.editbutton);
-        /*
+
         editUsernameButton = getView().findViewById(R.id.username_edit_button);
         editEmailButton = getView().findViewById(R.id.edit_email_button);
         editAgeButton = getView().findViewById(R.id.edit_age_button);
         editCountryButton = getView().findViewById(R.id.edit_country_button);
         editGenderButton = getView().findViewById(R.id.edit_gender_button);
-         */
         nameEdit = getView().findViewById(R.id.username_edit);
         des_Edit = getView().findViewById(R.id.description_text_edit);
         email_Edit = getView().findViewById(R.id.email_text_edit);
@@ -155,37 +137,6 @@ public class SettingFragment extends Fragment {
         dropdown.setAdapter(adapter);
 
 
-        if(savedInstanceState != null) {
-            name = savedInstanceState.getString("name");
-            gender = savedInstanceState.getString("gender");
-            age = savedInstanceState.getString("age");
-            email = savedInstanceState.getString("email");
-            country = savedInstanceState.getString("country");
-
-            ViewSwitcher nameSwitcher = getView().findViewById(R.id.my_switcher);
-            TextView nameTV = nameSwitcher.findViewById(R.id.username_view);
-            nameTV.setText(name);
-
-            ViewSwitcher genderSwitcher = getView().findViewById(R.id.my_switcher_gender);
-            TextView genTV = genderSwitcher.findViewById(R.id.gender_text_view);
-            genTV.setText(gender);
-
-            ViewSwitcher age_switcher = getView().findViewById(R.id.my_switcher_age);
-            TextView ageTV = age_switcher.findViewById(R.id.age_text_view);
-            ageTV.setText(age);
-
-            ViewSwitcher email_switcher = getView().findViewById(R.id.my_switcher_email);
-            TextView email_TV = email_switcher.findViewById(R.id.email_text_view);
-            email_TV.setText(email);
-
-            ViewSwitcher coun_switcher = getView().findViewById(R.id.my_switcher_country);
-            TextView coun_TV = coun_switcher.findViewById(R.id.country_text_view);
-            coun_TV.setText(country);
-        }
-
-
-
-
         changeProfileImage.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -194,6 +145,7 @@ public class SettingFragment extends Fragment {
             }
         });
 
+        /*
         editButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -201,39 +153,34 @@ public class SettingFragment extends Fragment {
                 nameSwitcher.showNext();
                 TextView nameTV = nameSwitcher.findViewById(R.id.username_view);
                 nameTV.setText(nameEdit.getText().toString());
-                name = nameTV.toString();
 
-                /*ViewSwitcher des_switcher = getView().findViewById(R.id.my_switcher_description);
+                ViewSwitcher des_switcher = getView().findViewById(R.id.my_switcher_description);
                 des_switcher.showNext();
                 TextView des_TV = des_switcher.findViewById(R.id.description_text_view);
                 des_TV.setText(des_Edit.getText().toString());
-                 */
 
                 ViewSwitcher email_switcher = getView().findViewById(R.id.my_switcher_email);
                 email_switcher.showNext();
                 TextView email_TV = email_switcher.findViewById(R.id.email_text_view);
                 email_TV.setText(email_Edit.getText().toString());
-                email = email_TV.toString();
 
                 ViewSwitcher gen_switcher = getView().findViewById(R.id.my_switcher_gender);
                 gen_switcher.showNext();
                 TextView gen_TV = gen_switcher.findViewById(R.id.gender_text_view);
                 gen_TV.setText(gen_Edit.getText().toString());
-                gender = gen_TV.toString();
 
                 ViewSwitcher age_switcher = getView().findViewById(R.id.my_switcher_age);
                 age_switcher.showNext();
                 TextView age_TV = age_switcher.findViewById(R.id.age_text_view);
                 age_TV.setText(age_Edit.getText().toString());
-                age = age_TV.toString();
 
                 ViewSwitcher coun_switcher = getView().findViewById(R.id.my_switcher_country);
                 coun_switcher.showNext();
                 TextView coun_TV = coun_switcher.findViewById(R.id.country_text_view);
                 coun_TV.setText(coun_Edit.getText().toString());
-                country = coun_TV.toString();
             }
         });
+                */
 
         logout_button.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -253,7 +200,7 @@ public class SettingFragment extends Fragment {
             }
         });
 
-        /*
+
         editUsernameButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -261,7 +208,6 @@ public class SettingFragment extends Fragment {
                 nameSwitcher.showNext();
                 TextView nameTV = nameSwitcher.findViewById(R.id.username_view);
                 nameTV.setText(nameEdit.getText().toString());
-                nameData = nameTV;
             }
         });
 
@@ -305,9 +251,6 @@ public class SettingFragment extends Fragment {
             }
         });
 
-
-
-         */
 
         /*Intent intent = new Intent(getActivity(), SettingFragment.class);
 
