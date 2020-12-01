@@ -33,6 +33,7 @@ public class Bottle_back{
     public Bottle_back(String msg, String bottleID, String userID, Boolean isAnonymous, String city,
                        double latitude, double longitude, long timestamp, String comment, Boolean viewed){
 
+
         self = this;
         this.message = msg;
         this.bottleID= bottleID;
