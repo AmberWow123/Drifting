@@ -1,7 +1,8 @@
-package com.example.drifting.ui.login;
+ package com.example.drifting.ui.login;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -10,10 +11,12 @@ import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.view.View;
@@ -22,24 +25,31 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.os.Looper;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.widget.ToggleButton;
+import com.example.drifting.HomeFragment;
+import com.example.drifting.NavBar;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import com.example.drifting.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import com.example.drifting.NavBar;
-import com.example.drifting.R;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.annotations.Nullable;
+import com.google.android.gms.tasks.Task;
+//import com.google.firebase.database.annotations.Nullable;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,7 +58,9 @@ import java.util.Locale;
 import java.util.Random;
 
 import backend.util.database.Bottle_back;
+import backend.util.database.EnumD;
 import backend.util.database.SetDatabase;
+import backend.util.database.UserProfile;
 
 public class WriteMessageActivity extends AppCompatActivity {
 
@@ -88,7 +100,6 @@ public class WriteMessageActivity extends AppCompatActivity {
     private static final int VIDEO_PICK_CODE = 2000;
     private static final int PERMISSION_CODE_IMAGE = 1001;
     private static final int PERMISSION_CODE_VIDEO = 2001;
-
 
     FusedLocationProviderClient fusedLocationProviderClient;
     private LocationRequest locationRequest;
@@ -263,7 +274,6 @@ public class WriteMessageActivity extends AppCompatActivity {
                 }
             }
         });
-
 
         // request permissions
         if (ContextCompat.checkSelfPermission(WriteMessageActivity.this,
