@@ -122,7 +122,7 @@
         app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3"
         app:layout_constraintVertical_bias="0.521" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="120dp"
         android:layout_height="120dp"
@@ -133,7 +133,7 @@
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3"
-        app:layout_constraintVertical_bias="0.521" />
+        app:layout_constraintVertical_bias="0.521" ></de.hdodenhof.circleimageview.CircleImageView>
 
     <Button
         android:id="@+id/change_avatar"
