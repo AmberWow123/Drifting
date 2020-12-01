@@ -30,6 +30,7 @@ public class ChatActivity extends AppCompatActivity {
     Button sendMessage;
     ScrollView scroll;
     Button return_button;
+    TextView userName_textview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,9 @@ public class ChatActivity extends AppCompatActivity {
         sendMessage = findViewById(R.id.send_chat_button);
         scroll = findViewById(R.id.content_scrollview);
         return_button = findViewById(R.id.return_button);
+        userName_textview = findViewById(R.id.textView2);
 
+        userName_textview.setText(ExampleAdapter.userName);
         TextView textView1 = new TextView(this);
         LayoutParams layoutParams1 = new LayoutParams(LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT);

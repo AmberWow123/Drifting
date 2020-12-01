@@ -9,6 +9,7 @@
     >
 
     <RelativeLayout
+        android:id="@+id/contact_container"
         android:layout_width="match_parent"
         android:layout_height="63dp"
         android:layout_margin="0dp"
