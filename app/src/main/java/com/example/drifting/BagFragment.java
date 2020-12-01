@@ -21,9 +21,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.drifting.ui.login.ViewBottleActivity;
 
-import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link BagFragment#newInstance} factory method to
@@ -106,13 +103,17 @@ public class BagFragment extends Fragment {
         int width_date = (int) (120 * scale + 0.5f);
         int height = (int) (80 * scale + 0.5f);
 
+        sent_indicator.setVisibility(View.VISIBLE);
+        picked_indicator.setVisibility(View.VISIBLE);
+
+
 
         picked_button.setOnClickListener(new Button.OnClickListener(){
              @Override
             public void onClick(View v) {
                  tableLayout.removeAllViews();
-                 sent_indicator.setVisibility(INVISIBLE);
-                 picked_indicator.setVisibility(VISIBLE);
+                 sent_indicator.setVisibility(View.GONE);
+                 picked_indicator.setVisibility(View.VISIBLE);
 
                  for(int i=0; i<pickedBottle.length; i++) {
                      String content = pickedBottle[i];
@@ -166,8 +167,9 @@ public class BagFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 tableLayout.removeAllViews();
-                sent_indicator.setVisibility(VISIBLE);
-                picked_indicator.setVisibility(INVISIBLE);
+                sent_indicator.setVisibility(View.VISIBLE);
+                picked_indicator.setVisibility(View.GONE);
+
 
                 for (int i = 0; i < sentBottle.length; i++) {
                     String content = sentBottle[i];
@@ -214,5 +216,8 @@ public class BagFragment extends Fragment {
                 }
             }
         });
+        sent_button.performClick();
+        sent_button.setSoundEffectsEnabled(true);
+        picked_button.setSoundEffectsEnabled(true);
     }
 }

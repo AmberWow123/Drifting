@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".BagFragment">
 
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="410dp"
@@ -17,6 +26,7 @@
 
         <Button
             android:id="@+id/sent_button"
+            android:soundEffectsEnabled="false"
             android:layout_width="205dp"
             android:layout_height="match_parent"
             android:background="#dcdcdc"
@@ -26,6 +36,7 @@
 
         <Button
             android:id="@+id/picked_button"
+            android:soundEffectsEnabled="false"
             android:layout_width="205dp"
             android:layout_height="match_parent"
             android:background="#dcdcdc"
@@ -50,18 +61,12 @@
             android:layout_height="wrap_content" />
     </ScrollView>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="205dp" />
-
     <ImageView
         android:id="@+id/picked_indicator"
+        android:visibility="gone"
+        android:background="#101010"
         android:layout_width="205dp"
         android:layout_height="wrap_content"
-        android:background="#101010"
         android:elevation="4dp"
         android:src="@drawable/line"
         app:layout_constraintBottom_toTopOf="@+id/bag_view"
@@ -71,9 +76,10 @@
 
     <ImageView
         android:id="@+id/sent_indicator"
+        android:visibility="gone"
+        android:background="#101010"
         android:layout_width="205dp"
         android:layout_height="wrap_content"
-        android:background="#101010"
         android:elevation="4dp"
         android:src="@drawable/line"
         app:layout_constraintBottom_toTopOf="@+id/bag_view"
