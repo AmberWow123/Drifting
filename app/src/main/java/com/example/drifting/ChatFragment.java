@@ -1,10 +1,17 @@
 package com.example.drifting;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +21,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.drifting.ui.login.ChatActivity;
+import com.example.drifting.ui.login.ViewBottleActivity;
 import android.widget.EditText;
 
 import com.example.drifting.ui.login.ExampleAdapter;
@@ -42,6 +52,8 @@ public class ChatFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private ExampleAdapter adapter;
+    public static FragmentActivity chatActivity;
+    public static Context chatContext;
 
     public ChatFragment() {
         // Required empty public constructor
@@ -72,6 +84,37 @@ public class ChatFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        chatActivity = getActivity();
+        chatContext = getContext();
+    }
+
+    private void filter(String text) {
+        ArrayList<ExampleItem> filteredList = new ArrayList<>();
+
+        for (ExampleItem item : exampleList) {
+            if (item.getName().toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+
+        adapter.filterList(filteredList);
+    }
+
+    private void createExampleList() {
+        exampleList = new ArrayList<>();
+
+        // TODO: backend might use a loop to create all the needed chat rooms here (or whatever applies)
+        // TODO: backend might want to sort the chat rooms by time.
+        // TODO: time: ex. "15:00" for today; otherwise, "Monday" or "11/23" instead
+        // TODO: the 3rd parameter is the most recent message sent by the user's friend
+        // TODO: and the 4th parameter is the time of the most recent message sent
+        exampleList.add(new ExampleItem( R.drawable.avatar, "Amber", "yooooo! Lets go get some boba >.<", "12:00"));
+        exampleList.add(new ExampleItem( R.drawable.avatar, "Sam", "How are you? >.<", "13:00"));
+        exampleList.add(new ExampleItem( R.drawable.avatar, "Jiaming", "I am fine! Thank you! And you? >.<", "14:00"));
+        exampleList.add(new ExampleItem( R.drawable.avatar, "Tao Jin", "Just finished my midterm >.<", "15:00"));
+        exampleList.add(new ExampleItem( R.drawable.avatar, "Lucky", "yaaaaaa >.<", "17:00"));
+        exampleList.add(new ExampleItem( R.drawable.avatar, "Vickie", "haaaaaa >.<", "18:00"));
+        exampleList.add(new ExampleItem( R.drawable.avatar, "Samuel", "laaaaaa >.<", "19:00"));
     }
 
     private void filter(String text) {

@@ -1,9 +1,11 @@
 package com.example.drifting.ui.login;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -20,28 +22,33 @@ import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
 import com.example.drifting.NavBar;
 import com.example.drifting.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.io.File;
 
 import backend.util.authentication.CredentialAuthenticator;
-
-import static java.lang.Thread.sleep;
+import backend.util.connectivity.ConnectionChecker;
 
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
 
+    FirebaseUser firebaseUser;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
+        Context context = getApplicationContext();
 
         final EditText usernameEditText = findViewById(R.id.username_forget);
         final EditText passwordEditText = findViewById(R.id.password);
@@ -71,6 +78,13 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //auto login
+//        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//
+//        if(firebaseUser != null){
+//            openHomepageActivity();
+//        }
 
         loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
             @Override
@@ -114,6 +128,13 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean isConnected = ConnectionChecker.isInternetConnected(getApplicationContext());
+
+                if(!isConnected){
+                    Toast.makeText(getApplicationContext(), "Please check Internet connection", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+
                 CredentialAuthenticator ca = new CredentialAuthenticator();
                 String feedback = ca.validate(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
@@ -150,7 +171,15 @@ public class LoginActivity extends AppCompatActivity {
 
            @Override
            public void onClick(View v) {
-               loadingBar.setVisibility(View.VISIBLE);
+
+               boolean isConnected = ConnectionChecker.isInternetConnected(getApplicationContext());
+
+               if(!isConnected){
+                   Toast.makeText(getApplicationContext(), "Please check Internet connection", Toast.LENGTH_SHORT).show();
+                   return;
+               }
+
+
                CredentialAuthenticator ca = new CredentialAuthenticator();
                String feedback = ca.validate(usernameEditText.getText().toString(),
                        passwordEditText.getText().toString());
@@ -159,8 +188,8 @@ public class LoginActivity extends AppCompatActivity {
 
                FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-
                if(ca.isValid()) {
+                   loadingBar.setVisibility(View.VISIBLE);
                    Task task = mAuth.signInWithEmailAndPassword(usernameEditText.getText().toString(),
                            passwordEditText.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                        @Override
@@ -168,6 +197,7 @@ public class LoginActivity extends AppCompatActivity {
                            if (task.isSuccessful()) {
                                loadingBar.setVisibility((View.GONE));
                                Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
+
 
                                openHomepageActivity();
                            } else {
@@ -177,7 +207,6 @@ public class LoginActivity extends AppCompatActivity {
                        }
                    });
                }
-               loadingBar.setVisibility((View.GONE));
            }
        });
 

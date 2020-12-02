@@ -61,6 +61,7 @@ import backend.util.database.Bottle_back;
 import backend.util.database.EnumD;
 import backend.util.database.SetDatabase;
 import backend.util.database.UserProfile;
+import backend.util.time.DriftTime;
 
 public class WriteMessageActivity extends AppCompatActivity {
 
@@ -121,6 +122,9 @@ public class WriteMessageActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         final int[] whether_anonymous = {0};
 
+        final double[] latitude = {181.0};
+        final double[] longitude = {181.0};
+
         //check if the user switches to anonymous
         AnonymousBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -134,7 +138,7 @@ public class WriteMessageActivity extends AppCompatActivity {
         });
 
         // throw the bottle when "send" is clicked
-        sendBtn.setOnClickListener((new View.OnClickListener(){
+        sendBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
@@ -145,14 +149,24 @@ public class WriteMessageActivity extends AppCompatActivity {
                 // anonymous case
                 if(whether_anonymous[0] > 0) {
                     //create a new bottle object
-                    String userID = "NOTAVAILABLE";
-                    //generate a random number
-                    int upperbound = 10;
-                    Random rand = new Random();
-                    int int_random = rand.nextInt(upperbound);
-                    String random_int = Integer.toString(int_random);
-                    String bottleID = (userID + timeStamp + random_int).trim();
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID);
+//                    String userID = "NOTAVAILABLE";
+//                    //generate a random number
+//                    int upperbound = 10;
+//                    Random rand = new Random();
+//                    int int_random = rand.nextInt(upperbound);
+//                    String random_int = Integer.toString(int_random);
+//                    String bottleID = (userID + timeStamp + random_int).trim();
+                    String userID = fAuth.getUid();
+                    String bottleID = (userID + timeStamp).trim();
+                    String city = locationText.getText().toString();
+
+
+                    DriftTime currTime = new DriftTime();
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
+                            true, city, latitude[0], longitude[0], currTime.getTimestamp(),
+                            null, false);
+
+
                     SetDatabase set = new SetDatabase();
                     set.addNewBottle(this_bottle);
                 }
@@ -160,7 +174,14 @@ public class WriteMessageActivity extends AppCompatActivity {
                 else{
                     String userID = fAuth.getUid();
                     String bottleID = (userID + timeStamp).trim();
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID);
+                    String city = locationText.getText().toString();
+
+                    DriftTime currTime = new DriftTime();
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
+                            false, city, latitude[0], longitude[0], currTime.getTimestamp(),
+                            null, false);
+
+
                     SetDatabase set = new SetDatabase();
                     set.addNewBottle(this_bottle);
                 }
@@ -169,7 +190,7 @@ public class WriteMessageActivity extends AppCompatActivity {
                 Toast.makeText(WriteMessageActivity.this, "Yay you just throw a bottle! :D", Toast.LENGTH_SHORT).show();
                 openHomepageActivity();
             }
-        }));
+        });
 
         // adding image
         added_image_view = findViewById(R.id.image_view_added);
@@ -289,6 +310,8 @@ public class WriteMessageActivity extends AppCompatActivity {
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
                                 locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
+                                latitude[0] = location.getLatitude();
+                                longitude[0] = location.getLongitude();
                             } else {
                                 Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
 
@@ -304,27 +327,27 @@ public class WriteMessageActivity extends AppCompatActivity {
                                         for (Location mlocation : locationResult.getLocations()) {
                                             if (mlocation != null) {
                                                 locationText.setText(hereLocation(mlocation.getLatitude(), mlocation.getLongitude()));
+                                                latitude[0] = location.getLatitude();
+                                                longitude[0] = location.getLongitude();
                                                 fusedLocationProviderClient.removeLocationUpdates(locationCallback);
                                             }
                                         }
                                     }
                                 };
-
                                 fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
-
                             }
                         }
                     });
 
-         //   LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-         //   Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-         //   try{
-         //       locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
-         //   }
-         //   catch (Exception e){
-         //       e.printStackTrace();
-         //       Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
-         //   }
+            //   LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            //   Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            //   try{
+            //       locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
+            //   }
+            //   catch (Exception e){
+            //       e.printStackTrace();
+            //       Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
+            //   }
         }
 
     }
@@ -366,16 +389,15 @@ public class WriteMessageActivity extends AppCompatActivity {
                                     }
                                 });
 
-
-                    //    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                    //    Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    //    try{
-                    //        locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
-                    //    }
-                    //    catch (Exception e){
-                    //        e.printStackTrace();
-                    //        Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
-                    //    }
+                        //    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                        //    Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                        //    try{
+                        //        locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
+                        //    }
+                        //    catch (Exception e){
+                        //        e.printStackTrace();
+                        //        Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
+                        //    }
                     }
                 }
                 else {
@@ -448,7 +470,6 @@ public class WriteMessageActivity extends AppCompatActivity {
     // get closest city name
     public String hereLocation(double lat, double lon){
         String curCity = "";
-
         Geocoder geocoder = new Geocoder(WriteMessageActivity.this, Locale.getDefault());
         List<Address> addressList;
         try{

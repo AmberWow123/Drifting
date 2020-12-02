@@ -123,7 +123,7 @@
         app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3"
         app:layout_constraintVertical_bias="0.521" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="120dp"
         android:layout_height="120dp"
@@ -134,7 +134,7 @@
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3"
-        app:layout_constraintVertical_bias="0.521" />
+        app:layout_constraintVertical_bias="0.521" ></de.hdodenhof.circleimageview.CircleImageView>
 
     <Button
         android:id="@+id/change_avatar"
@@ -173,7 +173,7 @@
                 android:elevation="5dp"
                 android:fontFamily="@font/poppins"
                 android:gravity="center_vertical"
-                android:text="userID"
+                android:text="Name"
                 android:textColor="#A4A4A4"
                 android:textSize="13sp" />
 
@@ -199,7 +199,7 @@
                     android:layout_height="match_parent"
                     android:background="#dcdcdc"
                     android:fontFamily="@font/poppins"
-                    android:hint="Please enter useID"
+                    android:hint="Please enter use name"
                     android:importantForAutofill="no"
                     android:inputType="textNoSuggestions|text"
                     android:textColor="#a4a4a4"
@@ -207,14 +207,14 @@
                     android:textSize="13sp" />
 
             </ViewSwitcher>
-            <!--
+
             <Button
                 android:id="@+id/username_edit_button"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:background="@drawable/ic_actions_emultiple_edit"
                 android:backgroundTint="#a4a4a4" />
-            -->
+
 
         </TableRow>
 
@@ -261,14 +261,14 @@
                     android:textSize="13sp" />
 
             </ViewSwitcher>
-            <!--
+
             <Button
                 android:id="@+id/edit_email_button"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:background="@drawable/ic_actions_emultiple_edit"
                 android:backgroundTint="#a4a4a4" />
-            -->
+
         </TableRow>
 
         <TableRow
@@ -315,14 +315,14 @@
                     android:textSize="13sp" />
 
             </ViewSwitcher>
-            <!--
+
             <Button
                 android:id="@+id/edit_gender_button"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:background="@drawable/ic_actions_emultiple_edit"
                 android:backgroundTint="#a4a4a4" />
-            -->
+
         </TableRow>
 
         <TableRow
@@ -369,14 +369,14 @@
                     android:textSize="13sp" />
 
             </ViewSwitcher>
-            <!--
+
             <Button
                 android:id="@+id/edit_age_button"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:background="@drawable/ic_actions_emultiple_edit"
                 android:backgroundTint="#a4a4a4" />
-            -->
+
         </TableRow>
 
         <TableRow
@@ -423,14 +423,14 @@
 
 
             </ViewSwitcher>
-            <!--
+
             <Button
                 android:id="@+id/edit_country_button"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:background="@drawable/ic_actions_emultiple_edit"
                 android:backgroundTint="#a4a4a4" />
-            -->
+
         </TableRow>
 
         <TableRow
@@ -522,7 +522,7 @@
         app:layout_constraintVertical_bias="0.76" />
 
     <Button
-        android:id="@+id/log_out_button"
+        android:id="@+id/add_friend_button"
         android:layout_width="165dp"
         android:layout_height="47dp"
         android:background="@drawable/log_out_button"
@@ -546,13 +546,13 @@
         android:textColor="#a4a4a4"
         android:textIsSelectable="false"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/log_out_button"
+        app:layout_constraintBottom_toTopOf="@+id/add_friend_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_background"
         app:layout_constraintVertical_bias="0.90999997" />
-
+    <!--
     <Button
         android:id="@+id/editbutton"
         android:layout_width="28dp"
@@ -565,5 +565,6 @@
         app:layout_constraintHorizontal_bias="0.258"
         app:layout_constraintStart_toEndOf="@+id/avatar_background"
         app:layout_constraintTop_toTopOf="@+id/profile_background" />
+    -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
