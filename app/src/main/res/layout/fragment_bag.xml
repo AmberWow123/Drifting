@@ -1,14 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BagFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</RelativeLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="410dp"
+        android:layout_height="78dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/sent_button"
+            android:soundEffectsEnabled="false"
+            android:layout_width="205dp"
+            android:layout_height="match_parent"
+            android:background="#dcdcdc"
+            android:text="Sent"
+            android:textColor="#777777"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/picked_button"
+            android:soundEffectsEnabled="false"
+            android:layout_width="205dp"
+            android:layout_height="match_parent"
+            android:background="#dcdcdc"
+            android:text="picked"
+            android:textColor="#777777"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/bag_view"
+        android:layout_width="410dp"
+        android:layout_height="646dp"
+        android:background="@drawable/background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <TableLayout
+            android:id="@+id/bag_table_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/picked_indicator"
+        android:visibility="gone"
+        android:background="#101010"
+        android:layout_width="205dp"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:src="@drawable/line"
+        app:layout_constraintBottom_toTopOf="@+id/bag_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <ImageView
+        android:id="@+id/sent_indicator"
+        android:visibility="gone"
+        android:background="#101010"
+        android:layout_width="205dp"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:src="@drawable/line"
+        app:layout_constraintBottom_toTopOf="@+id/bag_view"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

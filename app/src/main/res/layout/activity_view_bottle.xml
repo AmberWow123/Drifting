@@ -138,19 +138,38 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/comment_label_textview"
+                <LinearLayout
+                    android:id="@+id/add_comment_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_light"
-                    android:text="Comments: "
+                    android:orientation="horizontal"
                     android:background="@drawable/view_msg_rect"
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="15dp"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
                     >
-                </TextView>
+
+                    <TextView
+                        android:id="@+id/comment_label_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_light"
+                        android:text="Comment:"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="[add]"
+                        android:textColor="@color/black"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_vertical|right"
+                        />
+
+                </LinearLayout>
+
+
 
                 <!-- below is the where sample comments insert -->
                 <TextView

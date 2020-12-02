@@ -170,7 +170,7 @@ public class LoginActivity extends AppCompatActivity {
                    return;
                }
 
-               loadingBar.setVisibility(View.VISIBLE);
+
                CredentialAuthenticator ca = new CredentialAuthenticator();
                String feedback = ca.validate(usernameEditText.getText().toString(),
                        passwordEditText.getText().toString());
@@ -179,8 +179,8 @@ public class LoginActivity extends AppCompatActivity {
 
                FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-
                if(ca.isValid()) {
+                   loadingBar.setVisibility(View.VISIBLE);
                    Task task = mAuth.signInWithEmailAndPassword(usernameEditText.getText().toString(),
                            passwordEditText.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                        @Override
@@ -197,7 +197,6 @@ public class LoginActivity extends AppCompatActivity {
                        }
                    });
                }
-               loadingBar.setVisibility((View.GONE));
            }
        });
 
