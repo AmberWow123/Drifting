@@ -216,6 +216,7 @@ public class BagFragment extends Fragment {
                 }
             }
         });
+
         sent_button.performClick();
         sent_button.setSoundEffectsEnabled(true);
         picked_button.setSoundEffectsEnabled(true);
