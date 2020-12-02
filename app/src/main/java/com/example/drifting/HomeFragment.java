@@ -347,6 +347,7 @@ public class HomeFragment extends Fragment {
         public String city;
         public AnimationDrawable bottleAnimation;
         public String comment;
+        public String userID;
 
 
         /**
@@ -398,6 +399,7 @@ public class HomeFragment extends Fragment {
         // ACTUAL CONSTRUCTOR: construct with a bottle_back and bottle index
         public Bottle(Bottle_back bottleBack, int bottle_index){
             self = this;
+            userID = bottleBack.userID;
             message = bottleBack.message;
             city = bottleBack.city;
             bottleID = bottleBack.getBottleID();

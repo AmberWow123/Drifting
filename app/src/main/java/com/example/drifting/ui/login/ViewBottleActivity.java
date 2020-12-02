@@ -5,12 +5,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.drifting.AddFriendActivity;
 import com.example.drifting.HomeFragment;
 import com.example.drifting.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,6 +50,7 @@ public class ViewBottleActivity extends AppCompatActivity {
         String city = HomeFragment.currBottle.city;
         String comment = HomeFragment.currBottle.comment;
         String bottleID = HomeFragment.currBottle.bottleID;
+        String fromUserID = HomeFragment.currBottle.userID;
 
 
         TextView messageView = findViewById(R.id.bottle_message_textview);
@@ -59,6 +64,17 @@ public class ViewBottleActivity extends AppCompatActivity {
 
         TextView commentView = findViewById(R.id.comment_field_textview);
         commentView.setText(comment);
+
+        LinearLayout fromLayout = findViewById(R.id.from_layout);
+        fromLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(ViewBottleActivity.this, AddFriendActivity.class));
+
+            }
+        });
+
         //------------------------------------------------------------------------
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
