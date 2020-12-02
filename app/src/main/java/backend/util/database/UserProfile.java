@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class UserProfile {
     public String user_id;
+    public String user_name;
     public String user_email;
     public File avatar;
     public Date regis_date;
@@ -15,9 +16,10 @@ public class UserProfile {
 
     public UserProfile(){};
 
-    public UserProfile (String user_id, String user_email, File avatar, Date regis_date,
+    public UserProfile (String user_id, String user_name, String user_email, File avatar, Date regis_date,
                         String discription, String user_gender, String user_country, String age){
         this.user_id = user_id;
+        this.user_name = user_name;
         this.user_email = user_email;
         this.avatar = avatar;
         this.regis_date = regis_date;
