@@ -2,19 +2,16 @@ package backend.util.bottleProvider;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
-import android.content.Context;
-import android.widget.Toast;
-
-import com.example.drifting.HomeFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,9 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.Vector;
+import java.util.concurrent.ExecutorService;
 
 import backend.util.database.Bottle_back;
 import backend.util.time.DriftTime;
@@ -105,12 +101,13 @@ public class BottleProvider {
                         continue;
                     }
 
+                    //TODO: comment for test purpose, REUSE for formal product
                     //check if the bottle is from the same user
-                    if (this_bottle.getUserID().equals(userID)) {
-                        continue;
-                    } else {
+//                    if (this_bottle.getUserID().equals(userID)) {
+//                        continue;
+//                    } else {
                         randomBottleList.add(this_bottle);
-                    }
+//                    }
                 }
                 isFetchComplete = true;
                 reference.removeEventListener(this);

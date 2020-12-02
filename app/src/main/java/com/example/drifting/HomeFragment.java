@@ -22,14 +22,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.drifting.ui.login.ViewBottleActivity;
 import com.example.drifting.ui.login.WriteMessageActivity;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import com.google.android.gms.location.*;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,7 +35,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Random;
 import java.util.Vector;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import backend.util.bottleProvider.BottleProvider;
@@ -282,10 +277,11 @@ public class HomeFragment extends Fragment {
                                         continue;
                                     }
 
+                                    //TODO: comment for test purpose, REUSE for formal product
                                     //check if the bottle is from the same user
-                                    if(this_bottle.getUserID().equals(userID)){
-                                        continue;
-                                    }
+//                                    if(this_bottle.getUserID().equals(userID)){
+//                                        continue;
+//                                    }
 
                                     else {
 
