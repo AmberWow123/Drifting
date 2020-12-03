@@ -162,9 +162,10 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/profile_page_layout"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
         app:layout_constraintTop_toBottomOf="@+id/avatar_background"
-        app:layout_constraintVertical_bias="0.521" />
+        app:layout_constraintVertical_bias="0.428" />
 
     <TableLayout
         android:id="@+id/profile_page_layout"

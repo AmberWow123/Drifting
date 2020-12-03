@@ -1,5 +1,6 @@
 package com.example.drifting.ui.login;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,8 +17,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
-import backend.util.database.EnumD;
+import backend.util.connectivity.ConnectionChecker;
 import backend.util.database.SetDatabase;
 import backend.util.database.UserProfile;
 
@@ -31,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        Context context = getApplicationContext();
 
         //correspond those buttons/texts
         mEmail = findViewById(R.id.username_register);
@@ -49,6 +52,13 @@ public class RegisterActivity extends AppCompatActivity {
         mRegisterBtn.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean isConnected = ConnectionChecker.isInternetConnected(getApplicationContext());
+
+                if(!isConnected){
+                    Toast.makeText(getApplicationContext(), "Please check Internet connection", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
                 String password_re = mRePassword.getText().toString().trim();
@@ -89,12 +99,20 @@ public class RegisterActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             Toast.makeText(RegisterActivity.this, "Yay User Created! :D", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                            UserProfile userProfile = new UserProfile(fAuth.getUid(), email, null,null,null, EnumD.gender.NOTSPECIFIED,null);
+                            UserProfile userProfile = new UserProfile(fAuth.getUid(),null, email, null,null,null, null,null,null);
                             SetDatabase set = new SetDatabase();
                             set.addNewUser(userProfile);
                         }
                         else{
-                            Toast.makeText(RegisterActivity.this, "Oh man there is an Error... :(", Toast.LENGTH_SHORT).show();
+                            try{
+                                throw task.getException();
+                            } catch (Exception e) {
+                                if(e instanceof FirebaseAuthUserCollisionException)
+                                    Toast.makeText(RegisterActivity.this, "The email already exists! :(", Toast.LENGTH_LONG).show();
+                                else{
+                                    Toast.makeText(RegisterActivity.this, "An unknown error has occurred! :(", Toast.LENGTH_LONG).show();
+                                }
+                            } ;
                         }
                     }
                 });

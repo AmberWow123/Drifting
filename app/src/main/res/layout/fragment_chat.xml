@@ -1,17 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cardview_light_background"
     tools:context=".ChatFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/text"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello! Chats here!"
-        android:textSize="36sp" />
+    <ImageView
+    android:id="@+id/bg_chat_search_bar"
+    android:layout_width="410dp"
+    android:layout_height="70dp"
+    android:layout_alignParentStart="false"
+    android:layout_alignParentTop="false"
+    android:background="@drawable/bg_chat_page_search_bar"
+    app:layout_constraintBottom_toTopOf="@+id/profile_page_layout"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.498"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3"
+    app:layout_constraintVertical_bias="0.521"
+        />
+
+    <ImageButton
+        android:id="@+id/search_button"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:elevation="2dp"
+        android:layout_alignBottom="@+id/bg_chat_search_bar"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/ic_actions_search" />
+
+    <EditText
+        android:id="@+id/search_field"
+        android:layout_width="262dp"
+        android:layout_height="36dp"
+        android:layout_alignBottom="@+id/bg_chat_search_bar"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="73dp"
+        android:layout_marginBottom="15dp"
+        android:background="@color/cardview_light_background"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Search friends..."
+        android:textColorHint="@color/black"
+         />
+
+    <ImageView
+        android:id="@+id/icon_friends"
+        android:layout_width="42dp"
+        android:layout_height="36dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:elevation="2dp"
+        android:src="@drawable/ic_friends" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="661dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_View"
+                android:layout_width="410dp"
+                android:layout_height="659dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentEnd="true"
+                android:padding="4dp"
+                android:scrollbars="vertical"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
 
 </RelativeLayout>

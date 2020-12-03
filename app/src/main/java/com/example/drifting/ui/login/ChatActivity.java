@@ -29,6 +29,8 @@ public class ChatActivity extends AppCompatActivity {
     EditText tfield;
     Button sendMessage;
     ScrollView scroll;
+    Button return_button;
+    TextView userName_textview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +40,10 @@ public class ChatActivity extends AppCompatActivity {
         linearLayout = (LinearLayout) findViewById(R.id.chat_linear_layout);
         sendMessage = findViewById(R.id.send_chat_button);
         scroll = findViewById(R.id.content_scrollview);
+        return_button = findViewById(R.id.return_button);
+        userName_textview = findViewById(R.id.textView2);
 
-
+        userName_textview.setText(ExampleAdapter.userName);
         TextView textView1 = new TextView(this);
         LayoutParams layoutParams1 = new LayoutParams(LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT);
@@ -65,6 +69,7 @@ public class ChatActivity extends AppCompatActivity {
                 textView2.setLayoutParams(layoutParams);
                 tfield = (EditText)findViewById(R.id.message_area);
                 String content = tfield.getText().toString();
+                tfield.setText("");
                 textView2.setText(content);
                 textView2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
                 textView2.setTextColor(0xFF000000);
@@ -74,6 +79,14 @@ public class ChatActivity extends AppCompatActivity {
                 scroll.scrollTo(0, scroll.getBottom());
             }
         });
+
+        return_button.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
     }
 }
