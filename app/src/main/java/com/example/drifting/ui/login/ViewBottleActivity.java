@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,12 +46,21 @@ public class ViewBottleActivity extends AppCompatActivity {
         // set canvas width and height.
         getWindow().setLayout((int)(width*1), (int)(height*0.75));
 
-        String msg = HomeFragment.currBottle.message;
-        String fromUser = HomeFragment.currBottle.fromUser;
-        String city = HomeFragment.currBottle.city;
-        String comment = HomeFragment.currBottle.comment;
-        String bottleID = HomeFragment.currBottle.bottleID;
-        String fromUserID = HomeFragment.currBottle.userID;
+        String msg = "";
+        String fromUser = "";
+        String city = "";
+        String comment = "";
+        String bottleID = "";
+        String fromUserID = "";
+
+        if (HomeFragment.currBottle != null) {
+             msg = HomeFragment.currBottle.message;
+             fromUser = HomeFragment.currBottle.fromUser;
+             city = HomeFragment.currBottle.city;
+             comment = HomeFragment.currBottle.comment;
+             bottleID = HomeFragment.currBottle.bottleID;
+             fromUserID = HomeFragment.currBottle.userID;
+        }
 
 
         TextView messageView = findViewById(R.id.bottle_message_textview);
@@ -64,6 +74,17 @@ public class ViewBottleActivity extends AppCompatActivity {
 
         TextView commentView = findViewById(R.id.comment_field_textview);
         commentView.setText(comment);
+
+        Button close_button = findViewById(R.id.close_button);
+        close_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                finish();
+
+            }
+        });
+
 
         LinearLayout fromLayout = findViewById(R.id.from_layout);
         fromLayout.setOnClickListener(new View.OnClickListener() {
