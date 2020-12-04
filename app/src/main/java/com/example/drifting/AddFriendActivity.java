@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class AddFriendActivity extends AppCompatActivity {
 
@@ -66,7 +68,27 @@ public class AddFriendActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(AddFriendActivity.this, "Failed to retrieve user data :(", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddFriendActivity.this, "Failed to retrieve user's data :(", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //retrieve and set the sender's avatar
+        DatabaseReference avatarRef = FirebaseDatabase.getInstance().getReference("avatars/");
+        avatarRef = avatarRef.child(fromUserID);
+        ImageView profileImage;
+        profileImage = findViewById(R.id.profile_image);
+        avatarRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ss : snapshot.getChildren()) {
+                    String url = ss.getValue(String.class);
+                    Picasso.get().load(url).into(profileImage);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(AddFriendActivity.this, "Failed to retrieve user's avatar :(", Toast.LENGTH_SHORT).show();
             }
         });
 
