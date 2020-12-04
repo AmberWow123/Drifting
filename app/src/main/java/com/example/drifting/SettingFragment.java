@@ -325,10 +325,17 @@ public class SettingFragment extends Fragment {
                 nameTV.setText(nameEdit.getText().toString());
                 String name = nameEdit.getText().toString();
 
+<<<<<<< Updated upstream
                 UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
 
+=======
+
+                UserProfile us = new UserProfile(name, email, null, null, null, gender, country, age);
+                SetDatabase set = new SetDatabase();
+                set.addNewUser(us);
+>>>>>>> Stashed changes
             }
         });
 
@@ -341,7 +348,11 @@ public class SettingFragment extends Fragment {
                 email_TV.setText(email_Edit.getText().toString());
                 String email = email_Edit.getText().toString();
 
+<<<<<<< Updated upstream
                 UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+=======
+                UserProfile us = new UserProfile(name, email, null, null, null, gender, country, age);
+>>>>>>> Stashed changes
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
@@ -356,7 +367,11 @@ public class SettingFragment extends Fragment {
                 age_TV.setText(age_Edit.getText().toString());
                 String age = age_Edit.getText().toString();
 
+<<<<<<< Updated upstream
                 UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+=======
+                UserProfile us = new UserProfile(name, email, null, null, null, gender, country, age);
+>>>>>>> Stashed changes
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
@@ -371,7 +386,11 @@ public class SettingFragment extends Fragment {
                 coun_TV.setText(coun_Edit.getText().toString());
                 String country = coun_Edit.getText().toString();
 
+<<<<<<< Updated upstream
                 UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+=======
+                UserProfile us = new UserProfile(name, email, null, null, null, gender, country, age);
+>>>>>>> Stashed changes
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
@@ -386,7 +405,11 @@ public class SettingFragment extends Fragment {
                 gen_TV.setText(gen_Edit.getText().toString());
                 String gender = gen_Edit.getText().toString();
 
+<<<<<<< Updated upstream
                 UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+=======
+                UserProfile us = new UserProfile(name, email, null, null, null, gender, country, age);
+>>>>>>> Stashed changes
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
