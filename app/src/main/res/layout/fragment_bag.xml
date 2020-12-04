@@ -109,10 +109,9 @@
         android:elevation="4dp"
         android:src="@drawable/line"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/bag_view"
+        app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toStartOf="@+id/guideline9"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/bag_view"
+        app:layout_constraintStart_toStartOf="@+id/guideline12"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
