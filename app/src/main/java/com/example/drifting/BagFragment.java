@@ -20,6 +20,17 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.drifting.ui.login.ViewBottleActivity;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+import backend.util.database.Bottle_back;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,11 +47,12 @@ public class BagFragment extends Fragment {
 
 
 
-    public static String[] pickedBottle = new String[] {"HK is back!", "We win the war!", "Hello!!!The People's Republic of China is here!"};
-    public static String [] pickedTime = new String [] {"07/01/1997", "08/15/1945", "10/01/1949"};
+    public static ArrayList<String> pickedBottle = new ArrayList<String>();
+    public static ArrayList<String> pickedTime = new ArrayList<String>();;
 
-    public static String[] sentBottle = new String[] {"Hi!", "How are you!", "This is a bottle from Guangzhou!!!"};
-    public static String [] sentTime = new String [] {"11/03/2020", "11/05/1983", "12/05/2000"};
+    public static ArrayList<String> sentBottle = new ArrayList<String>();
+    public static ArrayList<String> sentTime = new ArrayList<String>();
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -93,6 +105,34 @@ public class BagFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //get database reference
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
+        //get current userID
+        FirebaseAuth fAuth;
+        fAuth = FirebaseAuth.getInstance();
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
+                    //String bottleID = this_bottle.getBottleID();
+                    String userID = fAuth.getUid();
+                    //check if the bottle is sent from the user
+                    if(this_bottle.getUserID() == userID){
+                        sentBottle.add(this_bottle.getMessage());
+                        sentTime.add(this_bottle.getCity());
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         picked_button = getView().findViewById(R.id.picked_button);
         sent_button = getView().findViewById(R.id.sent_button);
         tableLayout = (TableLayout) getView().findViewById(R.id.bag_table_layout);
@@ -115,9 +155,9 @@ public class BagFragment extends Fragment {
                  sent_indicator.setVisibility(View.GONE);
                  picked_indicator.setVisibility(View.VISIBLE);
 
-                 for(int i=0; i<pickedBottle.length; i++) {
-                     String content = pickedBottle[i];
-                     String date = pickedTime[i];
+                 for(int i=0; i<pickedBottle.size(); i++) {
+                     String content = pickedBottle.get(i);
+                     String date = pickedTime.get(i);
                      TableRow row = new TableRow(getActivity());
 
 
@@ -171,9 +211,9 @@ public class BagFragment extends Fragment {
                 picked_indicator.setVisibility(View.GONE);
 
 
-                for (int i = 0; i < sentBottle.length; i++) {
-                    String content = sentBottle[i];
-                    String date = sentTime[i];
+                for (int i = 0; i < sentBottle.size(); i++) {
+                    String content = sentBottle.get(i);
+                    String date = sentTime.get(i);
                     TableRow row = new TableRow(getActivity());
 
 
@@ -213,8 +253,11 @@ public class BagFragment extends Fragment {
                             startActivity(new Intent(getActivity(), ViewBottleActivity.class));
                         }
                     });
+
                 }
+                sentBottle.clear();
             }
+
         });
         sent_button.performClick();
         sent_button.setSoundEffectsEnabled(true);

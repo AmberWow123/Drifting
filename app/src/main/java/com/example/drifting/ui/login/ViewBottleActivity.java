@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.drifting.HomeFragment;
@@ -26,7 +27,7 @@ import java.util.Map;
 import backend.util.database.Bottle_back;
 
 public class ViewBottleActivity extends AppCompatActivity {
-
+    //Button throw_back = (Button) findViewById(R.id.throw_back_button);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
