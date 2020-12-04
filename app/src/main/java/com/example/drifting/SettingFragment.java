@@ -34,6 +34,7 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import backend.util.database.SetDatabase;
+import backend.util.database.UserProfile;
 
 
 /**
@@ -322,6 +323,12 @@ public class SettingFragment extends Fragment {
                 nameSwitcher.showNext();
                 TextView nameTV = nameSwitcher.findViewById(R.id.username_view);
                 nameTV.setText(nameEdit.getText().toString());
+                String name = nameEdit.getText().toString();
+
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+                SetDatabase set = new SetDatabase();
+                set.addNewUser(us);
+
             }
         });
 
@@ -332,6 +339,11 @@ public class SettingFragment extends Fragment {
                 email_switcher.showNext();
                 TextView email_TV = email_switcher.findViewById(R.id.email_text_view);
                 email_TV.setText(email_Edit.getText().toString());
+                String email = email_Edit.getText().toString();
+
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+                SetDatabase set = new SetDatabase();
+                set.addNewUser(us);
             }
         });
 
@@ -342,6 +354,11 @@ public class SettingFragment extends Fragment {
                 age_switcher.showNext();
                 TextView age_TV = age_switcher.findViewById(R.id.age_text_view);
                 age_TV.setText(age_Edit.getText().toString());
+                String age = age_Edit.getText().toString();
+
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+                SetDatabase set = new SetDatabase();
+                set.addNewUser(us);
             }
         });
 
@@ -352,6 +369,11 @@ public class SettingFragment extends Fragment {
                 coun_switcher.showNext();
                 TextView coun_TV = coun_switcher.findViewById(R.id.country_text_view);
                 coun_TV.setText(coun_Edit.getText().toString());
+                String country = coun_Edit.getText().toString();
+
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+                SetDatabase set = new SetDatabase();
+                set.addNewUser(us);
             }
         });
 
@@ -362,6 +384,11 @@ public class SettingFragment extends Fragment {
                 gen_switcher.showNext();
                 TextView gen_TV = gen_switcher.findViewById(R.id.gender_text_view);
                 gen_TV.setText(gen_Edit.getText().toString());
+                String gender = gen_Edit.getText().toString();
+
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+                SetDatabase set = new SetDatabase();
+                set.addNewUser(us);
             }
         });
 

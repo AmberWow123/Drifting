@@ -101,7 +101,7 @@ public class BagFragment extends Fragment {
         final float scale = getContext().getResources().getDisplayMetrics().density;
         int width_content = (int) (300 * scale + 0.5f);
         int width_date = (int) (120 * scale + 0.5f);
-        int height = (int) (80 * scale + 0.5f);
+        int height = (int) (70 * scale + 0.5f);
 
         sent_indicator.setVisibility(View.VISIBLE);
         picked_indicator.setVisibility(View.VISIBLE);
@@ -216,6 +216,7 @@ public class BagFragment extends Fragment {
                 }
             }
         });
+
         sent_button.performClick();
         sent_button.setSoundEffectsEnabled(true);
         picked_button.setSoundEffectsEnabled(true);
