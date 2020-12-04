@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.drifting.AddFriendActivity;
 import com.example.drifting.HomeFragment;
+import com.example.drifting.NavBar;
 import com.example.drifting.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -76,10 +77,17 @@ public class ViewBottleActivity extends AppCompatActivity {
         });
 
         Button throwBack_button = findViewById(R.id.throw_back_button);
+        String finalBottleID = bottleID;
         throwBack_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //TODO: throw back function
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
+                DatabaseReference this_bottle_data = reference.child(finalBottleID);
+                Map<String, Object> bottle_update = new HashMap<>();
+                bottle_update.put("isViewed", false);
+                this_bottle_data.updateChildren(bottle_update);
+                startActivity(new Intent(ViewBottleActivity.this, NavBar.class));
+                finish();
             }
         });
 
