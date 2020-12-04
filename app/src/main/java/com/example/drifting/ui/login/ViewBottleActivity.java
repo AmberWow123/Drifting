@@ -1,34 +1,24 @@
 package com.example.drifting.ui.login;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.drifting.AddFriendActivity;
 import com.example.drifting.HomeFragment;
 import com.example.drifting.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import backend.util.database.Bottle_back;
 
 public class ViewBottleActivity extends AppCompatActivity {
 
@@ -84,7 +74,14 @@ public class ViewBottleActivity extends AppCompatActivity {
 
             }
         });
-
+        
+        Button throwBack_button = findViewById(R.id.throw_back_button);
+        throwBack_button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //TODO: throw back function
+            }
+        });
 
         LinearLayout fromLayout = findViewById(R.id.from_layout);
         fromLayout.setOnClickListener(new View.OnClickListener() {
