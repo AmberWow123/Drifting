@@ -47,10 +47,10 @@
         android:id="@+id/sent_button"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#dcdcdc"
+        android:background="#e8e8e8"
         android:soundEffectsEnabled="false"
         android:text="Sent"
-        android:textColor="#777777"
+        android:textColor="#5E5E5E"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toStartOf="@+id/guideline9"
@@ -61,10 +61,10 @@
         android:id="@+id/picked_button"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="#dcdcdc"
+        android:background="#E8E8E8"
         android:soundEffectsEnabled="false"
         android:text="picked"
-        android:textColor="#777777"
+        android:textColor="#5e5e5e"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,10 +81,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline10">
 
-        <TableLayout
+        <LinearLayout
             android:id="@+id/bag_table_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
     </ScrollView>
 
     <ImageView
@@ -97,9 +98,10 @@
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toStartOf="@+id/guideline11"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/sent_indicator"
@@ -111,8 +113,9 @@
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline12"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
