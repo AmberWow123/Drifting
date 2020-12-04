@@ -25,6 +25,13 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.03" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/profcontent_guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.97" />
+
     <!--
     <TextView
         android:id="@+id/description"
@@ -100,10 +107,10 @@
         android:layout_width="356dp"
         android:layout_height="392dp"
         android:background="@drawable/profile_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/profcontent_guideline4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
         app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3"
         app:layout_constraintVertical_bias="0.33999997" />
 
@@ -114,53 +121,49 @@
         android:layout_height="120dp"
         android:layout_alignParentStart="false"
         android:layout_alignParentTop="false"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/avatar_background"
         android:elevation="2dp"
         app:layout_constraintBottom_toTopOf="@+id/profile_page_layout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3"
-        app:layout_constraintVertical_bias="0.521" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/avatar"
         android:elevation="6dp"
         app:layout_constraintBottom_toTopOf="@+id/profile_page_layout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3"
-        app:layout_constraintVertical_bias="0.521" ></de.hdodenhof.circleimageview.CircleImageView>
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"></de.hdodenhof.circleimageview.CircleImageView>
 
     <Button
         android:id="@+id/change_avatar"
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:layout_marginBottom="24dp"
         android:background="#00FFFFFF"
         android:drawableBottom="@drawable/blank"
         android:elevation="4dp"
         app:layout_constraintBottom_toTopOf="@+id/profile_page_layout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3"
-        app:layout_constraintVertical_bias="0.521" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TableLayout
         android:id="@+id/profile_page_layout"
         android:layout_width="323dp"
         android:layout_height="307dp"
+        android:layout_marginTop="44dp"
         android:elevation="5dp"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_background"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
-        app:layout_constraintTop_toTopOf="@+id/profile_background"
-        app:layout_constraintVertical_bias="0.611">
+        app:layout_constraintTop_toTopOf="@+id/profile_background">
 
         <TableRow
             android:layout_width="match_parent"
@@ -530,16 +533,16 @@
         android:text="Log Out"
         android:textColor="#ffffff"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/profcontent_guideline4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
         app:layout_constraintTop_toBottomOf="@+id/profile_background" />
 
     <Button
         android:id="@+id/reset_password_button"
         android:layout_width="112dp"
         android:layout_height="26dp"
+        android:layout_marginBottom="8dp"
         android:background="#00FFFFFF"
         android:text="Reset Password"
         android:textAllCaps="false"
@@ -547,11 +550,8 @@
         android:textIsSelectable="false"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/add_friend_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_background"
-        app:layout_constraintVertical_bias="0.90999997" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="@+id/right_guideline_profile" />
     <!--
     <Button
         android:id="@+id/editbutton"

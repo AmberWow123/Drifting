@@ -66,7 +66,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_light"
-                    android:text="My head is full of random stuff, Like rusty bread and bits of fluff. And talking pies with googly eyes, And stupid stuff that doesn't rhyme."
+                    android:hint=""
                     android:textColor="@color/black"
                     android:textSize="30sp"
                     android:paddingBottom="50dp"
@@ -76,7 +76,6 @@
                     android:layout_height="wrap_content"
                     android:scaleType="fitStart"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/gary"
                     android:paddingBottom="50dp"
                     />
                 <LinearLayout

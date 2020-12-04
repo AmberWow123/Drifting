@@ -24,6 +24,13 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.03" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/profcontent_guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.97" />
+
     <!--
         <TextView
             android:id="@+id/description"
@@ -99,12 +106,12 @@
         android:layout_width="356dp"
         android:layout_height="363dp"
         android:background="@drawable/profile_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/profcontent_guideline4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
         app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3"
-        app:layout_constraintVertical_bias="0.33999997" />
+        app:layout_constraintVertical_bias="0.32999998" />
 
 
     <ImageView
@@ -113,46 +120,41 @@
         android:layout_height="120dp"
         android:layout_alignParentStart="false"
         android:layout_alignParentTop="false"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/avatar_background"
         android:elevation="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/profile_page_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3"
-        app:layout_constraintVertical_bias="0.521" />
+        app:layout_constraintBottom_toTopOf="@+id/username_view"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="@+id/right_guideline_profile" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/avatar"
         android:elevation="6dp"
-        app:layout_constraintBottom_toTopOf="@+id/profile_page_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3"
-        app:layout_constraintVertical_bias="0.521" />
+        app:layout_constraintBottom_toTopOf="@+id/username_view"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"></de.hdodenhof.circleimageview.CircleImageView>
 
     <Button
         android:id="@+id/change_avatar"
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:layout_marginBottom="32dp"
         android:background="#00FFFFFF"
         android:drawableBottom="@drawable/blank"
         android:elevation="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/profile_page_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/profcontent_guideline3"
-        app:layout_constraintVertical_bias="0.516" />
+        app:layout_constraintBottom_toTopOf="@+id/username_view"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="@+id/right_guideline_profile" />
 
     <TextView
         android:id="@+id/username_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:elevation="5dp"
         android:fontFamily="@font/poppins"
         android:gravity="center"
@@ -163,20 +165,18 @@
         app:layout_constraintBottom_toTopOf="@+id/profile_page_layout"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
-        app:layout_constraintTop_toBottomOf="@+id/avatar_background"
-        app:layout_constraintVertical_bias="0.428" />
+        app:layout_constraintStart_toStartOf="@+id/right_guideline_profile" />
 
     <TableLayout
         android:id="@+id/profile_page_layout"
         android:layout_width="325dp"
         android:layout_height="247dp"
+        android:layout_marginTop="96dp"
         android:elevation="5dp"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_background"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
-        app:layout_constraintTop_toTopOf="@+id/profile_background"
-        app:layout_constraintVertical_bias="0.879">
+        app:layout_constraintTop_toTopOf="@+id/profile_background">
 
         <TableRow
             android:layout_width="match_parent"
@@ -399,49 +399,45 @@
         android:id="@+id/line_1"
         android:layout_width="325dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
         android:elevation="6dp"
         android:src="@drawable/line"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_background"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
-        app:layout_constraintTop_toTopOf="@+id/profile_background"
-        app:layout_constraintVertical_bias="0.42" />
+        app:layout_constraintTop_toTopOf="@+id/profile_background" />
 
     <ImageView
         android:id="@+id/line_2"
         android:layout_width="325dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="190dp"
         android:elevation="6dp"
         android:src="@drawable/line"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_background"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
-        app:layout_constraintTop_toTopOf="@+id/profile_background"
-        app:layout_constraintVertical_bias="0.56" />
+        app:layout_constraintTop_toTopOf="@+id/profile_background" />
 
     <ImageView
         android:id="@+id/line_4"
         android:layout_width="325dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="240dp"
         android:elevation="6dp"
         android:src="@drawable/line"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_background"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
-        app:layout_constraintTop_toTopOf="@+id/profile_background"
-        app:layout_constraintVertical_bias="0.828" />
+        app:layout_constraintTop_toTopOf="@+id/profile_background" />
 
     <ImageView
         android:id="@+id/line_3"
         android:layout_width="325dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="290dp"
         android:elevation="6dp"
         android:src="@drawable/line"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_background"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
-        app:layout_constraintTop_toTopOf="@+id/profile_background"
-        app:layout_constraintVertical_bias="0.7" />
+        app:layout_constraintTop_toTopOf="@+id/profile_background" />
 
     <Button
         android:id="@+id/add_friend_button"
@@ -452,11 +448,11 @@
         android:text="Add friend"
         android:textColor="#ffffff"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_background" />
+        app:layout_constraintBottom_toTopOf="@+id/profcontent_guideline4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
+        app:layout_constraintTop_toBottomOf="@+id/profile_background"
+        app:layout_constraintVertical_bias="0.25" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

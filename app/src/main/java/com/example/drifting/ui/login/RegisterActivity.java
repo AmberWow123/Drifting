@@ -36,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         Context context = getApplicationContext();
 
         //correspond those buttons/texts
-        mEmail = findViewById(R.id.username_register);
+        mEmail = findViewById(R.id.email_register);
         mPassword = findViewById(R.id.password_register);
         mRePassword = findViewById(R.id.re_enter_password_register);
         mRegisterBtn = findViewById(R.id.sign_up_button);

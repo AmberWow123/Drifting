@@ -1,6 +1,5 @@
 package com.example.drifting;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +20,14 @@ public class AddFriendActivity extends AppCompatActivity {
         TextView username_view = findViewById(R.id.username_view);
         username_view.setText(fromUser);
 
+
         Button addFriendButton = findViewById(R.id.add_friend_button);
+        /*
+        if fromUserID is already in user's friend list  //TODO: NEED USER FRIEND LIST FROM DATABASE
+            addFriendButton.setVisibility(View_GONE);
+
+
+         */
         addFriendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
