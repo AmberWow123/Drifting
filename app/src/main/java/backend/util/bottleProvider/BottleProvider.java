@@ -101,6 +101,12 @@ public class BottleProvider {
                         continue;
                     }
 
+                    //check if the bottle has been picked up by the same user before
+                    if(this_bottle.pickHistory.containsKey(userID)){
+                        Log.d("isPicked","A bottle picked before was returned");
+                        continue;
+                    }
+
                     //TODO: comment for test purpose, REUSE for formal product
                     //check if the bottle is from the same user
 //                    if (this_bottle.getUserID().equals(userID)) {

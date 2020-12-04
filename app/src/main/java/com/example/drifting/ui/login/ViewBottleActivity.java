@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -97,6 +98,7 @@ public class ViewBottleActivity extends AppCompatActivity {
                 final DatabaseReference added_user= this_bottle_data.child("pickHistory").child(current_user);
                 added_user.setValue(true);
 
+                Toast.makeText(ViewBottleActivity.this, "Yay you just throw the bottle back!! :D", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(ViewBottleActivity.this, NavBar.class));
                 finish();
             }

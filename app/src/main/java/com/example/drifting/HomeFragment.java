@@ -33,6 +33,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Vector;
 import java.util.concurrent.Executors;
@@ -270,6 +271,13 @@ public class HomeFragment extends Fragment {
                                     Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
                                     //String bottleID = this_bottle.getBottleID();
                                     String userID = fAuth.getUid();
+                                    HashMap<String, Boolean> this_history= this_bottle.getPickHistory();
+
+                                    //debug: print picked history
+                                    for(String users : this_history.keySet()) {
+                                        Log.d("", "picked content:");
+                                        Log.d("user:", users);
+                                    }
 
                                     //check if the bottle is viewed
                                     if(this_bottle.getIsViewed()) {
@@ -283,13 +291,19 @@ public class HomeFragment extends Fragment {
 //                                        continue;
 //                                    }
 
+                                    //check if the bottle has been picked up by the same user before
+                                    if(this_bottle.pickHistory.containsKey(userID)){
+                                        Log.d("isPicked","A bottle picked before was returned");
+                                        continue;
+                                    }
+
                                     else {
 
                                         Bottle bottle_get = new Bottle(this_bottle, bottleList.size());
                                         bottle_get.comment = "filler comment";
                                         bottle_get.setVisible();
                                         bottleList.add(bottle_get);
-                                        Log.d(" Bottle content is :", " " + bottle_get.message);
+                                        Log.d(" Bottle content is :", " aaaaaaaaaaaaaa" + bottle_get.message);
                                         Log.d(" BottleList size is :", " " + bottleList.size());
                                         Log.d(" vector contains ", bottleList.toString());
                                         reference.removeEventListener(this);
