@@ -1,6 +1,6 @@
 package backend.util.database;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Bottle_back{
 
@@ -17,7 +17,7 @@ public class Bottle_back{
      public Boolean isViewed = false;
 
     //history attribute to track all users picked up the bottles
-     public ArrayList<String> pickHistory = new ArrayList<String>();
+     public HashMap<String, Boolean> pickHistory = new HashMap<>();
 
      public Bottle_back(){
      }
@@ -83,5 +83,5 @@ public class Bottle_back{
          this.isViewed = isViewed;
     }
 
-    public ArrayList<String> getPickHistory() {return pickHistory;}
+    public HashMap<String, Boolean> getPickHistory() {return pickHistory;}
 }

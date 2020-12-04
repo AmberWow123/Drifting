@@ -15,6 +15,7 @@ import com.example.drifting.AddFriendActivity;
 import com.example.drifting.HomeFragment;
 import com.example.drifting.NavBar;
 import com.example.drifting.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -43,6 +44,8 @@ public class ViewBottleActivity extends AppCompatActivity {
         String comment = "";
         String bottleID = "";
         String fromUserID = "";
+        FirebaseAuth fAuth = FirebaseAuth.getInstance();
+        String current_user = fAuth.getUid();
 
         if (HomeFragment.currBottle != null) {
              msg = HomeFragment.currBottle.message;
@@ -76,6 +79,7 @@ public class ViewBottleActivity extends AppCompatActivity {
             }
         });
 
+        // Throw back function
         Button throwBack_button = findViewById(R.id.throw_back_button);
         String finalBottleID = bottleID;
         throwBack_button.setOnClickListener(new View.OnClickListener(){
@@ -83,9 +87,16 @@ public class ViewBottleActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
                 DatabaseReference this_bottle_data = reference.child(finalBottleID);
+
+                // set isViewed to false
                 Map<String, Object> bottle_update = new HashMap<>();
                 bottle_update.put("isViewed", false);
                 this_bottle_data.updateChildren(bottle_update);
+
+                //add the user info to bottle history
+                final DatabaseReference added_user= this_bottle_data.child("pickHistory").child(current_user);
+                added_user.setValue(true);
+
                 startActivity(new Intent(ViewBottleActivity.this, NavBar.class));
                 finish();
             }
