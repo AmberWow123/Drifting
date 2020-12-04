@@ -138,7 +138,10 @@ public class BottleProvider {
         long currTimestampMillis = timer.getTimestamp();
         double bottleTravelRate = 13.0;     // Increase this variable to make the bottles drift faster. The unit is in degree/hour
 
-        double manhattanDistance = (abs(bottle.latitude - latitude) + abs(bottle.longitude - longitude));
+        double manhattanDistance =  Math.min((abs(bottle.latitude - latitude) + (abs(bottle.latitude) +
+                abs(latitude)) / 180.0 * abs(bottle.longitude - longitude)),
+                360 - (abs(bottle.latitude - latitude) + (abs(bottle.latitude) + abs(latitude)) / 180.0
+                        * abs(bottle.longitude - longitude)));
 
         if(manhattanDistance < 0.0001){     // Floating point operation: consider two locations the same if their manhattan distance
                                             // is this small.
