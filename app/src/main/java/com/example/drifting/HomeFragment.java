@@ -244,6 +244,7 @@ public class HomeFragment extends Fragment {
                         bottle_get.setVisible();
                         bottleList.add(bottle_get);
                         Log.d(" Bottle content is :", " " + bottle_get.message);
+                        Log.d("The sender is:", bottle_get.userID);
                         Log.d(" BottleList size is :", " " + bottleList.size());
                         Log.d(" vector contains ", bottleList.toString());
 
@@ -410,6 +411,7 @@ public class HomeFragment extends Fragment {
         public Bottle(Bottle_back bottleBack, int bottle_index){
             self = this;
             userID = bottleBack.userID;
+            fromUser = bottleBack.userID;
             message = bottleBack.message;
             city = bottleBack.city;
             bottleID = bottleBack.getBottleID();
