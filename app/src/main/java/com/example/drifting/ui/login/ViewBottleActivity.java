@@ -74,7 +74,7 @@ public class ViewBottleActivity extends AppCompatActivity {
 
             }
         });
-        
+
         Button throwBack_button = findViewById(R.id.throw_back_button);
         throwBack_button.setOnClickListener(new View.OnClickListener(){
             @Override
