@@ -176,7 +176,7 @@ public class SettingFragment extends Fragment {
                 name = snapshot.child("user_name").getValue() != null ? snapshot.child("user_name").getValue().toString() : "unspecified";
                 gender = snapshot.child("user_gender").getValue() != null ? snapshot.child("user_gender").getValue().toString() : "unspecified";
                 country = snapshot.child("user_country").getValue()!= null ? snapshot.child("user_country").getValue().toString() : "unspecified";
-                age = snapshot.child("user_age").getValue()!= null ? snapshot.child("user_age").getValue().toString() : "unspecified";
+                age = snapshot.child("age").getValue()!= null ? snapshot.child("age").getValue().toString() : "unspecified";
                 email = snapshot.child("user_email").getValue()!= null ? snapshot.child("user_email").getValue().toString() : "unspecified";
                 receive_list = (HashMap<String, Boolean>)snapshot.child("receive_list").getValue();
                 send_list = (HashMap<String, Boolean>)snapshot.child("send_list").getValue();
