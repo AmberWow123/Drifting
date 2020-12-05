@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/msg_background"
-    tools:context=".ui.login.ViewBottleActivity">
+    tools:context=".ui.login.ViewBagBottleActivity">
 
     <Button
-        android:id="@+id/close_button"
+        android:id="@+id/bag_close_button"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginStart="228dp"
@@ -48,49 +48,49 @@
 
 
 
-        <ScrollView
-            android:id="@+id/content_scrollview"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/bottom_guideline"
-            app:layout_constraintEnd_toStartOf="@+id/right_guideline"
-            app:layout_constraintStart_toStartOf="@+id/left_guideline"
-            app:layout_constraintTop_toTopOf="@+id/top_guideline">
+    <ScrollView
+        android:id="@+id/bag_content_scrollview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_guideline"
+        app:layout_constraintEnd_toStartOf="@+id/right_guideline"
+        app:layout_constraintStart_toStartOf="@+id/left_guideline"
+        app:layout_constraintTop_toTopOf="@+id/top_guideline">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/bag_bottle_message_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
+                android:hint=""
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:paddingBottom="50dp"
+                />
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitStart"
+                android:adjustViewBounds="true"
+                android:paddingBottom="50dp"
+                />
             <LinearLayout
+                android:id="@+id/bag_from_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="horizontal"
+                android:background="@drawable/view_msg_rect"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="15dp"
 
+                >
                 <TextView
-                    android:id="@+id/bottle_message_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_light"
-                    android:hint=""
-                    android:textColor="@color/black"
-                    android:textSize="30sp"
-                    android:paddingBottom="50dp"
-                    />
-                <ImageView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitStart"
-                    android:adjustViewBounds="true"
-                    android:paddingBottom="50dp"
-                    />
-                <LinearLayout
-                    android:id="@+id/from_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@drawable/view_msg_rect"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="15dp"
-
-                    >
-                <TextView
-                    android:id="@+id/from_label_textview"
+                    android:id="@+id/bag_from_label_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_light"
@@ -101,7 +101,7 @@
                     >
                 </TextView>
                 <TextView
-                    android:id="@+id/from_var_textview"
+                    android:id="@+id/bag_from_var_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_light"
@@ -110,102 +110,100 @@
 
                     android:textColor="@color/black"
                     android:textSize="18sp" />
-                </LinearLayout>
+            </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/location_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@drawable/view_msg_rect"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="15dp"
+            <LinearLayout
+                android:id="@+id/bag_location_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/view_msg_rect"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="15dp"
 
-                    >
-                    <TextView
-                        android:id="@+id/location_label_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_light"
-                        android:text="Location"
-
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        >
-                    </TextView>
-                    <TextView
-                        android:id="@+id/location_var_textview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_light"
-                        android:gravity="center_vertical|right"
-
-
-                        android:textColor="@color/black"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/add_comment_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@drawable/view_msg_rect"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="15dp"
-                    >
-
-                    <TextView
-                        android:id="@+id/comment_label_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_light"
-                        android:text="Comment:"
-                        android:textColor="@color/black"
-                        android:textSize="18sp"
-                        />
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="[add]"
-                        android:textColor="@color/black"
-                        android:background="@android:color/transparent"
-                        android:gravity="center_vertical|right"
-                        />
-
-                </LinearLayout>
-
-
-
-                <!-- below is the where sample comments insert -->
+                >
                 <TextView
-                    android:id="@+id/comment_field_textview"
-                    android:layout_width="fill_parent"
+                    android:id="@+id/bag_location_label_textview"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_light"
-                    android:background="@drawable/view_msg_rect"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="15dp"
+                    android:text="Location"
+
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     >
                 </TextView>
-
                 <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="100dp"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="15dp"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    >
-                </TextView>
+                    android:id="@+id/bag_location_var_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:gravity="center_vertical|right"
 
+
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
             </LinearLayout>
-        </ScrollView>
+
+            <LinearLayout
+                android:id="@+id/bag_add_comment_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/view_msg_rect"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="15dp"
+                >
+
+                <TextView
+                    android:id="@+id/bag_comment_label_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_light"
+                    android:text="Comment:"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="[add]"
+                    android:textColor="@color/black"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_vertical|right"
+                    />
+
+            </LinearLayout>
+
+
+
+            <!-- below is the where sample comments insert -->
+            <TextView
+                android:id="@+id/bag_comment_field_textview"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
+                android:background="@drawable/view_msg_rect"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="15dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                >
+            </TextView>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="100dp"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="15dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                >
+            </TextView>
+        </LinearLayout>
+    </ScrollView>
 
 
 

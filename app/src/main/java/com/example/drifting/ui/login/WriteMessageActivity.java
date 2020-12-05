@@ -56,6 +56,8 @@
 
 //import com.google.firebase.database.annotations.Nullable;
 
+//import com.google.firebase.database.annotations.Nullable;
+
 public class WriteMessageActivity extends AppCompatActivity {
 
     private static final int MY_PERMISSION_REQUEST_LOCATION = 1;
@@ -71,7 +73,6 @@ public class WriteMessageActivity extends AppCompatActivity {
     }
 
     Switch switch_anon;
-    TextView text_view_anon;
 
     private static String MY_PREFS = "switch_prefs";
     private static String ANON_STATUS = "anon_on";
@@ -151,6 +152,10 @@ public class WriteMessageActivity extends AppCompatActivity {
                             true, city, latitude[0], longitude[0], currTime.getTimestamp(),
                             null, false);
 
+                    //save the bottle id in user's send list
+                    DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(userID);
+                    final DatabaseReference added_bottle= UserRef.child("send_list");
+                    //added_bottle.setValue(true);
 
                     SetDatabase set = new SetDatabase();
                     set.addNewBottle(this_bottle);
@@ -240,7 +245,6 @@ public class WriteMessageActivity extends AppCompatActivity {
 
         // switch button
         switch_anon = findViewById(R.id.switch_button);
-        text_view_anon = findViewById(R.id.text_is_anon);
 
         myPreferences = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
         myEditor = getSharedPreferences(MY_PREFS, MODE_PRIVATE).edit();
@@ -250,11 +254,6 @@ public class WriteMessageActivity extends AppCompatActivity {
 
         switch_anon.setChecked(switch_status);
 
-        if(anon_status) {
-            text_view_anon.setText("ON!!");
-        } else {
-            text_view_anon.setText("OFF!");
-        }
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
 
@@ -262,14 +261,12 @@ public class WriteMessageActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean b) {
                 if (buttonView.isChecked()) {
-                    text_view_anon.setText("ON!!");
 
                     myEditor.putBoolean(SWITCH_STATUS, true);
                     myEditor.putBoolean(ANON_STATUS, true);
                     myEditor.apply();
                     switch_anon.setChecked(true);
                 } else {
-                    text_view_anon.setText("OFF!");
 
                     myEditor.putBoolean(SWITCH_STATUS, false);
                     myEditor.putBoolean(ANON_STATUS, false);

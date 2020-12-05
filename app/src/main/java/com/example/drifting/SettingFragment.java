@@ -38,6 +38,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
 
@@ -500,6 +502,9 @@ public class SettingFragment extends Fragment {
         if (requestCode == 1000){
             if (resultCode  == Activity.RESULT_OK){
                 Uri imageUri = data.getData();
+
+                CropImage.activity()
+                        .start(getContext(), this);
                 profileImage.setImageURI(imageUri);
                 SetDatabase set = new SetDatabase();
                 set.uploadAvatars(firebaseUser.getUid(),imageUri);
