@@ -26,6 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import backend.util.database.Bottle_back;
+import com.example.drifting.ui.login.ViewBagBottleActivity;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -166,7 +168,7 @@ public class BagFragment extends Fragment {
                      customView.setOnClickListener(new View.OnClickListener() {
                          @Override
                          public void onClick(View v) {
-                             startActivity(new Intent(getActivity(), ViewBottleActivity.class));
+                             startActivity(new Intent(getActivity(), ViewBagBottleActivity.class));
                          }
                      });
                  }
@@ -199,7 +201,7 @@ public class BagFragment extends Fragment {
                     customView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            startActivity(new Intent(getActivity(), ViewBottleActivity.class));
+                            startActivity(new Intent(getActivity(), ViewBagBottleActivity.class));
                         }
                     });
                 }

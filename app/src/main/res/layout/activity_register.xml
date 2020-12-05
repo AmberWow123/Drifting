@@ -42,6 +42,7 @@
         android:inputType="text"
         android:padding="10dp"
         android:selectAllOnFocus="true"
+        android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/right_guideline_register"
@@ -62,6 +63,7 @@
         android:inputType="textEmailAddress"
         android:padding="10dp"
         android:selectAllOnFocus="true"
+        android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/right_guideline_register"
@@ -82,6 +84,7 @@
         android:inputType="textPassword"
         android:padding="10dp"
         android:selectAllOnFocus="true"
+        android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/right_guideline_register"
@@ -95,13 +98,13 @@
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
         android:background="@color/white"
-        android:drawableStart="@drawable/eye_hide_line"
-        android:drawablePadding="8dp"
         android:fontFamily="@font/roboto_light"
         android:hint="Re-enter Password"
         android:inputType="textPassword"
         android:padding="10dp"
+        android:paddingStart="42dp"
         android:selectAllOnFocus="true"
+        android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:textSize="14dp"
         app:layout_constraintEnd_toStartOf="@+id/right_guideline_register"
@@ -138,5 +141,15 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent=".65"
         />
+
+    <Button
+        android:id="@+id/hide_password"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/eye_hide_line"
+        app:layout_constraintBottom_toBottomOf="@+id/re_enter_password_register"
+        app:layout_constraintStart_toStartOf="@+id/left_guideline_register" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
