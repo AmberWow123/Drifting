@@ -29,6 +29,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import backend.util.database.Bottle_back;
 
@@ -105,6 +107,7 @@ public class BagFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+<<<<<<< Updated upstream
         //get database reference
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
         //get current userID
@@ -132,6 +135,16 @@ public class BagFragment extends Fragment {
 
             }
         });
+=======
+        picked_button = getView().findViewById(R.id.picked_button);
+        sent_button = getView().findViewById(R.id.sent_button);
+        linearLayout = (LinearLayout) getView().findViewById(R.id.bag_table_layout);
+        sent_indicator = getView().findViewById(R.id.sent_indicator);
+        picked_indicator = getView().findViewById(R.id.picked_indicator);
+
+
+
+>>>>>>> Stashed changes
 
         picked_button = getView().findViewById(R.id.picked_button);
         sent_button = getView().findViewById(R.id.sent_button);
@@ -151,11 +164,67 @@ public class BagFragment extends Fragment {
         picked_button.setOnClickListener(new Button.OnClickListener(){
              @Override
             public void onClick(View v) {
+<<<<<<< Updated upstream
                  tableLayout.removeAllViews();
+=======
+                 //get current userID
+                 FirebaseAuth fAuth;
+                 fAuth = FirebaseAuth.getInstance();
+                 String userID = fAuth.getUid();
+                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                 DatabaseReference user_ref = ref.child("user").child(userID).child("receive_list");
+
+                 Object hm_obj = new Object();
+
+                 //ArrayList<String> bottle_ids = new ArrayList<String>();
+                 user_ref.addValueEventListener(new ValueEventListener() {
+                     @Override
+                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                         Log.d("ref", user_ref.toString());
+                         HashMap<String, Boolean> hp = (HashMap)snapshot.getValue(hm_obj.getClass());
+                         for (Map.Entry<String, Boolean> set : hp.entrySet()) {
+                             if(set.getValue() == true) {
+                                 //set.getKey() is the bottle id
+                                 //Log.d("HashMap: ","Key: "+ set.getKey() + " Val: " + set.getValue());
+                                 DatabaseReference bottle_ref = ref.child("bottle").child(set.getKey());
+                                 bottle_ref.addValueEventListener(new ValueEventListener() {
+                                     @Override
+                                     public void onDataChange(@NonNull DataSnapshot snapshot_2) {
+                                         String msg = snapshot_2.child("message").getValue(String.class);
+                                         pickedBottle.add(msg);
+                                         long time = snapshot_2.child("timestamp").getValue(Long.class);
+                                         pickedTime.add(String.valueOf(time));
+                                         String city = snapshot_2.child("city").getValue(String.class);
+                                         pickedLocation.add(city);
+                                         //Log.d("Msg ", msg);
+                                         //Log.d("Time ", String.valueOf(time));
+                                         //Log.d("City", city);
+                                     }
+
+                                     @Override
+                                     public void onCancelled(@NonNull DatabaseError error) {
+
+                                     }
+                                 });
+                             }
+                         }
+
+                         //Log.d("userId", "UserID " + userID);
+                         //Log.d("sentBottle", "Bottle " + sentBottle.toString());
+                     }
+
+                     @Override
+                     public void onCancelled(@NonNull DatabaseError error) {
+
+                     }
+                 });
+                 linearLayout.removeAllViews();
+>>>>>>> Stashed changes
                  sent_indicator.setVisibility(View.GONE);
                  picked_indicator.setVisibility(View.VISIBLE);
 
                  for(int i=0; i<pickedBottle.size(); i++) {
+<<<<<<< Updated upstream
                      String content = pickedBottle.get(i);
                      String date = pickedTime.get(i);
                      TableRow row = new TableRow(getActivity());
@@ -192,12 +261,32 @@ public class BagFragment extends Fragment {
                      row.addView(textView2);
                      tableLayout.addView(row,i);
                      row.setOnClickListener(new View.OnClickListener() {
+=======
+                     //LinearLayout row = new LinearLayout(getActivity());
+                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                     layoutParams.setMargins(0, 0, 0, 10);
+                     View customView = getLayoutInflater().inflate(R.layout.bag_item, null);
+                     TextView bag_content = (TextView)customView.findViewById(R.id.textView_bag_content);
+                     TextView bag_date = (TextView) customView.findViewById(R.id.textView_bag_time);
+                     TextView bag_location = (TextView) customView.findViewById(R.id.textView_bag_location);
+                     bag_date.setText(pickedTime.get(i));
+                     bag_content.setText(pickedBottle.get(i));
+                     bag_location.setText(pickedLocation.get(i));
+                     linearLayout.addView(customView, layoutParams);
+                     customView.setOnClickListener(new View.OnClickListener() {
+>>>>>>> Stashed changes
                          @Override
                          public void onClick(View v) {
                              startActivity(new Intent(getActivity(), ViewBottleActivity.class));
                          }
                      });
                  }
+<<<<<<< Updated upstream
+=======
+                 pickedTime.clear();
+                 pickedBottle.clear();
+                 pickedLocation.clear();
+>>>>>>> Stashed changes
             }
 
 
@@ -206,7 +295,59 @@ public class BagFragment extends Fragment {
         sent_button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+<<<<<<< Updated upstream
                 tableLayout.removeAllViews();
+=======
+                //get current userID
+                FirebaseAuth fAuth;
+                fAuth = FirebaseAuth.getInstance();
+                String userID = fAuth.getUid();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference user_ref = ref.child("user").child(userID).child("send_list");
+
+                Object hm_obj = new Object();
+
+                //ArrayList<String> bottle_ids = new ArrayList<String>();
+                user_ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        HashMap<String, Boolean> hp = (HashMap)snapshot.getValue(hm_obj.getClass());
+                        for (Map.Entry<String, Boolean> set : hp.entrySet()) {
+                            //set.getKey() is the bottle id
+                            //Log.d("HashMap: ","Key: "+ set.getKey() + " Val: " + set.getValue());
+                            DatabaseReference bottle_ref = ref.child("bottle").child(set.getKey());
+                            bottle_ref.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot_2) {
+                                    String msg = snapshot_2.child("message").getValue(String.class);
+                                    sentBottle.add(msg);
+                                    long time = snapshot_2.child("timestamp").getValue(Long.class);
+                                    sentTime.add(String.valueOf(time));
+                                    String city = snapshot_2.child("city").getValue(String.class);
+                                    sentLocation.add(city);
+                                    //Log.d("Msg ", msg);
+                                    //Log.d("Time ", String.valueOf(time));
+                                    //Log.d("City", city);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
+
+                        //Log.d("userId", "UserID " + userID);
+                        //Log.d("sentBottle", "Bottle " + sentBottle.toString());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                linearLayout.removeAllViews();
+>>>>>>> Stashed changes
                 sent_indicator.setVisibility(View.VISIBLE);
                 picked_indicator.setVisibility(View.GONE);
 
@@ -256,6 +397,12 @@ public class BagFragment extends Fragment {
 
                 }
                 sentBottle.clear();
+<<<<<<< Updated upstream
+=======
+                sentTime.clear();
+                sentLocation.clear();
+
+>>>>>>> Stashed changes
             }
 
         });
