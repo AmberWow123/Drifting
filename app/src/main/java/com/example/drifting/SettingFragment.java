@@ -456,12 +456,6 @@ public class SettingFragment extends Fragment {
 
                 CropImage.activity()
                         .start(getContext(), this);
-
-//                CropImage.activity()
-//                        .setGuidelines(CropImageView.Guidelines.ON)
-//                        .setAspectRatio(1,1)
-//                        .start(this);
-
                 profileImage.setImageURI(imageUri);
                 SetDatabase set = new SetDatabase();
                 set.uploadAvatars(firebaseUser.getUid(),imageUri);
