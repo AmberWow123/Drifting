@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.drifting.ui.login.ViewBottleActivity;
+import com.example.drifting.ui.login.ViewBagBottleActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -123,7 +123,7 @@ public class BagFragment extends Fragment {
                      customView.setOnClickListener(new View.OnClickListener() {
                          @Override
                          public void onClick(View v) {
-                             startActivity(new Intent(getActivity(), ViewBottleActivity.class));
+                             startActivity(new Intent(getActivity(), ViewBagBottleActivity.class));
                          }
                      });
                  }
@@ -156,7 +156,7 @@ public class BagFragment extends Fragment {
                     customView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            startActivity(new Intent(getActivity(), ViewBottleActivity.class));
+                            startActivity(new Intent(getActivity(), ViewBagBottleActivity.class));
                         }
                     });
                 }
