@@ -9,46 +9,40 @@
     >
 
     <RelativeLayout
-        android:id="@+id/contact_container"
+        android:id="@+id/bag_container"
         android:layout_width="match_parent"
-        android:layout_height="63dp"
-        android:layout_margin="0dp"
+        android:layout_height="65dp"
         android:background="#FFFFFF">
 
-        <ImageView
-            android:id="@+id/imageView_friend_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:padding="2dp" />
-
         <TextView
-            android:id="@+id/textView_friend_name"
+            android:id="@+id/textView_bag_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="19dp"
+            android:layout_marginStart="22dp"
             android:layout_marginTop="7dp"
-            android:layout_toEndOf="@+id/imageView_friend_image"
             android:fontFamily="@font/poppins"
-            android:text="test friend name"
+            android:maxWidth="250dp"
+            android:maxLines="2"
+            android:text="this is a test bottle content. Hi!!!!"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/textView_recent_message"
+            android:id="@+id/textView_bag_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView_friend_name"
-            android:layout_marginStart="21dp"
-            android:layout_marginTop="-4dp"
-            android:layout_toEndOf="@+id/imageView_friend_image"
-            android:text="test message"
-            android:textColor="#4D99D5"
-            android:textSize="15sp" />
+            android:layout_below="@+id/textView_bag_time"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="15dp"
+            android:text="mountainView"
+            android:textColor="#010101"
+            android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/textView_time"
+            android:id="@+id/textView_bag_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
@@ -57,8 +51,8 @@
             android:layout_marginTop="13dp"
             android:layout_marginEnd="17dp"
             android:fontFamily="@font/poppins"
-            android:text="10:00"
-            android:textColor="#305268"
+            android:text="00/00/0000"
+            android:textColor="#010101"
             android:textSize="10sp" />
 
     </RelativeLayout>

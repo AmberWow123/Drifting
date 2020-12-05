@@ -33,6 +33,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+
 import backend.util.database.SetDatabase;
 import backend.util.database.UserProfile;
 
@@ -62,6 +64,9 @@ public class SettingFragment extends Fragment {
     private static  String email = null;
     private static  String gender = null;
     private static  String country = null;
+    private static HashMap<String, Boolean> receive_list;
+    private static HashMap<String, Boolean> send_list;
+
     private SetDatabase set = new SetDatabase();
 
     private Spinner spinner;
@@ -147,10 +152,12 @@ public class SettingFragment extends Fragment {
         editAgeButton = getView().findViewById(R.id.edit_age_button);
         editCountryButton = getView().findViewById(R.id.edit_country_button);
         editGenderButton = getView().findViewById(R.id.edit_gender_button);
+        //editGenderButton = getView().findViewById(R.id.edit_gender_button);
         nameEdit = getView().findViewById(R.id.username_edit);
         des_Edit = getView().findViewById(R.id.description_text_edit);
         email_Edit = getView().findViewById(R.id.email_text_edit);
         gen_Edit = getView().findViewById(R.id.gender_text_edit);
+        //gen_Edit = getView().findViewById(R.id.gender_text_edit);
         age_Edit = getView().findViewById(R.id.age_text_edit);
         coun_Edit = getView().findViewById(R.id.country_text_edit);
         settingbutton = getView().findViewById(R.id.settingbutton);
@@ -164,6 +171,18 @@ public class SettingFragment extends Fragment {
         String[] items = new String[]{"Not visible to others", "Visible to friends only", "Visible to all"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, R.id.dropdown_item, items);
         dropdown.setAdapter(adapter);
+        //preference of privacy
+        Spinner privacy_spinner = getView().findViewById(R.id.spinner1);
+        String[] items_1 = new String[]{"Not visible to others", "Visible to friends only", "Visible to all"};
+        ArrayAdapter<String> adapter_privacy = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, R.id.dropdown_item, items_1);
+        privacy_spinner.setAdapter(adapter_privacy);
+
+        //gender spinner
+        Spinner gender_spinner = getView().findViewById(R.id.spinner2);
+        String[] items_2 = new String[]{"Unspecified", "Female", "Male"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, R.id.dropdown_item, items_2);
+        gender_spinner.setAdapter(adapter);
+
 
         UserRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -172,7 +191,10 @@ public class SettingFragment extends Fragment {
                 gender = snapshot.child("user_gender").getValue() != null ? snapshot.child("user_gender").getValue().toString() : "unspecified";
                 country = snapshot.child("user_country").getValue()!= null ? snapshot.child("user_country").getValue().toString() : "unspecified";
                 age = snapshot.child("user_age").getValue()!= null ? snapshot.child("user_age").getValue().toString() : "unspecified";
+                age = snapshot.child("age").getValue()!= null ? snapshot.child("age").getValue().toString() : "unspecified";
                 email = snapshot.child("user_email").getValue()!= null ? snapshot.child("user_email").getValue().toString() : "unspecified";
+                receive_list = (HashMap<String, Boolean>)snapshot.child("receive_list").getValue();
+                send_list = (HashMap<String, Boolean>)snapshot.child("send_list").getValue();
 
             }
             @Override
@@ -185,9 +207,11 @@ public class SettingFragment extends Fragment {
         TextView nameTV1 = name1Switcher.findViewById(R.id.username_view);
         nameTV1.setText(name);
 
+        /*
         ViewSwitcher gender1Switcher = getView().findViewById(R.id.my_switcher_gender);
         TextView gen1TV = gender1Switcher.findViewById(R.id.gender_text_view);
         gen1TV.setText(gender);
+         */
 
         ViewSwitcher age_1switcher = getView().findViewById(R.id.my_switcher_age);
         TextView age1TV = age_1switcher.findViewById(R.id.age_text_view);
@@ -200,6 +224,30 @@ public class SettingFragment extends Fragment {
         ViewSwitcher coun_1switcher = getView().findViewById(R.id.my_switcher_country);
         TextView coun_1TV = coun_1switcher.findViewById(R.id.country_text_view);
         coun_1TV.setText(country);
+
+        UserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                name = snapshot.child("user_name").getValue() != null ? snapshot.child("user_name").getValue().toString() : "unspecified";
+                gender = snapshot.child("user_gender").getValue() != null ? snapshot.child("user_gender").getValue().toString() : "unspecified";
+                country = snapshot.child("user_country").getValue()!= null ? snapshot.child("user_country").getValue().toString() : "unspecified";
+                age = snapshot.child("user_age").getValue()!= null ? snapshot.child("user_age").getValue().toString() : "unspecified";
+                email = snapshot.child("user_email").getValue()!= null ? snapshot.child("user_email").getValue().toString() : "unspecified";
+                receive_list = (HashMap<String, Boolean>)snapshot.child("receive_list").getValue();
+                send_list = (HashMap<String, Boolean>)snapshot.child("send_list").getValue();
+
+                nameTV1.setText(name);
+                age1TV.setText(age);
+                email_1TV.setText(email);
+                coun_1TV.setText(country);
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
@@ -327,6 +375,8 @@ public class SettingFragment extends Fragment {
 
 
                 UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, receive_list, send_list);
+>>>>>>> master
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
 
@@ -372,6 +422,9 @@ public class SettingFragment extends Fragment {
 
                // UserProfile us = new UserProfile(name, email, null, null, null, gender, country, age);
 
+=======
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, receive_list, send_list);
+>>>>>>> master
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
@@ -386,16 +439,20 @@ public class SettingFragment extends Fragment {
                 coun_TV.setText(coun_Edit.getText().toString());
                 String country = coun_Edit.getText().toString();
 
+<<<<<<< HEAD
 
                 UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
 
                 //UserProfile us = new UserProfile(name, email, null, null, null, gender, country, age);
 
+=======
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, receive_list, send_list);
+>>>>>>> master
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
         });
-
+        /*
         editGenderButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -405,15 +462,20 @@ public class SettingFragment extends Fragment {
                 gen_TV.setText(gen_Edit.getText().toString());
                 String gender = gen_Edit.getText().toString();
 
+<<<<<<< HEAD
 
                 UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
 
                // UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
 
+=======
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, receive_list, send_list);
+>>>>>>> master
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
         });
+         */
 
 
         /*Intent intent = new Intent(getActivity(), SettingFragment.class);
