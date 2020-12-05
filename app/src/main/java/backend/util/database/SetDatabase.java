@@ -49,9 +49,9 @@ public class SetDatabase {
             DatabaseReference targetdataRef = database.child("bottle").child(String.valueOf(this_bottle.bottleID));
 
             if (!this_bottle.isVideo)
-                targetRef = storageRef.child("picture/" + this_bottle.bottleID + "." + parseName(file.getLastPathSegment()).second);
+                targetRef = storageRef.child("picture/" + this_bottle.bottleID + ".jpg");
             else
-                targetRef = storageRef.child("video/" + this_bottle.bottleID + "." + parseName(file.getLastPathSegment()).second);
+                targetRef = storageRef.child("video/" + this_bottle.bottleID + ".mp4");
 
             UploadTask uploadTask = targetRef.putFile(file);
 

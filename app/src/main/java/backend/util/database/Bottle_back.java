@@ -17,6 +17,8 @@ public class Bottle_back{
      public Boolean isViewed = false;
      public String ext = null;
      public boolean isVideo = false;
+     public String picture = null;
+     public String video = null;
 
     //history attribute to track all users picked up the bottles
      public HashMap<String, Boolean> pickHistory = new HashMap<>();
@@ -40,7 +42,7 @@ public class Bottle_back{
         this.timestamp = timestamp;
         this.comment = comment;
         this.isViewed = viewed;
-        this.ext = SetDatabase.parseName(filename).second;
+        this.ext = filename;
         this.isVideo = isVideo;
     }
 

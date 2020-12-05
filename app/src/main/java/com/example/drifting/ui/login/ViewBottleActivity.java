@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import com.example.drifting.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +47,8 @@ public class ViewBottleActivity extends AppCompatActivity {
         String comment = "";
         String bottleID = "";
         String fromUserID = "";
+        String pictureURL = null;
+        String videoURL = null;
         FirebaseAuth fAuth = FirebaseAuth.getInstance();
         String current_user = fAuth.getUid();
 
@@ -55,6 +59,9 @@ public class ViewBottleActivity extends AppCompatActivity {
              comment = HomeFragment.currBottle.comment;
              bottleID = HomeFragment.currBottle.bottleID;
              fromUserID = HomeFragment.currBottle.userID;
+             pictureURL = HomeFragment.currBottle.pictureDownloadURL;
+             //Log.d("feafiawn",pictureURL);
+             videoURL = HomeFragment.currBottle.videoDownloadURL;
         }
 
 
@@ -69,6 +76,10 @@ public class ViewBottleActivity extends AppCompatActivity {
 
         TextView commentView = findViewById(R.id.comment_field_textview);
         commentView.setText(comment);
+
+        ImageView pictureView = findViewById(R.id.bottle_image);
+        //Log.d("url",pictureURL);
+        if(pictureURL != null) Picasso.get().load(pictureURL).into(pictureView);
 
         Button close_button = findViewById(R.id.close_button);
         close_button.setOnClickListener(new View.OnClickListener() {

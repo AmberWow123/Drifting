@@ -16,6 +16,7 @@
  import android.os.Bundle;
  import android.os.Looper;
  import android.provider.MediaStore;
+ import android.util.Log;
  import android.view.View;
  import android.widget.Button;
  import android.widget.CompoundButton;
@@ -155,11 +156,14 @@ public class WriteMessageActivity extends AppCompatActivity {
                     boolean isVideo = false;
                     if (picture != null) {
                         filename = picture.getLastPathSegment();
-                        Toast.makeText(WriteMessageActivity.this, "foundpicture", Toast.LENGTH_SHORT).show();
                     }
                     else if (video != null) {
                         filename = video.getLastPathSegment();
                         isVideo = true;
+                    }
+
+                    if (filename != null) {
+                        Log.d("","ffff");
                     }
                     Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
                             true, city, latitude[0], longitude[0], currTime.getTimestamp(),
@@ -186,6 +190,7 @@ public class WriteMessageActivity extends AppCompatActivity {
                     String filename = null;
                     boolean isVideo = false;
                     if (picture != null) {
+                        Log.d("dir",picture.getPath());
                         filename = picture.getLastPathSegment();
                     }
                     else if (video != null) {
