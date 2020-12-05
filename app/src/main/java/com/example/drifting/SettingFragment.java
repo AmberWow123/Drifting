@@ -33,6 +33,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+
 import backend.util.database.SetDatabase;
 import backend.util.database.UserProfile;
 
@@ -62,6 +64,9 @@ public class SettingFragment extends Fragment {
     private static  String email = null;
     private static  String gender = null;
     private static  String country = null;
+    private static HashMap<String, Boolean> receive_list;
+    private static HashMap<String, Boolean> send_list;
+
     private SetDatabase set = new SetDatabase();
 
     private Spinner spinner;
@@ -173,6 +178,8 @@ public class SettingFragment extends Fragment {
                 country = snapshot.child("user_country").getValue()!= null ? snapshot.child("user_country").getValue().toString() : "unspecified";
                 age = snapshot.child("user_age").getValue()!= null ? snapshot.child("user_age").getValue().toString() : "unspecified";
                 email = snapshot.child("user_email").getValue()!= null ? snapshot.child("user_email").getValue().toString() : "unspecified";
+                receive_list = (HashMap<String, Boolean>)snapshot.child("receive_list").getValue();
+                send_list = (HashMap<String, Boolean>)snapshot.child("send_list").getValue();
 
             }
             @Override
@@ -325,7 +332,7 @@ public class SettingFragment extends Fragment {
                 nameTV.setText(nameEdit.getText().toString());
                 String name = nameEdit.getText().toString();
 
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, receive_list, send_list);
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
 
@@ -341,7 +348,7 @@ public class SettingFragment extends Fragment {
                 email_TV.setText(email_Edit.getText().toString());
                 String email = email_Edit.getText().toString();
 
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, receive_list, send_list);
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
@@ -356,7 +363,7 @@ public class SettingFragment extends Fragment {
                 age_TV.setText(age_Edit.getText().toString());
                 String age = age_Edit.getText().toString();
 
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, receive_list, send_list);
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
@@ -371,7 +378,7 @@ public class SettingFragment extends Fragment {
                 coun_TV.setText(coun_Edit.getText().toString());
                 String country = coun_Edit.getText().toString();
 
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, receive_list, send_list);
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
@@ -386,7 +393,7 @@ public class SettingFragment extends Fragment {
                 gen_TV.setText(gen_Edit.getText().toString());
                 String gender = gen_Edit.getText().toString();
 
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, receive_list, send_list);
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
