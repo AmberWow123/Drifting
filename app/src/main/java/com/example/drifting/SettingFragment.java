@@ -151,12 +151,10 @@ public class SettingFragment extends Fragment {
         editEmailButton = getView().findViewById(R.id.edit_email_button);
         editAgeButton = getView().findViewById(R.id.edit_age_button);
         editCountryButton = getView().findViewById(R.id.edit_country_button);
-        editGenderButton = getView().findViewById(R.id.edit_gender_button);
         //editGenderButton = getView().findViewById(R.id.edit_gender_button);
         nameEdit = getView().findViewById(R.id.username_edit);
         des_Edit = getView().findViewById(R.id.description_text_edit);
         email_Edit = getView().findViewById(R.id.email_text_edit);
-        gen_Edit = getView().findViewById(R.id.gender_text_edit);
         //gen_Edit = getView().findViewById(R.id.gender_text_edit);
         age_Edit = getView().findViewById(R.id.age_text_edit);
         coun_Edit = getView().findViewById(R.id.country_text_edit);
@@ -167,10 +165,6 @@ public class SettingFragment extends Fragment {
         reset_password = getView().findViewById(R.id.reset_password_button);
 
         //get the spinner from the xml.
-        Spinner dropdown = getView().findViewById(R.id.spinner1);
-        String[] items = new String[]{"Not visible to others", "Visible to friends only", "Visible to all"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, R.id.dropdown_item, items);
-        dropdown.setAdapter(adapter);
         //preference of privacy
         Spinner privacy_spinner = getView().findViewById(R.id.spinner1);
         String[] items_1 = new String[]{"Not visible to others", "Visible to friends only", "Visible to all"};
@@ -190,7 +184,6 @@ public class SettingFragment extends Fragment {
                 name = snapshot.child("user_name").getValue() != null ? snapshot.child("user_name").getValue().toString() : "unspecified";
                 gender = snapshot.child("user_gender").getValue() != null ? snapshot.child("user_gender").getValue().toString() : "unspecified";
                 country = snapshot.child("user_country").getValue()!= null ? snapshot.child("user_country").getValue().toString() : "unspecified";
-                age = snapshot.child("user_age").getValue()!= null ? snapshot.child("user_age").getValue().toString() : "unspecified";
                 age = snapshot.child("age").getValue()!= null ? snapshot.child("age").getValue().toString() : "unspecified";
                 email = snapshot.child("user_email").getValue()!= null ? snapshot.child("user_email").getValue().toString() : "unspecified";
                 receive_list = (HashMap<String, Boolean>)snapshot.child("receive_list").getValue();
@@ -373,18 +366,9 @@ public class SettingFragment extends Fragment {
                 nameTV.setText(nameEdit.getText().toString());
                 String name = nameEdit.getText().toString();
 
-
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
                 UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, receive_list, send_list);
->>>>>>> master
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
-
-
-
-//                UserProfile us = new UserProfile(name, email, null, null, null, gender, country, age);
-//                SetDatabase set = new SetDatabase();
-//                set.addNewUser(us);
 
             }
         });
@@ -398,11 +382,7 @@ public class SettingFragment extends Fragment {
                 email_TV.setText(email_Edit.getText().toString());
                 String email = email_Edit.getText().toString();
 
-
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
-
-              //  UserProfile us = new UserProfile(name, email, null, null, null, gender, country, age);
-
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, receive_list, send_list);
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
@@ -417,14 +397,7 @@ public class SettingFragment extends Fragment {
                 age_TV.setText(age_Edit.getText().toString());
                 String age = age_Edit.getText().toString();
 
-
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
-
-               // UserProfile us = new UserProfile(name, email, null, null, null, gender, country, age);
-
-=======
                 UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, receive_list, send_list);
->>>>>>> master
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
@@ -439,15 +412,7 @@ public class SettingFragment extends Fragment {
                 coun_TV.setText(coun_Edit.getText().toString());
                 String country = coun_Edit.getText().toString();
 
-<<<<<<< HEAD
-
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
-
-                //UserProfile us = new UserProfile(name, email, null, null, null, gender, country, age);
-
-=======
                 UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, receive_list, send_list);
->>>>>>> master
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
@@ -462,15 +427,7 @@ public class SettingFragment extends Fragment {
                 gen_TV.setText(gen_Edit.getText().toString());
                 String gender = gen_Edit.getText().toString();
 
-<<<<<<< HEAD
-
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
-
-               // UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
-
-=======
                 UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, receive_list, send_list);
->>>>>>> master
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
