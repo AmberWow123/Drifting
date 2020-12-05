@@ -171,27 +171,51 @@ public class SettingFragment extends Fragment {
         Spinner privacy_spinner = getView().findViewById(R.id.spinner1);
         String[] items_1 = new String[]{"Not visible to others", "Visible to friends only", "Visible to all"};
         ArrayAdapter<String> adapter_privacy = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, R.id.dropdown_item, items_1);
+
         privacy_spinner.setAdapter(adapter_privacy);
-        privacy_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getItemAtPosition(position).toString();
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, item, receive_list, send_list);
-                SetDatabase set = new SetDatabase();
-                set.addNewUser(us);
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
 
         //gender spinner
         Spinner gender_spinner = getView().findViewById(R.id.spinner2);
         String[] items_2 = new String[]{"Unspecified", "Female", "Male"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, R.id.dropdown_item, items_2);
         gender_spinner.setAdapter(adapter);
+
+
+
+        UserRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                name = snapshot.child("user_name").getValue() != null ? snapshot.child("user_name").getValue().toString() : "unspecified";
+                gender = snapshot.child("user_gender").getValue() != null ? snapshot.child("user_gender").getValue().toString() : "unspecified";
+                country = snapshot.child("user_country").getValue()!= null ? snapshot.child("user_country").getValue().toString() : "unspecified";
+                age = snapshot.child("age").getValue()!= null ? snapshot.child("age").getValue().toString() : "unspecified";
+                email = snapshot.child("user_email").getValue()!= null ? snapshot.child("user_email").getValue().toString() : "unspecified";
+                privacy = snapshot.child("privacy").getValue()!= null ? snapshot.child("privacy").getValue().toString() : "unspecified";
+                receive_list = (HashMap<String, Boolean>)snapshot.child("receive_list").getValue();
+                send_list = (HashMap<String, Boolean>)snapshot.child("send_list").getValue();
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        switch(gender) {
+            case "Unspecified":
+                gender_spinner.setSelection(0);
+                break;
+            case "Female":
+                gender_spinner.setSelection(1);
+                break;
+            case "Male":
+                gender_spinner.setSelection(2);
+                break;
+            default:
+                break;
+        }
         gender_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -207,21 +231,30 @@ public class SettingFragment extends Fragment {
             }
         });
 
-
-        UserRef.addValueEventListener(new ValueEventListener() {
+        switch(privacy) {
+            case "Not visible to others":
+                privacy_spinner.setSelection(0);
+                break;
+            case "Visible to friends only":
+                privacy_spinner.setSelection(1);
+                break;
+            case "Visible to all":
+                privacy_spinner.setSelection(2);
+                break;
+            default:
+                break;
+        }
+        privacy_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                name = snapshot.child("user_name").getValue() != null ? snapshot.child("user_name").getValue().toString() : "unspecified";
-                gender = snapshot.child("user_gender").getValue() != null ? snapshot.child("user_gender").getValue().toString() : "unspecified";
-                country = snapshot.child("user_country").getValue()!= null ? snapshot.child("user_country").getValue().toString() : "unspecified";
-                age = snapshot.child("age").getValue()!= null ? snapshot.child("age").getValue().toString() : "unspecified";
-                email = snapshot.child("user_email").getValue()!= null ? snapshot.child("user_email").getValue().toString() : "unspecified";
-                receive_list = (HashMap<String, Boolean>)snapshot.child("receive_list").getValue();
-                send_list = (HashMap<String, Boolean>)snapshot.child("send_list").getValue();
-
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, item, receive_list, send_list);
+                SetDatabase set = new SetDatabase();
+                set.addNewUser(us);
             }
+
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
