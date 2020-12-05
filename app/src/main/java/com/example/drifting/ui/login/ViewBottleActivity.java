@@ -98,6 +98,14 @@ public class ViewBottleActivity extends AppCompatActivity {
                 final DatabaseReference added_user= this_bottle_data.child("pickHistory").child(current_user);
                 added_user.setValue(true);
 
+                //remove the bottle from user's receive list
+                //save the bottle id in user's receive list
+                DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(current_user);
+                final DatabaseReference added_bottle= UserRef.child("receive_list");
+                Map<String, Object> user_update = new HashMap<>();
+                user_update.put(finalBottleID, false);
+                added_bottle.updateChildren(user_update);
+
                 Toast.makeText(ViewBottleActivity.this, "Yay you just throw the bottle back!! :D", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(ViewBottleActivity.this, NavBar.class));
                 finish();
@@ -116,11 +124,19 @@ public class ViewBottleActivity extends AppCompatActivity {
 
         //------------------------------------------------------------------------
 
+        //set isviewed to be true
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
         DatabaseReference this_bottle_data = reference.child(bottleID);
         Map<String, Object> bottle_update = new HashMap<>();
         bottle_update.put("isViewed", true);
         this_bottle_data.updateChildren(bottle_update);
+
+        //save the bottle id in user's receive list
+        DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(current_user);
+        final DatabaseReference added_bottle= UserRef.child("receive_list");
+        Map<String, Object> user_update = new HashMap<>();
+        user_update.put(bottleID, true);
+        added_bottle.updateChildren(user_update);
     }
 
     @Nullable

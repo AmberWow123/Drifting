@@ -2,6 +2,7 @@ package backend.util.database;
 
 import java.io.File;
 import java.util.Date;
+import java.util.HashMap;
 
 public class UserProfile {
     public String user_id;
@@ -13,6 +14,8 @@ public class UserProfile {
     public String user_gender;
     public String user_country;
     public String age;
+    public HashMap<String, Boolean> send_list = new HashMap<>();
+    public HashMap<String, Boolean> receive_list = new HashMap<>();
 
     public UserProfile(){};
 
