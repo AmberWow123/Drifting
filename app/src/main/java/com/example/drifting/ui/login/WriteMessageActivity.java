@@ -83,6 +83,9 @@ public class WriteMessageActivity extends AppCompatActivity {
     SharedPreferences myPreferences;
     SharedPreferences.Editor myEditor;
 
+    private Uri video = null;
+    private Uri picture = null;
+
     // for adding image
     ImageView added_image_view;
     Button added_image_button;
@@ -147,13 +150,28 @@ public class WriteMessageActivity extends AppCompatActivity {
 
 
                     DriftTime currTime = new DriftTime();
+
+                    String filename = null;
+                    boolean isVideo = false;
+                    if (picture != null) {
+                        filename = picture.getLastPathSegment();
+                        Toast.makeText(WriteMessageActivity.this, "foundpicture", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (video != null) {
+                        filename = video.getLastPathSegment();
+                        isVideo = true;
+                    }
                     Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
                             true, city, latitude[0], longitude[0], currTime.getTimestamp(),
-                            null, false);
+                            null, false, filename, isVideo);
 
 
                     SetDatabase set = new SetDatabase();
-                    set.addNewBottle(this_bottle);
+                    if (isVideo) {
+                        set.addNewBottle(this_bottle, video);
+                    } else {
+                        set.addNewBottle(this_bottle, picture);
+                    }
                 }
                 //not anonymous
                 else{
@@ -164,11 +182,26 @@ public class WriteMessageActivity extends AppCompatActivity {
 
                     //send the bottle to database
                     DriftTime currTime = new DriftTime();
+
+                    String filename = null;
+                    boolean isVideo = false;
+                    if (picture != null) {
+                        filename = picture.getLastPathSegment();
+                    }
+                    else if (video != null) {
+                        filename = video.getLastPathSegment();
+                        isVideo = true;
+                    }
+
                     Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
                             false, city, latitude[0], longitude[0], currTime.getTimestamp(),
-                            null, false);
+                            null, false, filename, isVideo);
                     SetDatabase set = new SetDatabase();
-                    set.addNewBottle(this_bottle);
+                    if (isVideo) {
+                        set.addNewBottle(this_bottle, video);
+                    } else {
+                        set.addNewBottle(this_bottle, picture);
+                    }
 
                     //save the bottle id in user's send list
                     DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(userID);
@@ -430,15 +463,17 @@ public class WriteMessageActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE) {
             // set image to image view
-            added_image_view.setImageURI(data.getData());
+            Uri seletedImageUri = data.getData();
+            picture = seletedImageUri;
+            added_image_view.setImageURI(seletedImageUri);
         }
         if (resultCode == RESULT_OK && requestCode == VIDEO_PICK_CODE) {
             // set video preview to image view
 
-            Uri selectedImageUri = data.getData();
-
+            Uri selectedVideoUri = data.getData();
+            video = selectedVideoUri;
             // MEDIA GALLERY
-            String selectedImagePath = getPath(selectedImageUri);
+            String selectedImagePath = getPath(selectedVideoUri);
             if (selectedImagePath != null) {
                 Bitmap thumbnail = ThumbnailUtils.createVideoThumbnail(selectedImagePath, MediaStore.Images.Thumbnails.MINI_KIND);
                 added_image_view.setImageBitmap(thumbnail);

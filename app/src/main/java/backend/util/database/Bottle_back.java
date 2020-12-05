@@ -15,6 +15,8 @@ public class Bottle_back{
      public long timestamp;
      public String comment;
      public Boolean isViewed = false;
+     public String ext = null;
+     public boolean isVideo = false;
 
     //history attribute to track all users picked up the bottles
      public HashMap<String, Boolean> pickHistory = new HashMap<>();
@@ -25,7 +27,7 @@ public class Bottle_back{
     // construct with a message and bottle index
 
     public Bottle_back(String msg, String bottleID, String userID, Boolean isAnonymous, String city,
-                       double latitude, double longitude, long timestamp, String comment, Boolean viewed){
+                       double latitude, double longitude, long timestamp, String comment, Boolean viewed, String filename, boolean isVideo) {
 
         self = this;
         this.message = msg;
@@ -38,6 +40,8 @@ public class Bottle_back{
         this.timestamp = timestamp;
         this.comment = comment;
         this.isViewed = viewed;
+        this.ext = SetDatabase.parseName(filename).second;
+        this.isVideo = isVideo;
     }
 
     public String getMessage(){
