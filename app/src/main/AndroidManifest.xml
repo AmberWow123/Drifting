@@ -31,6 +31,8 @@
         <activity
             android:name=".ui.login.ViewBottleActivity"
             android:theme="@style/CustomThemePOP" />
+        <activity android:name=".ui.login.ViewBagBottleActivity"
+            android:theme="@style/CustomThemePOP"/>
         <activity android:name=".ui.login.WriteMessageActivity" />
         <activity android:name=".NavBar" />
         <activity android:name=".ui.login.SettingActivity" />
