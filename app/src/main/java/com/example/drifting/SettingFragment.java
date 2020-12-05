@@ -208,7 +208,6 @@ public class SettingFragment extends Fragment {
         });
 
 
-<<<<<<< Updated upstream
         UserRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -227,8 +226,6 @@ public class SettingFragment extends Fragment {
             }
         });
 
-=======
->>>>>>> Stashed changes
         ViewSwitcher name1Switcher = getView().findViewById(R.id.my_switcher);
         TextView nameTV1 = name1Switcher.findViewById(R.id.username_view);
         nameTV1.setText(name);
@@ -250,31 +247,6 @@ public class SettingFragment extends Fragment {
         ViewSwitcher coun_1switcher = getView().findViewById(R.id.my_switcher_country);
         TextView coun_1TV = coun_1switcher.findViewById(R.id.country_text_view);
         coun_1TV.setText(country);
-
-        UserRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                name = snapshot.child("user_name").getValue() != null ? snapshot.child("user_name").getValue().toString() : "unspecified";
-                gender = snapshot.child("user_gender").getValue() != null ? snapshot.child("user_gender").getValue().toString() : "unspecified";
-                country = snapshot.child("user_country").getValue()!= null ? snapshot.child("user_country").getValue().toString() : "unspecified";
-                age = snapshot.child("user_age").getValue()!= null ? snapshot.child("user_age").getValue().toString() : "unspecified";
-                email = snapshot.child("user_email").getValue()!= null ? snapshot.child("user_email").getValue().toString() : "unspecified";
-                receive_list = (HashMap<String, Boolean>)snapshot.child("receive_list").getValue();
-                send_list = (HashMap<String, Boolean>)snapshot.child("send_list").getValue();
-
-                nameTV1.setText(name);
-                gen1TV.setText(gender);
-                age1TV.setText(age);
-                email_1TV.setText(email);
-                coun_1TV.setText(country);
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
