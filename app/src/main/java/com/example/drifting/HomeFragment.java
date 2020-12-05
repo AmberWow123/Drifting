@@ -411,7 +411,7 @@ public class HomeFragment extends Fragment {
         public Bottle(Bottle_back bottleBack, int bottle_index){
             self = this;
             userID = bottleBack.userID;
-            fromUser = bottleBack.userID;
+            //fromUser = bottleBack.userID;
             message = bottleBack.message;
             city = bottleBack.city;
             bottleID = bottleBack.getBottleID();
@@ -439,6 +439,20 @@ public class HomeFragment extends Fragment {
                     Log.d(" vector contains ", bottleList.toString());
                 }
             });
+
+            //set fromuser to be user nickname
+            DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(userID);
+            UserRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    fromUser = (snapshot.child("user_name").getValue() != null) ? snapshot.child("user_name").getValue().toString() : "unspecified";
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText( getContext(),"Failed to retrieve user's name :(", Toast.LENGTH_SHORT).show();
+                }
+            });
+
         }
 
         public int getRandomBottleImg(){

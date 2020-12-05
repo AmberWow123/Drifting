@@ -99,7 +99,6 @@ public class ViewBottleActivity extends AppCompatActivity {
                 added_user.setValue(true);
 
                 //remove the bottle from user's receive list
-                //save the bottle id in user's receive list
                 DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(current_user);
                 final DatabaseReference added_bottle= UserRef.child("receive_list");
                 Map<String, Object> user_update = new HashMap<>();

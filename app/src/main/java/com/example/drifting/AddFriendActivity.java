@@ -1,5 +1,6 @@
 package com.example.drifting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.drifting.ui.login.ViewBottleActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -105,7 +107,9 @@ public class AddFriendActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 // TODO: ADD FRIEND
-
+                Toast.makeText(AddFriendActivity.this, "Yay you just add a friend!! :D", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(AddFriendActivity.this, NavBar.class));
+                finish();
             }
         });
     }
