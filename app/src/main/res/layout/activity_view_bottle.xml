@@ -72,13 +72,23 @@
                     android:textSize="30sp"
                     android:paddingBottom="50dp"
                     />
-                <ImageView
+
+                <VideoView
+                    android:id="@+id/bottle_vedio"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitStart"
+                    android:paddingBottom="50dp"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/bottle_image"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
                     android:paddingBottom="50dp"
-                    />
+                    android:scaleType="fitStart"
+                    android:visibility="gone" />
+
                 <LinearLayout
                     android:id="@+id/from_layout"
                     android:layout_width="match_parent"
@@ -87,8 +97,8 @@
                     android:background="@drawable/view_msg_rect"
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="15dp"
-
                     >
+
                 <TextView
                     android:id="@+id/from_label_textview"
                     android:layout_width="wrap_content"
