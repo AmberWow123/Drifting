@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.drifting.ui.login.ViewBagBottleActivity;
 
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link BagFragment#newInstance} factory method to

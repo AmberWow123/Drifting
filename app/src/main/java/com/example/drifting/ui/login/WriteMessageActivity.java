@@ -2,7 +2,6 @@
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -11,12 +10,10 @@ import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationManager;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.EditText;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.view.View;
@@ -25,43 +22,35 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Switch;
-import android.os.Looper;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
-import com.example.drifting.HomeFragment;
-import com.example.drifting.NavBar;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import com.example.drifting.R;
-import com.google.firebase.auth.FirebaseAuth;
 
 import com.example.drifting.NavBar;
-
+import com.example.drifting.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-//import com.google.firebase.database.annotations.Nullable;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 import backend.util.database.Bottle_back;
-import backend.util.database.EnumD;
 import backend.util.database.SetDatabase;
-import backend.util.database.UserProfile;
 import backend.util.time.DriftTime;
+
+//import com.google.firebase.database.annotations.Nullable;
 
 public class WriteMessageActivity extends AppCompatActivity {
 
@@ -78,7 +67,6 @@ public class WriteMessageActivity extends AppCompatActivity {
     }
 
     Switch switch_anon;
-    TextView text_view_anon;
 
     private static String MY_PREFS = "switch_prefs";
     private static String ANON_STATUS = "anon_on";
@@ -246,7 +234,6 @@ public class WriteMessageActivity extends AppCompatActivity {
 
         // switch button
         switch_anon = findViewById(R.id.switch_button);
-        text_view_anon = findViewById(R.id.text_is_anon);
 
         myPreferences = getSharedPreferences(MY_PREFS, MODE_PRIVATE);
         myEditor = getSharedPreferences(MY_PREFS, MODE_PRIVATE).edit();
@@ -256,11 +243,6 @@ public class WriteMessageActivity extends AppCompatActivity {
 
         switch_anon.setChecked(switch_status);
 
-        if(anon_status) {
-            text_view_anon.setText("ON!!");
-        } else {
-            text_view_anon.setText("OFF!");
-        }
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
 
@@ -268,14 +250,12 @@ public class WriteMessageActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean b) {
                 if (buttonView.isChecked()) {
-                    text_view_anon.setText("ON!!");
 
                     myEditor.putBoolean(SWITCH_STATUS, true);
                     myEditor.putBoolean(ANON_STATUS, true);
                     myEditor.apply();
                     switch_anon.setChecked(true);
                 } else {
-                    text_view_anon.setText("OFF!");
 
                     myEditor.putBoolean(SWITCH_STATUS, false);
                     myEditor.putBoolean(ANON_STATUS, false);
