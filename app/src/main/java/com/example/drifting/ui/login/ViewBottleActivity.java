@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ViewBottleActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +44,20 @@ public class ViewBottleActivity extends AppCompatActivity {
         String comment = "";
         String bottleID = "";
         String fromUserID = "";
+        Boolean isAnonymous = false;
 
         if (HomeFragment.currBottle != null) {
              msg = HomeFragment.currBottle.message;
-             fromUser = HomeFragment.currBottle.fromUser;
              city = HomeFragment.currBottle.city;
+             fromUser = HomeFragment.currBottle.fromUser;
              comment = HomeFragment.currBottle.comment;
              bottleID = HomeFragment.currBottle.bottleID;
              fromUserID = HomeFragment.currBottle.userID;
+             isAnonymous = HomeFragment.currBottle.isAnonymous;
+
+             if (isAnonymous){
+                 fromUser = "Anonymous";
+             }
         }
 
 
@@ -84,14 +92,25 @@ public class ViewBottleActivity extends AppCompatActivity {
         });
 
         LinearLayout fromLayout = findViewById(R.id.from_layout);
-        fromLayout.setOnClickListener(new View.OnClickListener() {
+
+        if (isAnonymous) {
+
+            fromLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(ViewBottleActivity.this, "Bottle is anonymous", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+        else {
+            fromLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 startActivity(new Intent(ViewBottleActivity.this, AddFriendActivity.class));
-
             }
         });
+        }
 
         //------------------------------------------------------------------------
 
