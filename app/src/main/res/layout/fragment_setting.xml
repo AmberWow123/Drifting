@@ -274,59 +274,7 @@
 
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/gender"
-                android:layout_width="90dp"
-                android:layout_height="50dp"
-                android:elevation="5dp"
-                android:fontFamily="@font/poppins"
-                android:gravity="center_vertical"
-                android:text="Gender"
-                android:textColor="#a4a4a4"
-                android:textSize="13sp" />
-
-            <ViewSwitcher
-                android:id="@+id/my_switcher_gender"
-                android:layout_width="153dp"
-                android:layout_height="wrap_content"
-                android:elevation="5dp">
-
-                <TextView
-                    android:id="@+id/gender_text_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/poppins"
-                    android:gravity="center_vertical"
-                    android:textColor="#a4a4a4"
-                    android:textSize="13sp" />
-
-                <EditText
-                    android:id="@+id/gender_text_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#dcdcdc"
-                    android:fontFamily="@font/poppins"
-                    android:hint="Please enter your gender"
-                    android:importantForAutofill="no"
-                    android:inputType="textNoSuggestions|text"
-                    android:textColor="#a4a4a4"
-                    android:textColorHint="#a4a4a4"
-                    android:textSize="13sp" />
-
-            </ViewSwitcher>
-
-            <Button
-                android:id="@+id/edit_gender_button"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                android:background="@drawable/ic_actions_emultiple_edit"
-                android:backgroundTint="#a4a4a4" />
-
-        </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
@@ -433,6 +381,71 @@
                 android:layout_height="22dp"
                 android:background="@drawable/ic_actions_emultiple_edit"
                 android:backgroundTint="#a4a4a4" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/gender"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:elevation="5dp"
+                android:fontFamily="@font/poppins"
+                android:gravity="center_vertical"
+                android:text="Gender"
+                android:textColor="#a4a4a4"
+                android:textSize="13sp" />
+
+            <Spinner
+                android:id="@+id/spinner2"
+                style="@style/SpinnerTheme"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:popupBackground="#222222"
+                android:spinnerMode="dropdown" />
+            <!--
+            <ViewSwitcher
+                android:id="@+id/my_switcher_gender"
+                android:layout_width="153dp"
+                android:layout_height="wrap_content"
+                android:elevation="5dp">
+
+                <TextView
+                    android:id="@+id/gender_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center_vertical"
+                    android:textColor="#a4a4a4"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/gender_text_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#dcdcdc"
+                    android:fontFamily="@font/poppins"
+                    android:hint="Please enter your gender"
+                    android:importantForAutofill="no"
+                    android:inputType="textNoSuggestions|text"
+                    android:textColor="#a4a4a4"
+                    android:textColorHint="#a4a4a4"
+                    android:textSize="13sp" />
+
+            </ViewSwitcher>
+
+
+            <Button
+                android:id="@+id/edit_gender_button"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="@drawable/ic_actions_emultiple_edit"
+                android:backgroundTint="#a4a4a4" />
+            -->
 
         </TableRow>
 
