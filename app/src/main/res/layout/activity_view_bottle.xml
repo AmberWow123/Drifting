@@ -78,7 +78,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="50dp"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
                 <ImageView
                     android:id="@+id/bottle_image"
@@ -87,7 +88,8 @@
                     android:adjustViewBounds="true"
                     android:paddingBottom="50dp"
                     android:scaleType="fitStart"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
                 <LinearLayout
                     android:id="@+id/from_layout"
