@@ -146,11 +146,11 @@ public class SettingFragment extends Fragment {
         editEmailButton = getView().findViewById(R.id.edit_email_button);
         editAgeButton = getView().findViewById(R.id.edit_age_button);
         editCountryButton = getView().findViewById(R.id.edit_country_button);
-        editGenderButton = getView().findViewById(R.id.edit_gender_button);
+        //editGenderButton = getView().findViewById(R.id.edit_gender_button);
         nameEdit = getView().findViewById(R.id.username_edit);
         des_Edit = getView().findViewById(R.id.description_text_edit);
         email_Edit = getView().findViewById(R.id.email_text_edit);
-        gen_Edit = getView().findViewById(R.id.gender_text_edit);
+        //gen_Edit = getView().findViewById(R.id.gender_text_edit);
         age_Edit = getView().findViewById(R.id.age_text_edit);
         coun_Edit = getView().findViewById(R.id.country_text_edit);
         settingbutton = getView().findViewById(R.id.settingbutton);
@@ -160,10 +160,18 @@ public class SettingFragment extends Fragment {
         reset_password = getView().findViewById(R.id.reset_password_button);
 
         //get the spinner from the xml.
-        Spinner dropdown = getView().findViewById(R.id.spinner1);
-        String[] items = new String[]{"Not visible to others", "Visible to friends only", "Visible to all"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, R.id.dropdown_item, items);
-        dropdown.setAdapter(adapter);
+        //preference of privacy
+        Spinner privacy_spinner = getView().findViewById(R.id.spinner1);
+        String[] items_1 = new String[]{"Not visible to others", "Visible to friends only", "Visible to all"};
+        ArrayAdapter<String> adapter_privacy = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, R.id.dropdown_item, items_1);
+        privacy_spinner.setAdapter(adapter_privacy);
+
+        //gender spinner
+        Spinner gender_spinner = getView().findViewById(R.id.spinner2);
+        String[] items_2 = new String[]{"Unspecified", "Female", "Male"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, R.id.dropdown_item, items_2);
+        gender_spinner.setAdapter(adapter);
+
 
         UserRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -185,9 +193,11 @@ public class SettingFragment extends Fragment {
         TextView nameTV1 = name1Switcher.findViewById(R.id.username_view);
         nameTV1.setText(name);
 
+        /*
         ViewSwitcher gender1Switcher = getView().findViewById(R.id.my_switcher_gender);
         TextView gen1TV = gender1Switcher.findViewById(R.id.gender_text_view);
         gen1TV.setText(gender);
+         */
 
         ViewSwitcher age_1switcher = getView().findViewById(R.id.my_switcher_age);
         TextView age1TV = age_1switcher.findViewById(R.id.age_text_view);
@@ -376,7 +386,7 @@ public class SettingFragment extends Fragment {
                 set.addNewUser(us);
             }
         });
-
+        /*
         editGenderButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -391,6 +401,7 @@ public class SettingFragment extends Fragment {
                 set.addNewUser(us);
             }
         });
+         */
 
 
         /*Intent intent = new Intent(getActivity(), SettingFragment.class);
