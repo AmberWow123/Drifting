@@ -178,7 +178,6 @@ public class SettingFragment extends Fragment {
         gender_spinner.setAdapter(adapter);
 
 
-<<<<<<< Updated upstream
         UserRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -197,8 +196,6 @@ public class SettingFragment extends Fragment {
             }
         });
 
-=======
->>>>>>> Stashed changes
         ViewSwitcher name1Switcher = getView().findViewById(R.id.my_switcher);
         TextView nameTV1 = name1Switcher.findViewById(R.id.username_view);
         nameTV1.setText(name);
@@ -233,7 +230,6 @@ public class SettingFragment extends Fragment {
                 send_list = (HashMap<String, Boolean>)snapshot.child("send_list").getValue();
 
                 nameTV1.setText(name);
-                gen1TV.setText(gender);
                 age1TV.setText(age);
                 email_1TV.setText(email);
                 coun_1TV.setText(country);
