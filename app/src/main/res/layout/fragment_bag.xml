@@ -14,77 +14,108 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="1" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="410dp"
-        android:layout_height="78dp"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.09" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="1" />
+
+
+    <Button
+        android:id="@+id/sent_button"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#e8e8e8"
+        android:soundEffectsEnabled="false"
+        android:text="Sent"
+        android:textColor="#5E5E5E"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline10"
+        app:layout_constraintEnd_toStartOf="@+id/guideline9"
+        app:layout_constraintStart_toStartOf="@+id/guideline12"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/picked_button"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#E8E8E8"
+        android:soundEffectsEnabled="false"
+        android:text="picked"
+        android:textColor="#5e5e5e"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <Button
-            android:id="@+id/sent_button"
-            android:soundEffectsEnabled="false"
-            android:layout_width="205dp"
-            android:layout_height="match_parent"
-            android:background="#dcdcdc"
-            android:text="Sent"
-            android:textColor="#777777"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/picked_button"
-            android:soundEffectsEnabled="false"
-            android:layout_width="205dp"
-            android:layout_height="match_parent"
-            android:background="#dcdcdc"
-            android:text="picked"
-            android:textColor="#777777"
-            android:textSize="18sp" />
-    </LinearLayout>
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/bag_view"
-        android:layout_width="410dp"
-        android:layout_height="646dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@drawable/background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline13"
+        app:layout_constraintEnd_toStartOf="@+id/guideline11"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintTop_toTopOf="@+id/guideline10">
 
-        <TableLayout
+        <LinearLayout
             android:id="@+id/bag_table_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
     </ScrollView>
 
     <ImageView
         android:id="@+id/picked_indicator"
-        android:visibility="gone"
-        android:background="#101010"
-        android:layout_width="205dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="#101010"
         android:elevation="4dp"
         android:src="@drawable/line"
-        app:layout_constraintBottom_toTopOf="@+id/bag_view"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline10"
+        app:layout_constraintEnd_toStartOf="@+id/guideline11"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/sent_indicator"
-        android:visibility="gone"
-        android:background="#101010"
-        android:layout_width="205dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="#101010"
         android:elevation="4dp"
         android:src="@drawable/line"
-        app:layout_constraintBottom_toTopOf="@+id/bag_view"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline10"
         app:layout_constraintEnd_toStartOf="@+id/guideline9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline12"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

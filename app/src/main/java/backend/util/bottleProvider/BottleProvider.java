@@ -2,19 +2,16 @@ package backend.util.bottleProvider;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
-import android.content.Context;
-import android.widget.Toast;
-
-import com.example.drifting.HomeFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,9 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
 import java.util.Vector;
+import java.util.concurrent.ExecutorService;
 
 import backend.util.database.Bottle_back;
 import backend.util.time.DriftTime;
@@ -105,12 +101,19 @@ public class BottleProvider {
                         continue;
                     }
 
-                    //check if the bottle is from the same user
-                    if (this_bottle.getUserID().equals(userID)) {
+                    //check if the bottle has been picked up by the same user before
+                    if(this_bottle.pickHistory.containsKey(userID)){
+                        Log.d("isPicked","A bottle picked before was returned");
                         continue;
-                    } else {
-                        randomBottleList.add(this_bottle);
                     }
+
+                    //TODO: comment for test purpose, REUSE for formal product
+                    //check if the bottle is from the same user
+//                    if (this_bottle.getUserID().equals(userID)) {
+//                        continue;
+//                    } else {
+                        randomBottleList.add(this_bottle);
+//                    }
                 }
                 isFetchComplete = true;
                 reference.removeEventListener(this);
@@ -141,7 +144,10 @@ public class BottleProvider {
         long currTimestampMillis = timer.getTimestamp();
         double bottleTravelRate = 13.0;     // Increase this variable to make the bottles drift faster. The unit is in degree/hour
 
-        double manhattanDistance = (abs(bottle.latitude - latitude) + abs(bottle.longitude - longitude));
+        double manhattanDistance =  Math.min((abs(bottle.latitude - latitude) + (abs(bottle.latitude) +
+                abs(latitude)) / 180.0 * abs(bottle.longitude - longitude)),
+                360 - (abs(bottle.latitude - latitude) + (abs(bottle.latitude) + abs(latitude)) / 180.0
+                        * abs(bottle.longitude - longitude)));
 
         if(manhattanDistance < 0.0001){     // Floating point operation: consider two locations the same if their manhattan distance
                                             // is this small.

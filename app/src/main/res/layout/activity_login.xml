@@ -13,12 +13,19 @@
     tools:context=".ui.login.LoginActivity"
     >
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.07" />
+
 
     <EditText
         android:id="@+id/username_forget"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="8dp"
         android:background="@color/white"
         android:drawableLeft="@drawable/mdi_account"
         android:drawablePadding="8dp"
@@ -27,18 +34,19 @@
         android:inputType="textEmailAddress"
         android:padding="10dp"
         android:selectAllOnFocus="true"
-        android:textColorHint="@color/black"
         android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:textSize="14dp"
         app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toStartOf="@+id/right_guideline"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/left_guideline" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="85dp"
+        android:layout_marginBottom="60dp"
         android:background="@color/white"
         android:drawableLeft="@drawable/mdi_lock"
         android:drawablePadding="8dp"
@@ -54,6 +62,7 @@
         android:textSize="14dp"
         app:layout_constraintBottom_toTopOf="@+id/login_button_guideline"
         app:layout_constraintEnd_toStartOf="@+id/right_guideline"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/left_guideline" />
 
     <Button
@@ -61,12 +70,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:layout_marginTop="16dp"
         android:background="@drawable/loginbutton"
         android:fontFamily="@font/poppins"
         android:text="Login"
         android:textColor="#FFFFFF"
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/login_button_guideline" />
 
@@ -113,7 +124,7 @@
         android:id="@+id/forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
         android:background="@android:color/transparent"
         android:fontFamily="@font/roboto"
         android:text="Forgot password"
@@ -143,5 +154,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/right_guideline"
+        app:layout_constraintStart_toStartOf="@+id/left_guideline"
+        app:layout_constraintTop_toTopOf="@+id/guideline16"
+        app:srcCompat="@drawable/drifter_logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

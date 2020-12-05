@@ -203,14 +203,6 @@
                     >
                 </TextView>
 
-                <Button
-                    android:id="@+id/throw_back_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:text="Throw it back!"
-                    android:fontFamily="@font/roboto_light"
-                    android:background="@drawable/throwback"/>
-
 
             </LinearLayout>
         </ScrollView>
