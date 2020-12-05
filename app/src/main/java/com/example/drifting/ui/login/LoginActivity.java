@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //auto login
+//        //auto login
 //        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 //
 //        if(firebaseUser != null){
