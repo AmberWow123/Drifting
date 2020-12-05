@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.drifting.AddFriendActivity;
@@ -16,12 +15,12 @@ import com.example.drifting.HomeFragment;
 import com.example.drifting.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ViewBagBottleActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,11 +29,11 @@ public class ViewBagBottleActivity extends AppCompatActivity {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        int width=dm.widthPixels;
+        int width = dm.widthPixels;
         int height = dm.heightPixels;
 
         // set canvas width and height.
-        getWindow().setLayout((int)(width*1), (int)(height*0.75));
+        getWindow().setLayout((int) (width * 1), (int) (height * 0.75));
 
         String msg = "";
         String fromUser = "";
@@ -44,28 +43,27 @@ public class ViewBagBottleActivity extends AppCompatActivity {
         String fromUserID = "";
 
         if (HomeFragment.currBottle != null) {
-             msg = HomeFragment.currBottle.message;
-             fromUser = HomeFragment.currBottle.fromUser;
-             city = HomeFragment.currBottle.city;
-             comment = HomeFragment.currBottle.comment;
-             bottleID = HomeFragment.currBottle.bottleID;
-             fromUserID = HomeFragment.currBottle.userID;
+            msg = HomeFragment.currBottle.message;
+            fromUser = HomeFragment.currBottle.fromUser;
+            city = HomeFragment.currBottle.city;
+            comment = HomeFragment.currBottle.comment;
+            bottleID = HomeFragment.currBottle.bottleID;
+            fromUserID = HomeFragment.currBottle.userID;
         }
 
-
-        TextView messageView = findViewById(R.id.bottle_message_textview);
+        TextView messageView = findViewById(R.id.bag_bottle_message_textview);
         messageView.setText(msg);
 
-        TextView fromUserView = findViewById(R.id.from_var_textview);
+        TextView fromUserView = findViewById(R.id.bag_from_var_textview);
         fromUserView.setText(fromUser);
 
-        TextView locationView = findViewById(R.id.location_var_textview);
+        TextView locationView = findViewById(R.id.bag_location_var_textview);
         locationView.setText(city);
 
-        TextView commentView = findViewById(R.id.comment_field_textview);
+        TextView commentView = findViewById(R.id.bag_comment_field_textview);
         commentView.setText(comment);
 
-        Button close_button = findViewById(R.id.close_button);
+        Button close_button = findViewById(R.id.bag_close_button);
         close_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,15 +73,8 @@ public class ViewBagBottleActivity extends AppCompatActivity {
             }
         });
 
-        Button throwBack_button = findViewById(R.id.throw_back_button);
-        throwBack_button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //TODO: throw back function
-            }
-        });
 
-        LinearLayout fromLayout = findViewById(R.id.from_layout);
+        LinearLayout fromLayout = findViewById(R.id.bag_from_layout);
         fromLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,4 +98,5 @@ public class ViewBagBottleActivity extends AppCompatActivity {
     public View onCreatePanelView(int featureId) {
         return super.onCreatePanelView(featureId);
     }
+
 }
