@@ -30,6 +30,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
 
@@ -40,6 +45,7 @@ import backend.util.connectivity.ConnectionChecker;
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
+    private DatabaseReference UserRef;
 
     FirebaseUser firebaseUser;
     @Override
@@ -153,8 +159,18 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 loadingBar.setVisibility((View.GONE));
-                                Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
+                                UserRef.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        String name = snapshot.child("user_name").getValue() != null ? snapshot.child("user_name").getValue().toString() : "unspecified";
+                                        Toast.makeText(LoginActivity.this, "Welcome, " + name, Toast.LENGTH_LONG).show();
+                                        // Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
+                                    }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
 
+                                    }
+                                });
                                 openHomepageActivity();
                             } else {
                                 loadingBar.setVisibility((View.GONE));
@@ -189,6 +205,7 @@ public class LoginActivity extends AppCompatActivity {
                Toast.makeText(LoginActivity.this, feedback, Toast.LENGTH_SHORT).show();
 
                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+               UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(mAuth.getCurrentUser().getUid());
 
                if(ca.isValid()) {
                    loadingBar.setVisibility(View.VISIBLE);
@@ -198,9 +215,18 @@ public class LoginActivity extends AppCompatActivity {
                        public void onComplete(@NonNull Task<AuthResult> task) {
                            if (task.isSuccessful()) {
                                loadingBar.setVisibility((View.GONE));
-                               Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
+                               UserRef.addValueEventListener(new ValueEventListener() {
+                                   @Override
+                                   public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                       String name = snapshot.child("user_name").getValue() != null ? snapshot.child("user_name").getValue().toString() : "unspecified";
+                                       Toast.makeText(LoginActivity.this, "Welcome, " + name, Toast.LENGTH_LONG).show();
+                                       // Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
+                                   }
+                                   @Override
+                                   public void onCancelled(@NonNull DatabaseError error) {
 
-
+                                   }
+                               });
                                openHomepageActivity();
                            } else {
                                loadingBar.setVisibility((View.GONE));
@@ -209,6 +235,8 @@ public class LoginActivity extends AppCompatActivity {
                        }
                    });
                }
+               loadingBar.setVisibility((View.GONE));
+
            }
        });
 
