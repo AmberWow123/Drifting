@@ -152,17 +152,104 @@ public class HomeFragment extends Fragment {
         generate_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (bottleList.size() < BOTTLE_MAX) {
-                    int randomNum;
-                    Random rand = new Random();
-                    randomNum = rand.nextInt(10);
-                    Bottle bottle = new Bottle(randomNum+"", bottleList.size());
-                    bottle.comment = "filler comment";
-                    bottle.setVisible();
-                    bottleList.add(bottle);
-                    Log.d(" Bottle content is :", " " + randomNum);
-                    Log.d(" BottleList size is :", " " + bottleList.size());
-                    Log.d(" vector contains ", bottleList.toString());
+
+                if(!provider.locationLess) {
+                    if (bottleList.size() < BOTTLE_MAX) {
+                        if(nextBottleIndex == 0 && nextBottles[nextBottleIndex] == null){
+                            provider.populateNextBottles(nextBottles);
+                        }
+                        if(nextBottles[nextBottleIndex] == null){
+                            for(int i = 0; i < 7; i++){
+                                nextBottles[i] = null;
+                            }
+                            provider.serveNextBottles();
+                            nextBottleIndex = 0;
+                            Toast.makeText(getContext(), "There are no more bottle in the sea. Please wait a few moments.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        Bottle bottle_get = new Bottle(nextBottles[nextBottleIndex++], bottleList.size());
+                        bottle_get.comment = "filler comment";
+                        bottle_get.setVisible();
+                        bottleList.add(bottle_get);
+                        Log.d(" Bottle content is :", " " + bottle_get.message);
+                        Log.d("The sender is:", bottle_get.userID);
+                        Log.d(" BottleList size is :", " " + bottleList.size());
+                        Log.d(" vector contains ", bottleList.toString());
+
+                        if(nextBottleIndex == 7){
+                            nextBottleIndex = 0;
+                            provider.populateNextBottles(nextBottles);
+                        }
+                    }
+
+                    provider.serveNextBottles();
+                }
+                else {
+                    if (bottleList.size() < BOTTLE_MAX) {
+                        //get database reference
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
+                        //get current userID
+                        FirebaseAuth fAuth;
+                        fAuth = FirebaseAuth.getInstance();
+
+
+                        reference.orderByChild("isViewed").equalTo(false).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                    Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
+                                    Log.d("urlefawefea",this_bottle.picture);
+                                    //String bottleID = this_bottle.getBottleID();
+                                    String userID = fAuth.getUid();
+                                    HashMap<String, Boolean> this_history= this_bottle.getPickHistory();
+
+                                    //debug: print picked history
+                                    for(String users : this_history.keySet()) {
+                                        Log.d("", "picked content:");
+                                        Log.d("user:", users);
+                                    }
+
+                                    //check if the bottle is viewed
+                                    if(this_bottle.getIsViewed()) {
+                                        Log.d("isViewed","A viewed bottle was returned");
+                                        continue;
+                                    }
+
+                                    //TODO: comment for test purpose, REUSE for formal product
+                                    //check if the bottle is from the same user
+//                                    if(this_bottle.getUserID().equals(userID)){
+//                                        continue;
+//                                    }
+
+                                    //check if the bottle has been picked up by the same user before
+                                    if(this_bottle.pickHistory.containsKey(userID)){
+                                        Log.d("isPicked","A bottle picked before was returned");
+                                        continue;
+                                    }
+
+                                    else {
+
+                                        Bottle bottle_get = new Bottle(this_bottle, bottleList.size());
+                                        bottle_get.comment = "filler comment";
+                                        bottle_get.setVisible();
+                                        bottleList.add(bottle_get);
+                                        Log.d(" Bottle content is :", " aaaaaaaaaaaaaa" + bottle_get.message);
+                                        Log.d(" BottleList size is :", " " + bottleList.size());
+                                        Log.d(" vector contains ", bottleList.toString());
+                                        reference.removeEventListener(this);
+                                        break;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                        Log.d(" BottleList size is gg:", " " + bottleList.size());
+                    }
                 }
             }
         });
@@ -200,6 +287,10 @@ public class HomeFragment extends Fragment {
         public String city;
         public AnimationDrawable bottleAnimation;
         public String comment;
+        public String userID;
+        public String pictureDownloadURL;
+        public String videoDownloadURL;
+        public boolean isVideo;
 
 
         /**
@@ -253,6 +344,12 @@ public class HomeFragment extends Fragment {
             self = this;
             message = bottleBack.message;
             city = bottleBack.city;
+            bottleID = bottleBack.getBottleID();
+            isVideo = bottleBack.isVideo;
+            pictureDownloadURL = bottleBack.picture;
+            //Log.d("awfawef",pictureDownloadURL);
+            videoDownloadURL = bottleBack.video;
+
             this.bottle_index = bottle_index;
             locationID = getRandomBottleLocation();
             bottleView =  getView().findViewById(locationID);
