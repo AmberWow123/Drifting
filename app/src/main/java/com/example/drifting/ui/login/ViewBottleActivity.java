@@ -3,6 +3,7 @@ package com.example.drifting.ui.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -60,7 +61,7 @@ public class ViewBottleActivity extends AppCompatActivity {
              bottleID = HomeFragment.currBottle.bottleID;
              fromUserID = HomeFragment.currBottle.userID;
              pictureURL = HomeFragment.currBottle.pictureDownloadURL;
-             //Log.d("feafiawn",pictureURL);
+             Log.d("feafiawn",pictureURL);
              videoURL = HomeFragment.currBottle.videoDownloadURL;
         }
 
@@ -97,7 +98,7 @@ public class ViewBottleActivity extends AppCompatActivity {
         throwBack_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottler");
                 DatabaseReference this_bottle_data = reference.child(finalBottleID);
 
                 // set isViewed to false
@@ -136,7 +137,7 @@ public class ViewBottleActivity extends AppCompatActivity {
         //------------------------------------------------------------------------
 
         //set isviewed to be true
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottler");
         DatabaseReference this_bottle_data = reference.child(bottleID);
         Map<String, Object> bottle_update = new HashMap<>();
         bottle_update.put("isViewed", true);

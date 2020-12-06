@@ -37,7 +37,7 @@ public class BottleProvider {
     private ExecutorService es;
     private Context context;
     private Activity activity;
-    private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
+    private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottler");
     private FirebaseAuth fAuth = FirebaseAuth.getInstance();
     private boolean isFetchComplete = false;
     public boolean locationLess = false;    // Change this to true to start the app in location-less mode
@@ -92,7 +92,7 @@ public class BottleProvider {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
-                    Log.d("pictureUrl", this_bottle.picture);
+                    //Log.d("pictureUrl", this_bottle.picture);
                     //String bottleID = this_bottle.getBottleID();
                     String userID = fAuth.getUid();
 
