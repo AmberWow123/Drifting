@@ -13,7 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.drifting.AddFriendActivity;
 import com.example.drifting.HomeFragment;
 import com.example.drifting.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.Nullable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ViewBagBottleActivity extends AppCompatActivity {
     @Override
@@ -79,13 +84,13 @@ public class ViewBagBottleActivity extends AppCompatActivity {
             }
         });
 
-//        //------------------------------------------------------------------------
-//
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
-//        DatabaseReference this_bottle_data = reference.child(bottleID);
-//        Map<String, Object> bottle_update = new HashMap<>();
-//        bottle_update.put("isViewed", true);
-//        this_bottle_data.updateChildren(bottle_update);
+        //------------------------------------------------------------------------
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
+        DatabaseReference this_bottle_data = reference.child(bottleID);
+        Map<String, Object> bottle_update = new HashMap<>();
+        bottle_update.put("isViewed", true);
+        this_bottle_data.updateChildren(bottle_update);
     }
 
     @Nullable

@@ -1,8 +1,5 @@
 package com.example.drifting.ui.login;
 
-import android.net.Uri;
-import android.widget.ImageView;
-
 public class ExampleItem {
 
 

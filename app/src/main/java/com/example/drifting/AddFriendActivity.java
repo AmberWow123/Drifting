@@ -19,9 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.util.Calendar;
-import java.util.Date;
-
 public class AddFriendActivity extends AppCompatActivity {
 
     private static  String name = null;
@@ -82,20 +79,16 @@ public class AddFriendActivity extends AppCompatActivity {
 
     private void Add_friend(String current_user, String receiverUserID)
     {
-
-
-        Date currentTime = Calendar.getInstance().getTime();
-
-        ContactsRef.child(current_user).child("friend_list")
-                .child(receiverUserID).setValue(currentTime)
+        ContactsRef.child(current_user).child(receiverUserID)
+                .child("Contacts").setValue("Saved")
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task)
                     {
                         if (task.isSuccessful())
                         {
-                            ContactsRef.child(receiverUserID).child("friend_list")
-                                    .child(current_user).setValue(currentTime);
+                            ContactsRef.child(receiverUserID).child(current_user)
+                                    .child("Contacts").setValue("Saved");
                         }
                     }
                 });
