@@ -359,6 +359,7 @@ public class HomeFragment extends Fragment {
         public AnimationDrawable bottleAnimation;
         public String comment;
         public String userID;
+        public Boolean isAnonymous;
 
 
         /**
@@ -420,6 +421,7 @@ public class HomeFragment extends Fragment {
             bottleView =  getView().findViewById(locationID);
             imageSrc = getRandomBottleImg();
             bottleView.setBackgroundResource(imageSrc);
+            isAnonymous = bottleBack.isAnonymous;
 
 
             bottleAnimation = (AnimationDrawable) bottleView.getBackground();
