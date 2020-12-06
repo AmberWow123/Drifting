@@ -7,6 +7,17 @@
     android:background="@drawable/msg_background"
     tools:context=".ui.login.ViewBottleActivity">
 
+    <Button
+        android:id="@+id/close_button"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="228dp"
+        android:background="@drawable/red_cross"
+        app:layout_constraintBottom_toTopOf="@+id/top_guideline"
+        app:layout_constraintStart_toStartOf="@+id/left_guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.426" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/right_guideline"
         android:layout_width="wrap_content"
@@ -56,19 +67,30 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_light"
-                    android:text="My head is full of random stuff, Like rusty bread and bits of fluff. And talking pies with googly eyes, And stupid stuff that doesn't rhyme."
+                    android:hint=""
                     android:textColor="@color/black"
                     android:textSize="30sp"
                     android:paddingBottom="50dp"
                     />
-                <ImageView
+
+                <VideoView
+                    android:id="@+id/bottle_vedio"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitStart"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/gary"
                     android:paddingBottom="50dp"
-                    />
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/bottle_image"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:paddingBottom="50dp"
+                    android:scaleType="fitStart"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
                 <LinearLayout
                     android:id="@+id/from_layout"
                     android:layout_width="match_parent"
@@ -77,8 +99,8 @@
                     android:background="@drawable/view_msg_rect"
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="15dp"
-
                     >
+
                 <TextView
                     android:id="@+id/from_label_textview"
                     android:layout_width="wrap_content"
@@ -95,7 +117,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_light"
-                    android:text="Gary"
                     android:gravity="center_vertical|right"
 
 
@@ -129,7 +150,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_light"
-                        android:text="San Diego"
                         android:gravity="center_vertical|right"
 
 
@@ -177,7 +197,6 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_light"
-                    android:text="“Best professor at the CSE department”"
                     android:background="@drawable/view_msg_rect"
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="15dp"

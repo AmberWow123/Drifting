@@ -2,10 +2,9 @@ package com.example.drifting.ui.login;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,14 +21,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 
 import backend.util.connectivity.ConnectionChecker;
-import backend.util.database.EnumD;
 import backend.util.database.SetDatabase;
 import backend.util.database.UserProfile;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText mEmail, mPassword, mRePassword;
-    Button mRegisterBtn;
+    EditText mEmail, mPassword, mRePassword, mUsername;
+    Button mRegisterBtn, hidden_button;
     FirebaseAuth fAuth;
 
     @Override
@@ -39,10 +37,13 @@ public class RegisterActivity extends AppCompatActivity {
         Context context = getApplicationContext();
 
         //correspond those buttons/texts
-        mEmail = findViewById(R.id.username_register);
+        mUsername = findViewById(R.id.username_register);
+        mEmail = findViewById(R.id.email_register);
         mPassword = findViewById(R.id.password_register);
         mRePassword = findViewById(R.id.re_enter_password_register);
         mRegisterBtn = findViewById(R.id.sign_up_button);
+        hidden_button = findViewById(R.id.hide_password);
+
         fAuth = FirebaseAuth.getInstance();
 
         //TODO: add these code after we have sign out button
@@ -51,6 +52,30 @@ public class RegisterActivity extends AppCompatActivity {
 //            startActivity(new Intent(getApplicationContext(), MainActivity.class));
 //            finish();
 //        }
+
+        hidden_button.setOnClickListener((new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if(mPassword.getTransformationMethod() == PasswordTransformationMethod.getInstance() || mRePassword.getTransformationMethod() == PasswordTransformationMethod.getInstance()) {
+                    mPassword.setTransformationMethod(null);
+                    mRePassword.setTransformationMethod(null);
+                    if(getCurrentFocus().getId() == mPassword.getId()){
+                        mPassword.setSelection(mPassword.getText().length());
+                    } else{
+                        mRePassword.setSelection(mRePassword.getText().length());
+                    }
+                }else{
+                    mPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    mRePassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    if(getCurrentFocus().getId() == mPassword.getId()){
+                        mPassword.setSelection(mPassword.getText().length());
+                    } else{
+                        mRePassword.setSelection(mRePassword.getText().length());
+                    }
+                }
+            }
+        }));
+
 
         mRegisterBtn.setOnClickListener((new View.OnClickListener() {
             @Override
@@ -102,7 +127,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             Toast.makeText(RegisterActivity.this, "Yay User Created! :D", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                            UserProfile userProfile = new UserProfile(fAuth.getUid(), email, null,null,null, EnumD.gender.NOTSPECIFIED,null);
+                            UserProfile userProfile = new UserProfile(fAuth.getUid(),null, email, null,null,null,null, null,null,null, null, null);
                             SetDatabase set = new SetDatabase();
                             set.addNewUser(userProfile);
                         }
