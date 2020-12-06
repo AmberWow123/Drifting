@@ -1,6 +1,7 @@
 package com.example.drifting.ui.login;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -8,8 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +28,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.view.View.VISIBLE;
 
 public class ViewBottleActivity extends AppCompatActivity {
 
@@ -85,7 +90,27 @@ public class ViewBottleActivity extends AppCompatActivity {
 
         ImageView pictureView = findViewById(R.id.bottle_image);
         //Log.d("url",pictureURL);
-        if(pictureURL != null) Picasso.get().load(pictureURL).into(pictureView);
+        if(pictureURL != null) {
+            pictureView.setVisibility(VISIBLE);
+            Picasso.get().load(pictureURL).into(pictureView);
+        }
+
+        VideoView videoView = findViewById(R.id.bottle_vedio);
+        if(videoURL != null) {
+            Log.d("videourl",videoURL);
+            videoView.setVisibility(VISIBLE);
+            videoView.setZOrderOnTop(true);
+
+
+            Uri uri = Uri.parse(videoURL);
+            videoView.setVideoURI(uri);
+            videoView.setMediaController(new MediaController(this));
+            videoView.requestFocus();
+            videoView.start();
+
+
+
+        }
 
         Button close_button = findViewById(R.id.close_button);
         close_button.setOnClickListener(new View.OnClickListener() {
