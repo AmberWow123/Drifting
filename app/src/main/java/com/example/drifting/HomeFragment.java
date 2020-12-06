@@ -363,6 +363,7 @@ public class HomeFragment extends Fragment {
         public String pictureDownloadURL;
         public String videoDownloadURL;
         public boolean isVideo;
+        public boolean isAnonymous;
 
 
         /**
@@ -423,7 +424,7 @@ public class HomeFragment extends Fragment {
             pictureDownloadURL = bottleBack.picture;
             //Log.d("awfawef",pictureDownloadURL);
             videoDownloadURL = bottleBack.video;
-
+            isAnonymous = bottleBack.isAnonymous;
             this.bottle_index = bottle_index;
             locationID = getRandomBottleLocation();
             bottleView =  getView().findViewById(locationID);

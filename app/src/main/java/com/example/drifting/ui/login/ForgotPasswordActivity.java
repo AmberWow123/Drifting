@@ -71,8 +71,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                     Toast.makeText(ForgotPasswordActivity.this,
                                             "An email is sent if an associated account exists",
                                             Toast.LENGTH_LONG).show();
+                                    finish();
                             }
                         });
+
             }
         });
     }

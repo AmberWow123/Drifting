@@ -55,6 +55,7 @@ public class ViewBottleActivity extends AppCompatActivity {
         String fromUserID = "";
         String pictureURL = null;
         String videoURL = null;
+        Boolean isAnonymous = false;
         FirebaseAuth fAuth = FirebaseAuth.getInstance();
         String current_user = fAuth.getUid();
 
@@ -68,6 +69,11 @@ public class ViewBottleActivity extends AppCompatActivity {
              pictureURL = HomeFragment.currBottle.pictureDownloadURL;
              if(pictureURL!=null) Log.d("feafiawn",pictureURL);
              videoURL = HomeFragment.currBottle.videoDownloadURL;
+             isAnonymous = HomeFragment.currBottle.isAnonymous;
+
+            if (isAnonymous){
+                fromUser = "Anonymous";
+            }
         }
 
 
@@ -129,15 +135,24 @@ public class ViewBottleActivity extends AppCompatActivity {
         });
 
         LinearLayout fromLayout = findViewById(R.id.from_layout);
-        fromLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (isAnonymous) {
 
-                startActivity(new Intent(ViewBottleActivity.this, AddFriendActivity.class));
+            fromLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(ViewBottleActivity.this, "Bottle is anonymous", Toast.LENGTH_SHORT).show();
+                }
+            });
 
-            }
-        });
-
+        }
+        else {
+            fromLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(ViewBottleActivity.this, AddFriendActivity.class));
+                }
+            });
+        }
         //------------------------------------------------------------------------
 
         //set isviewed to be true
