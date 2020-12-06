@@ -4,10 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +38,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
+
+import java.util.HashMap;
 
 import backend.util.database.SetDatabase;
 import backend.util.database.UserProfile;
@@ -62,6 +72,10 @@ public class SettingFragment extends Fragment {
     private static  String email = null;
     private static  String gender = null;
     private static  String country = null;
+    private static  String privacy = null;
+    private static HashMap<String, Boolean> receive_list;
+    private static HashMap<String, Boolean> send_list;
+
     private SetDatabase set = new SetDatabase();
 
     private Spinner spinner;
@@ -164,7 +178,10 @@ public class SettingFragment extends Fragment {
         Spinner privacy_spinner = getView().findViewById(R.id.spinner1);
         String[] items_1 = new String[]{"Not visible to others", "Visible to friends only", "Visible to all"};
         ArrayAdapter<String> adapter_privacy = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, R.id.dropdown_item, items_1);
+
         privacy_spinner.setAdapter(adapter_privacy);
+
+
 
         //gender spinner
         Spinner gender_spinner = getView().findViewById(R.id.spinner2);
@@ -173,14 +190,99 @@ public class SettingFragment extends Fragment {
         gender_spinner.setAdapter(adapter);
 
 
+        ViewSwitcher name1Switcher = getView().findViewById(R.id.my_switcher);
+        ViewSwitcher age_1switcher = getView().findViewById(R.id.my_switcher_age);
+        ViewSwitcher email_1switcher = getView().findViewById(R.id.my_switcher_email);
+        ViewSwitcher coun_1switcher = getView().findViewById(R.id.my_switcher_country);
+
         UserRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 name = snapshot.child("user_name").getValue() != null ? snapshot.child("user_name").getValue().toString() : "unspecified";
                 gender = snapshot.child("user_gender").getValue() != null ? snapshot.child("user_gender").getValue().toString() : "unspecified";
                 country = snapshot.child("user_country").getValue()!= null ? snapshot.child("user_country").getValue().toString() : "unspecified";
-                age = snapshot.child("user_age").getValue()!= null ? snapshot.child("user_age").getValue().toString() : "unspecified";
+                age = snapshot.child("age").getValue()!= null ? snapshot.child("age").getValue().toString() : "unspecified";
                 email = snapshot.child("user_email").getValue()!= null ? snapshot.child("user_email").getValue().toString() : "unspecified";
+                privacy = snapshot.child("privacy").getValue()!= null ? snapshot.child("privacy").getValue().toString() : "unspecified";
+                receive_list = (HashMap<String, Boolean>)snapshot.child("receive_list").getValue();
+                send_list = (HashMap<String, Boolean>)snapshot.child("send_list").getValue();
+
+                switch(gender) {
+                    case "Unspecified":
+                        gender_spinner.setSelection(0);
+                        break;
+                    case "Female":
+                        gender_spinner.setSelection(1);
+                        break;
+                    case "Male":
+                        gender_spinner.setSelection(2);
+                        break;
+                    default:
+                        break;
+                }
+                gender_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        String item = parent.getItemAtPosition(position).toString();
+                        UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, item, country, age, privacy, receive_list, send_list);
+                        SetDatabase set = new SetDatabase();
+                        set.addNewUser(us);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+                switch(privacy) {
+                    case "Not visible to others":
+                        privacy_spinner.setSelection(0);
+                        break;
+                    case "Visible to friends only":
+                        privacy_spinner.setSelection(1);
+                        break;
+                    case "Visible to all":
+                        privacy_spinner.setSelection(2);
+                        break;
+                    default:
+                        break;
+                }
+                privacy_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        String item = parent.getItemAtPosition(position).toString();
+                        UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, item, receive_list, send_list);
+                        SetDatabase set = new SetDatabase();
+                        set.addNewUser(us);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+
+                TextView nameTV1 = name1Switcher.findViewById(R.id.username_view);
+                nameTV1.setText(name);
+
+        /*
+        ViewSwitcher gender1Switcher = getView().findViewById(R.id.my_switcher_gender);
+        TextView gen1TV = gender1Switcher.findViewById(R.id.gender_text_view);
+        gen1TV.setText(gender);
+         */
+
+
+                TextView age1TV = age_1switcher.findViewById(R.id.age_text_view);
+                age1TV.setText(age);
+
+                TextView email_1TV = email_1switcher.findViewById(R.id.email_text_view);
+                email_1TV.setText(email);
+
+
+                TextView coun_1TV = coun_1switcher.findViewById(R.id.country_text_view);
+                coun_1TV.setText(country);
 
             }
             @Override
@@ -189,27 +291,7 @@ public class SettingFragment extends Fragment {
             }
         });
 
-        ViewSwitcher name1Switcher = getView().findViewById(R.id.my_switcher);
-        TextView nameTV1 = name1Switcher.findViewById(R.id.username_view);
-        nameTV1.setText(name);
 
-        /*
-        ViewSwitcher gender1Switcher = getView().findViewById(R.id.my_switcher_gender);
-        TextView gen1TV = gender1Switcher.findViewById(R.id.gender_text_view);
-        gen1TV.setText(gender);
-         */
-
-        ViewSwitcher age_1switcher = getView().findViewById(R.id.my_switcher_age);
-        TextView age1TV = age_1switcher.findViewById(R.id.age_text_view);
-        age1TV.setText(age);
-
-        ViewSwitcher email_1switcher = getView().findViewById(R.id.my_switcher_email);
-        TextView email_1TV = email_1switcher.findViewById(R.id.email_text_view);
-        email_1TV.setText(email);
-
-        ViewSwitcher coun_1switcher = getView().findViewById(R.id.my_switcher_country);
-        TextView coun_1TV = coun_1switcher.findViewById(R.id.country_text_view);
-        coun_1TV.setText(country);
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
@@ -335,7 +417,7 @@ public class SettingFragment extends Fragment {
                 nameTV.setText(nameEdit.getText().toString());
                 String name = nameEdit.getText().toString();
 
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, privacy, receive_list, send_list);
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
 
@@ -351,7 +433,7 @@ public class SettingFragment extends Fragment {
                 email_TV.setText(email_Edit.getText().toString());
                 String email = email_Edit.getText().toString();
 
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, privacy, receive_list, send_list);
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
@@ -366,7 +448,7 @@ public class SettingFragment extends Fragment {
                 age_TV.setText(age_Edit.getText().toString());
                 String age = age_Edit.getText().toString();
 
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, privacy, receive_list, send_list);
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
@@ -381,7 +463,7 @@ public class SettingFragment extends Fragment {
                 coun_TV.setText(coun_Edit.getText().toString());
                 String country = coun_Edit.getText().toString();
 
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, privacy, receive_list, send_list);
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
@@ -396,7 +478,7 @@ public class SettingFragment extends Fragment {
                 gen_TV.setText(gen_Edit.getText().toString());
                 String gender = gen_Edit.getText().toString();
 
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age);
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, receive_list, send_list);
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
@@ -420,6 +502,9 @@ public class SettingFragment extends Fragment {
         if (requestCode == 1000){
             if (resultCode  == Activity.RESULT_OK){
                 Uri imageUri = data.getData();
+
+                CropImage.activity()
+                        .start(getContext(), this);
                 profileImage.setImageURI(imageUri);
                 SetDatabase set = new SetDatabase();
                 set.uploadAvatars(firebaseUser.getUid(),imageUri);

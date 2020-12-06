@@ -75,7 +75,7 @@
 
                 <VideoView
                     android:id="@+id/bottle_vedio"
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="50dp"
                     android:visibility="gone" />
