@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +76,7 @@ public class ChatFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ArrayList<ExampleItem> exampleList;
+    private static ArrayList<ExampleItem> exampleList;
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -135,27 +136,29 @@ public class ChatFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
 
         currentUserID = mAuth.getCurrentUser().getUid();
-        ContacsRef = FirebaseDatabase.getInstance().getReference().child("Contacts").child(currentUserID).child("friend_list");
-        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        ContacsRef = FirebaseDatabase.getInstance().getReference().child("Contacts").child(currentUserID);
+       // UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
 
         ContacsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                DatabaseReference friendRef;
-                //String name;
-
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
 
+                    DatabaseReference friendRef;
                     String friendId = snapshot1.getValue().toString();
+                    int  equal_sign=  friendId.indexOf("=");
+                    String f_id = friendId.substring(1,equal_sign);
+                    Log.d("========", f_id);
 
-                    friendRef = FirebaseDatabase.getInstance().getReference().child("user").child(friendId);
+                    friendRef = FirebaseDatabase.getInstance().getReference().child("user").child(f_id);
 
                     friendRef.addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            name = snapshot.child("user_name").getValue().toString();
+                        public void onDataChange(@NonNull DataSnapshot snapshot_) {
+                            name = snapshot_.child("user_name").getValue().toString();
+                            Log.d(" ", name);
 //                            FirebaseStorage storage = FirebaseStorage.getInstance();
 //                            StorageReference storageRef = storage.getReference();
 //                            DatabaseReference avatarRef = FirebaseDatabase.getInstance().getReference("avatars/");
@@ -172,15 +175,14 @@ public class ChatFragment extends Fragment {
 //
 //                                }
 //                            });
-
                             exampleList.add(new ExampleItem(R.drawable.avatar, name, "Let's chat", "12:00"));
-
+                            
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
 
                         }
-                    });
+                   });
 
                  //exampleList.add(new ExampleItem(R.drawable.avatar, name, "Let's chat", "12:00"));
 
@@ -220,7 +222,7 @@ public class ChatFragment extends Fragment {
 //        // TODO: time: ex. "15:00" for today; otherwise, "Monday" or "11/23" instead
 //        // TODO: the 3rd parameter is the most recent message sent by the user's friend
 //        // TODO: and the 4th parameter is the time of the most recent message sent
-//        exampleList.add(new ExampleItem( R.drawable.avatar, "Amber", "yooooo! Lets go get some boba >.<", "12:00"));
+          exampleList.add(new ExampleItem( R.drawable.avatar, name, "yooooo! Lets go get some boba >.<", "12:00"));
 //        exampleList.add(new ExampleItem( R.drawable.avatar, "Sam", "How are you? >.<", "13:00"));
 //        exampleList.add(new ExampleItem( R.drawable.avatar, "Jiaming", "I am fine! Thank you! And you? >.<", "14:00"));
 //        exampleList.add(new ExampleItem( R.drawable.avatar, "Tao Jin", "Just finished my midterm >.<", "15:00"));
