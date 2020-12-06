@@ -72,13 +72,14 @@
                     android:textSize="30sp"
                     android:paddingBottom="50dp"
                     />
+
                 <ImageView
+                    android:id="@+id/bottle_image"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitStart"
                     android:adjustViewBounds="true"
                     android:paddingBottom="50dp"
-                    />
+                    android:scaleType="fitStart" />
                 <LinearLayout
                     android:id="@+id/from_layout"
                     android:layout_width="match_parent"

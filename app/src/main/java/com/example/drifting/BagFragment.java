@@ -2,6 +2,7 @@ package com.example.drifting;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.drifting.ui.login.ViewBottleActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+import backend.util.database.Bottle_back;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,13 +42,19 @@ public class BagFragment extends Fragment {
 
 
 
-    public static String[] pickedBottle = new String[] {"HK is back!", "We win the war!", "Hello!!!The People's Republic of China is here!"};
+    /*public static String[] pickedBottle = new String[] {"HK is back!", "We win the war!", "Hello!!!The People's Republic of China is here!"};
     public static String [] pickedTime = new String [] {"07/01/1997", "08/15/1945", "10/01/1949"};
     public static String [] pickedLocation = new String [] {"Hongkong", "San Diego", "Los Angles"};
 
     public static String[] sentBottle = new String[] {"Hi!", "How are you!", "This is a bottle from Guangzhou!!!"};
     public static String [] sentTime = new String [] {"11/03/2020", "11/05/1983", "12/05/2000"};
-    public static String [] sentLocation = new String [] {"Guangzhou", "San Diego", "San Francisco"};
+    public static String [] sentLocation = new String [] {"Guangzhou", "San Diego", "San Francisco"};*/
+    public static ArrayList<String> pickedBottle = new ArrayList<String>();
+    public static ArrayList<String> pickedTime = new ArrayList<String>();
+    public static ArrayList<String> pickedLocation = new ArrayList<String>();
+    public static ArrayList<String> sentBottle = new ArrayList<String>();
+    public static ArrayList<String> sentTime = new ArrayList<String>();
+    public static ArrayList<String> sentLocation = new ArrayList<String>();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -99,6 +116,32 @@ public class BagFragment extends Fragment {
         sent_indicator = getView().findViewById(R.id.sent_indicator);
         picked_indicator = getView().findViewById(R.id.picked_indicator);
 
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
+        //get current userID
+        FirebaseAuth fAuth;
+        fAuth = FirebaseAuth.getInstance();
+
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
+                    //String bottleID = this_bottle.getBottleID();
+                    String userID = fAuth.getUid();
+                    if(userID == this_bottle.getUserID()){
+                        sentBottle.add(this_bottle.getMessage());
+                        sentTime.add(String.valueOf(this_bottle.getTimestamp()));
+                        sentLocation.add(this_bottle.getCity());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         picked_button.setOnClickListener(new Button.OnClickListener(){
              @Override
@@ -107,7 +150,7 @@ public class BagFragment extends Fragment {
                  sent_indicator.setVisibility(View.GONE);
                  picked_indicator.setVisibility(View.VISIBLE);
 
-                 for(int i=0; i<pickedBottle.length; i++) {
+                 for(int i=0; i<pickedBottle.size(); i++) {
                      //LinearLayout row = new LinearLayout(getActivity());
                      LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                              LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -116,9 +159,9 @@ public class BagFragment extends Fragment {
                      TextView bag_content = (TextView)customView.findViewById(R.id.textView_bag_content);
                      TextView bag_date = (TextView) customView.findViewById(R.id.textView_bag_time);
                      TextView bag_location = (TextView) customView.findViewById(R.id.textView_bag_location);
-                     bag_date.setText(pickedTime[i]);
-                     bag_content.setText(pickedBottle[i]);
-                     bag_location.setText(pickedLocation[i]);
+                     bag_date.setText(pickedTime.get(i));
+                     bag_content.setText(pickedBottle.get(i));
+                     bag_location.setText(pickedLocation.get(i));
                      linearLayout.addView(customView, layoutParams);
                      customView.setOnClickListener(new View.OnClickListener() {
                          @Override
@@ -141,7 +184,7 @@ public class BagFragment extends Fragment {
                 picked_indicator.setVisibility(View.GONE);
 
 
-                for (int i = 0; i < sentBottle.length; i++) {
+                for (int i = 0; i < sentBottle.size(); i++) {
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                     layoutParams.setMargins(0, 0, 0, 10);
@@ -149,9 +192,9 @@ public class BagFragment extends Fragment {
                     TextView bag_content = (TextView)customView.findViewById(R.id.textView_bag_content);
                     TextView bag_date = (TextView) customView.findViewById(R.id.textView_bag_time);
                     TextView bag_location = (TextView) customView.findViewById(R.id.textView_bag_location);
-                    bag_date.setText(sentTime[i]);
-                    bag_content.setText(sentBottle[i]);
-                    bag_location.setText(sentLocation[i]);
+                    bag_date.setText(sentTime.get(i));
+                    bag_content.setText(sentBottle.get(i));
+                    bag_location.setText(sentLocation.get(i));
                     linearLayout.addView(customView, layoutParams);
                     customView.setOnClickListener(new View.OnClickListener() {
                         @Override
