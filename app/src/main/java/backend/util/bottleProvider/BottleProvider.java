@@ -92,6 +92,7 @@ public class BottleProvider {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
+                    //Log.d("pictureUrl", this_bottle.picture);
                     //String bottleID = this_bottle.getBottleID();
                     String userID = fAuth.getUid();
 
