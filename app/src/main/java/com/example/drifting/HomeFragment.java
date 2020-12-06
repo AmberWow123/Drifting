@@ -421,7 +421,7 @@ public class HomeFragment extends Fragment {
             bottleID = bottleBack.getBottleID();
             isVideo = bottleBack.isVideo;
             pictureDownloadURL = bottleBack.picture;
-            Log.d("awfawef",pictureDownloadURL);
+            //Log.d("awfawef",pictureDownloadURL);
             videoDownloadURL = bottleBack.video;
 
             this.bottle_index = bottle_index;
