@@ -270,6 +270,7 @@ public class HomeFragment extends Fragment {
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                                     Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
+                                    Log.d("urlefawefea",this_bottle.picture);
                                     //String bottleID = this_bottle.getBottleID();
                                     String userID = fAuth.getUid();
                                     HashMap<String, Boolean> this_history= this_bottle.getPickHistory();
@@ -359,6 +360,9 @@ public class HomeFragment extends Fragment {
         public AnimationDrawable bottleAnimation;
         public String comment;
         public String userID;
+        public String pictureDownloadURL;
+        public String videoDownloadURL;
+        public boolean isVideo;
 
 
         /**
@@ -415,6 +419,11 @@ public class HomeFragment extends Fragment {
             message = bottleBack.message;
             city = bottleBack.city;
             bottleID = bottleBack.getBottleID();
+            isVideo = bottleBack.isVideo;
+            pictureDownloadURL = bottleBack.picture;
+            Log.d("awfawef",pictureDownloadURL);
+            videoDownloadURL = bottleBack.video;
+
             this.bottle_index = bottle_index;
             locationID = getRandomBottleLocation();
             bottleView =  getView().findViewById(locationID);
