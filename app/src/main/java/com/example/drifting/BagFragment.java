@@ -2,7 +2,6 @@ package com.example.drifting;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.drifting.ui.login.ViewBottleActivity;
+import com.example.drifting.ui.login.ViewBagBottleActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,10 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import backend.util.database.Bottle_back;
-
-import com.example.drifting.ui.login.ViewBagBottleActivity;
 
 
 /**
@@ -184,6 +179,7 @@ public class BagFragment extends Fragment {
                                             //Log.d("Msg ", msg);
                                             //Log.d("Time ", String.valueOf(time));
                                             //Log.d("City", city);
+                                            bottle_ref.removeEventListener(this);
                                         }
 
                                         @Override
@@ -197,6 +193,7 @@ public class BagFragment extends Fragment {
                             //Log.d("userId", "UserID " + userID);
                             //Log.d("sentBottle", "Bottle " + sentBottle.toString());
                         }
+                        user_ref.removeEventListener(this);
                     }
 
                     @Override
@@ -270,6 +267,7 @@ public class BagFragment extends Fragment {
                                         //Log.d("Msg ", msg);
                                         //Log.d("Time ", String.valueOf(time));
                                         //Log.d("City", city);
+                                        bottle_ref.removeEventListener(this);
                                     }
 
                                     @Override
@@ -283,6 +281,7 @@ public class BagFragment extends Fragment {
 
                         //Log.d("userId", "UserID " + userID);
                         //Log.d("sentBottle", "Bottle " + sentBottle.toString());
+                        user_ref.removeEventListener(this);
                     }
 
                     @Override

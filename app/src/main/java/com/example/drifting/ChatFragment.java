@@ -158,7 +158,7 @@ public class ChatFragment extends Fragment {
 //                                }
 //                            });
                             //exampleList.add(new ExampleItem(R.drawable.avatar, name, "Let's chat", "12:00"));
-
+                            friendRef.removeEventListener(this);
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
@@ -168,8 +168,8 @@ public class ChatFragment extends Fragment {
 
                  //exampleList.add(new ExampleItem(R.drawable.avatar, name, "Let's chat", "12:00"));
 
-
                 }
+                ContacsRef.removeEventListener(this);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -206,6 +206,7 @@ public class ChatFragment extends Fragment {
 //        // TODO: and the 4th parameter is the time of the most recent message sent
 
             Log.d("size", Integer.toString(name.size()));
+            //Toast.makeText(getActivity(),name.size()+"",Toast.LENGTH_LONG).show();
           for(int i = 0; i < name.size(); i++) {
               exampleList.add(new ExampleItem(R.drawable.avatar, name.get(i), "You are friends now! Let's start chatting.", "12:00"));
           }
