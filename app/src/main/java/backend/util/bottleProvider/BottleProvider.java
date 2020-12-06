@@ -92,19 +92,12 @@ public class BottleProvider {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
-                    //Log.d("pictureUrl", this_bottle.picture);
                     //String bottleID = this_bottle.getBottleID();
                     String userID = fAuth.getUid();
 
                     //check if the bottle is viewed
                     if (this_bottle.getIsViewed()) {
                         Log.d("isViewed", "A viewed bottle was returned");
-                        continue;
-                    }
-
-                    //check if the bottle has been picked up by the same user before
-                    if(this_bottle.pickHistory.containsKey(userID)){
-                        Log.d("isPicked","A bottle picked before was returned");
                         continue;
                     }
 
@@ -145,10 +138,7 @@ public class BottleProvider {
         long currTimestampMillis = timer.getTimestamp();
         double bottleTravelRate = 13.0;     // Increase this variable to make the bottles drift faster. The unit is in degree/hour
 
-        double manhattanDistance =  Math.min((abs(bottle.latitude - latitude) + (abs(bottle.latitude) +
-                abs(latitude)) / 180.0 * abs(bottle.longitude - longitude)),
-                360 - (abs(bottle.latitude - latitude) + (abs(bottle.latitude) + abs(latitude)) / 180.0
-                        * abs(bottle.longitude - longitude)));
+        double manhattanDistance = (abs(bottle.latitude - latitude) + abs(bottle.longitude - longitude));
 
         if(manhattanDistance < 0.0001){     // Floating point operation: consider two locations the same if their manhattan distance
                                             // is this small.

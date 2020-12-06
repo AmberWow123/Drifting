@@ -1,6 +1,15 @@
 package backend.util.database;
 
-import java.util.HashMap;
+import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+
+import com.example.drifting.HomeFragment;
+import com.example.drifting.ui.login.ViewBottleActivity;
+import java.util.Random;
 
 public class Bottle_back{
 
@@ -15,13 +24,6 @@ public class Bottle_back{
      public long timestamp;
      public String comment;
      public Boolean isViewed = false;
-     public String ext = null;
-     public boolean isVideo = false;
-     public String picture = null;
-     public String video = null;
-
-    //history attribute to track all users picked up the bottles
-     public HashMap<String, Boolean> pickHistory = new HashMap<>();
 
      public Bottle_back(){
      }
@@ -29,7 +31,8 @@ public class Bottle_back{
     // construct with a message and bottle index
 
     public Bottle_back(String msg, String bottleID, String userID, Boolean isAnonymous, String city,
-                       double latitude, double longitude, long timestamp, String comment, Boolean viewed, String filename, boolean isVideo) {
+                       double latitude, double longitude, long timestamp, String comment, Boolean viewed){
+
 
         self = this;
         this.message = msg;
@@ -42,8 +45,6 @@ public class Bottle_back{
         this.timestamp = timestamp;
         this.comment = comment;
         this.isViewed = viewed;
-        this.ext = filename;
-        this.isVideo = isVideo;
     }
 
     public String getMessage(){
@@ -88,6 +89,4 @@ public class Bottle_back{
     public void setIsViewed(Boolean isViewed){
          this.isViewed = isViewed;
     }
-
-    public HashMap<String, Boolean> getPickHistory() {return pickHistory;}
 }
