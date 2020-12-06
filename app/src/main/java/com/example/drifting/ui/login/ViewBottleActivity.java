@@ -3,6 +3,7 @@ package com.example.drifting.ui.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -67,7 +68,7 @@ public class ViewBottleActivity extends AppCompatActivity {
                  fromUser = "Anonymous";
              }
              pictureURL = HomeFragment.currBottle.pictureDownloadURL;
-             //Log.d("feafiawn",pictureURL);
+             if(pictureURL!=null) Log.d("feafiawn",pictureURL);
              videoURL = HomeFragment.currBottle.videoDownloadURL;
         }
 
