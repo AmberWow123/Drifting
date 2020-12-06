@@ -38,48 +38,9 @@ public class SetDatabase {
     }
 
     //add a new bottle to the database
-    public void addNewBottle(Bottle_back this_bottle, Uri file){
+    public void addNewBottle(Bottle_back this_bottle){
         DatabaseReference bottlesRef = database.child("bottle");
-
-        if (this_bottle.ext != null) {
-            StorageReference targetRef;
-
-            if (!this_bottle.isVideo)
-                targetRef = storageRef.child("picture/" + this_bottle.bottleID + ".jpg");
-            else
-                targetRef = storageRef.child("video/" + this_bottle.bottleID + ".mp4");
-
-            UploadTask uploadTask = targetRef.putFile(file);
-
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    targetRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            Uri downloadUrl = uri;
-                            //Log.d("eafawnvaw", uri.toString());
-
-
-                            if (this_bottle.isVideo) this_bottle.video = uri.toString();
-                            else this_bottle.picture = uri.toString();
-                            //Do what you want with the url
-                            bottlesRef.child(String.valueOf(this_bottle.bottleID)).setValue(this_bottle);
-                        }
-
-                    });
-                }
-            });
-        }
-        else {
-            bottlesRef.child(String.valueOf(this_bottle.bottleID)).setValue(this_bottle);
-        }
-
+        bottlesRef.child(String.valueOf(this_bottle.bottleID)).setValue(this_bottle);
     }
 
     public void uploadAvatars(String user_id, String path) {}

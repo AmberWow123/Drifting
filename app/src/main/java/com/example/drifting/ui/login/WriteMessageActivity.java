@@ -1,60 +1,54 @@
  package com.example.drifting.ui.login;
 
- import android.Manifest;
- import android.annotation.SuppressLint;
- import android.content.Intent;
- import android.content.SharedPreferences;
- import android.content.pm.PackageManager;
- import android.database.Cursor;
- import android.graphics.Bitmap;
- import android.location.Address;
- import android.location.Geocoder;
- import android.location.Location;
- import android.media.ThumbnailUtils;
- import android.net.Uri;
- import android.os.Build;
- import android.os.Bundle;
- import android.os.Looper;
- import android.provider.MediaStore;
- import android.util.Log;
- import android.view.View;
- import android.widget.Button;
- import android.widget.CompoundButton;
- import android.widget.EditText;
- import android.widget.ImageView;
- import android.widget.Switch;
- import android.widget.TextView;
- import android.widget.Toast;
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.widget.EditText;
+import android.os.Looper;
+import android.provider.MediaStore;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Switch;
+import android.os.Looper;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
+import com.example.drifting.HomeFragment;
+import com.example.drifting.NavBar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import com.example.drifting.R;
+import com.google.firebase.auth.FirebaseAuth;
 
- import androidx.annotation.NonNull;
- import androidx.annotation.Nullable;
- import androidx.appcompat.app.AppCompatActivity;
- import androidx.core.app.ActivityCompat;
- import androidx.core.content.ContextCompat;
+import com.example.drifting.NavBar;
 
- import com.example.drifting.NavBar;
- import com.example.drifting.R;
- import com.google.android.gms.location.FusedLocationProviderClient;
- import com.google.android.gms.location.LocationCallback;
- import com.google.android.gms.location.LocationRequest;
- import com.google.android.gms.location.LocationResult;
- import com.google.android.gms.location.LocationServices;
- import com.google.android.gms.tasks.OnSuccessListener;
- import com.google.firebase.auth.FirebaseAuth;
- import com.google.firebase.database.DatabaseReference;
- import com.google.firebase.database.FirebaseDatabase;
-
- import java.text.SimpleDateFormat;
- import java.util.Date;
- import java.util.HashMap;
- import java.util.List;
- import java.util.Locale;
- import java.util.Map;
-
- import backend.util.database.Bottle_back;
- import backend.util.database.SetDatabase;
- import backend.util.time.DriftTime;
-
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 //import com.google.firebase.database.annotations.Nullable;
 
 import java.text.SimpleDateFormat;
@@ -94,9 +88,6 @@ public class WriteMessageActivity extends AppCompatActivity {
 
     SharedPreferences myPreferences;
     SharedPreferences.Editor myEditor;
-
-    private Uri video = null;
-    private Uri picture = null;
 
     // for adding image
     ImageView added_image_view;
@@ -164,73 +155,18 @@ public class WriteMessageActivity extends AppCompatActivity {
                     String userID = fAuth.getUid();
                     String bottleID = (userID + timeStamp).trim();
                     String city = locationText.getText().toString();
-
-
-                    DriftTime currTime = new DriftTime();
-
-                    String filename = null;
-                    boolean isVideo = false;
-                    if (picture != null) {
-                        filename = picture.getLastPathSegment();
-                    }
-                    else if (video != null) {
-                        filename = video.getLastPathSegment();
-                        isVideo = true;
-                    }
-
-                    if (filename != null) {
-                        Log.d("","ffff");
-                    }
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
-                            true, city, latitude[0], longitude[0], currTime.getTimestamp(),
-                            null, false, filename, isVideo);
-
-
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, true, city, null);
                     SetDatabase set = new SetDatabase();
-                    if (isVideo) {
-                        set.addNewBottle(this_bottle, video);
-                    } else {
-                        set.addNewBottle(this_bottle, picture);
-                    }
+                    set.addNewBottle(this_bottle);
                 }
                 //not anonymous
                 else{
                     String userID = fAuth.getUid();
                     String bottleID = (userID + timeStamp).trim();
                     String city = locationText.getText().toString();
-
-                    //send the bottle to database
-                    DriftTime currTime = new DriftTime();
-
-                    String filename = null;
-                    boolean isVideo = false;
-                    if (picture != null) {
-                        Log.d("dir",picture.getPath());
-                        filename = picture.getLastPathSegment();
-                    }
-                    else if (video != null) {
-                        filename = video.getLastPathSegment();
-                        isVideo = true;
-                    }
-
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
-                            false, city, latitude[0], longitude[0], currTime.getTimestamp(),
-                            null, false, filename, isVideo);
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, false, city, null);
                     SetDatabase set = new SetDatabase();
-                    if (isVideo) {
-                        set.addNewBottle(this_bottle, video);
-                    } else {
-                        set.addNewBottle(this_bottle, picture);
-                    }
-
-                    //save the bottle id in user's send list
-                    DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(userID);
-                    final DatabaseReference added_bottle= UserRef.child("send_list");
-                    //added_bottle.setValue(true);
-
-                    Map<String, Object> user_update = new HashMap<>();
-                    user_update.put(bottleID, true);
-                    added_bottle.updateChildren(user_update);
+                    set.addNewBottle(this_bottle);
                 }
 
                 //return to the home page
@@ -479,17 +415,15 @@ public class WriteMessageActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE) {
             // set image to image view
-            Uri seletedImageUri = data.getData();
-            picture = seletedImageUri;
-            added_image_view.setImageURI(seletedImageUri);
+            added_image_view.setImageURI(data.getData());
         }
         if (resultCode == RESULT_OK && requestCode == VIDEO_PICK_CODE) {
             // set video preview to image view
 
-            Uri selectedVideoUri = data.getData();
-            video = selectedVideoUri;
+            Uri selectedImageUri = data.getData();
+
             // MEDIA GALLERY
-            String selectedImagePath = getPath(selectedVideoUri);
+            String selectedImagePath = getPath(selectedImageUri);
             if (selectedImagePath != null) {
                 Bitmap thumbnail = ThumbnailUtils.createVideoThumbnail(selectedImagePath, MediaStore.Images.Thumbnails.MINI_KIND);
                 added_image_view.setImageBitmap(thumbnail);

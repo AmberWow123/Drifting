@@ -21,19 +21,12 @@ public class Bottle_back{
      public String city;
      public String comment;
      public Boolean isViewed = false;
-     public String ext = null;
-     public boolean isVideo = false;
-     public String picture = null;
-     public String video = null;
 
      public Bottle_back(){
      }
 
     // construct with a message and bottle index
-
-    public Bottle_back(String msg, String bottleID, String userID, Boolean isAnonymous, String city,
-                       double latitude, double longitude, long timestamp, String comment, Boolean viewed, String filename, boolean isVideo) {
-
+    public Bottle_back(String msg, String bottleID, String userID, Boolean isAnonymous, String city, String comment){
         self = this;
         this.message = msg;
         this.bottleID= bottleID;
@@ -41,9 +34,7 @@ public class Bottle_back{
         this.isAnonymous = isAnonymous;
         this.city = city;
         this.comment = comment;
-        this.isViewed = viewed;
-        this.ext = filename;
-        this.isVideo = isVideo;
+        this.isViewed = false;
     }
 
     public String getMessage(){

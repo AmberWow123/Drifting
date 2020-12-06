@@ -5,11 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.drifting.HomeFragment;
@@ -19,7 +14,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,28 +37,19 @@ public class ViewBottleActivity extends AppCompatActivity {
         // set canvas width and height.
         getWindow().setLayout((int)(width*1), (int)(height*0.75));
 
-        String msg = "";
-        String fromUser = "";
-        String city = "";
-        String comment = "";
-        String bottleID = "";
-        String fromUserID = "";
-        String pictureURL = null;
-        String videoURL = null;
-        FirebaseAuth fAuth = FirebaseAuth.getInstance();
-        String current_user = fAuth.getUid();
+        //get database reference
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
+        //get current userID
+        FirebaseAuth fAuth;
+        fAuth = FirebaseAuth.getInstance();
 
-        if (HomeFragment.currBottle != null) {
-             msg = HomeFragment.currBottle.message;
-             fromUser = HomeFragment.currBottle.fromUser;
-             city = HomeFragment.currBottle.city;
-             comment = HomeFragment.currBottle.comment;
-             bottleID = HomeFragment.currBottle.bottleID;
-             fromUserID = HomeFragment.currBottle.userID;
-             pictureURL = HomeFragment.currBottle.pictureDownloadURL;
-             if(pictureURL!=null) Log.d("feafiawn",pictureURL);
-             videoURL = HomeFragment.currBottle.videoDownloadURL;
-        }
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
+                    String bottleId = this_bottle.getBottleID();
+                    String userID = fAuth.getUid();
 
                     //check if the bottle is viewed
                     if(this_bottle.getIsViewed()) {
@@ -86,14 +72,8 @@ public class ViewBottleActivity extends AppCompatActivity {
                         TextView fromUserView = findViewById(R.id.from_var_textview);
                         fromUserView.setText(fromUser);
 
-        ImageView pictureView = findViewById(R.id.bottle_image);
-        //Log.d("url",pictureURL);
-        if(pictureURL != null) Picasso.get().load(pictureURL).into(pictureView);
-
-        Button close_button = findViewById(R.id.close_button);
-        close_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                        TextView locationView = findViewById(R.id.location_var_textview);
+                        locationView.setText(city);
 
                         TextView commentView = findViewById(R.id.comment_field_textview);
                         commentView.setText(comment);
