@@ -22,6 +22,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.drifting.ui.login.ViewBottleActivity;
 import com.example.drifting.ui.login.WriteMessageActivity;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,17 +33,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import com.google.android.gms.location.*;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
+import java.util.HashMap;
 import java.util.Random;
 import java.util.Vector;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import backend.util.bottleProvider.BottleProvider;
@@ -248,6 +244,7 @@ public class HomeFragment extends Fragment {
                         bottle_get.setVisible();
                         bottleList.add(bottle_get);
                         Log.d(" Bottle content is :", " " + bottle_get.message);
+                        Log.d("The sender is:", bottle_get.userID);
                         Log.d(" BottleList size is :", " " + bottleList.size());
                         Log.d(" vector contains ", bottleList.toString());
 
@@ -275,6 +272,13 @@ public class HomeFragment extends Fragment {
                                     Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
                                     //String bottleID = this_bottle.getBottleID();
                                     String userID = fAuth.getUid();
+                                    HashMap<String, Boolean> this_history= this_bottle.getPickHistory();
+
+                                    //debug: print picked history
+                                    for(String users : this_history.keySet()) {
+                                        Log.d("", "picked content:");
+                                        Log.d("user:", users);
+                                    }
 
                                     //check if the bottle is viewed
                                     if(this_bottle.getIsViewed()) {
@@ -282,8 +286,15 @@ public class HomeFragment extends Fragment {
                                         continue;
                                     }
 
+                                    //TODO: comment for test purpose, REUSE for formal product
                                     //check if the bottle is from the same user
-                                    if(this_bottle.getUserID().equals(userID)){
+//                                    if(this_bottle.getUserID().equals(userID)){
+//                                        continue;
+//                                    }
+
+                                    //check if the bottle has been picked up by the same user before
+                                    if(this_bottle.pickHistory.containsKey(userID)){
+                                        Log.d("isPicked","A bottle picked before was returned");
                                         continue;
                                     }
 
@@ -293,7 +304,7 @@ public class HomeFragment extends Fragment {
                                         bottle_get.comment = "filler comment";
                                         bottle_get.setVisible();
                                         bottleList.add(bottle_get);
-                                        Log.d(" Bottle content is :", " " + bottle_get.message);
+                                        Log.d(" Bottle content is :", " aaaaaaaaaaaaaa" + bottle_get.message);
                                         Log.d(" BottleList size is :", " " + bottleList.size());
                                         Log.d(" vector contains ", bottleList.toString());
                                         reference.removeEventListener(this);
@@ -347,6 +358,7 @@ public class HomeFragment extends Fragment {
         public String city;
         public AnimationDrawable bottleAnimation;
         public String comment;
+        public String userID;
 
 
         /**
@@ -398,6 +410,8 @@ public class HomeFragment extends Fragment {
         // ACTUAL CONSTRUCTOR: construct with a bottle_back and bottle index
         public Bottle(Bottle_back bottleBack, int bottle_index){
             self = this;
+            userID = bottleBack.userID;
+            //fromUser = bottleBack.userID;
             message = bottleBack.message;
             city = bottleBack.city;
             bottleID = bottleBack.getBottleID();
@@ -425,6 +439,20 @@ public class HomeFragment extends Fragment {
                     Log.d(" vector contains ", bottleList.toString());
                 }
             });
+
+            //set fromuser to be user nickname
+            DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(userID);
+            UserRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    fromUser = (snapshot.child("user_name").getValue() != null) ? snapshot.child("user_name").getValue().toString() : "unspecified";
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText( getContext(),"Failed to retrieve user's name :(", Toast.LENGTH_SHORT).show();
+                }
+            });
+
         }
 
         public int getRandomBottleImg(){

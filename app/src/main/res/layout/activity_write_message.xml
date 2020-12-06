@@ -237,16 +237,5 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_text_right"
         app:layout_constraintTop_toTopOf="@+id/text_Location" />
 
-    <TextView
-        android:id="@+id/text_is_anon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="TextView"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline_text_left"
-        app:layout_constraintTop_toBottomOf="@+id/text_Video_Link" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

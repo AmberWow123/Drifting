@@ -8,7 +8,12 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    //cropper
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
@@ -26,6 +31,8 @@
         <activity
             android:name=".ui.login.ViewBottleActivity"
             android:theme="@style/CustomThemePOP" />
+        <activity android:name=".ui.login.ViewBagBottleActivity"
+            android:theme="@style/CustomThemePOP"/>
         <activity android:name=".ui.login.WriteMessageActivity" />
         <activity android:name=".NavBar" />
         <activity android:name=".ui.login.SettingActivity" />
@@ -50,6 +57,7 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
     </application>
 
 </manifest>
