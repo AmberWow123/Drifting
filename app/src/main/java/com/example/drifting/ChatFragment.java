@@ -1,13 +1,15 @@
 package com.example.drifting;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,38 +18,16 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-
-import com.example.drifting.ui.login.ChatActivity;
-import com.example.drifting.ui.login.ViewBottleActivity;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.google.firebase.auth.FirebaseAuth;
 import com.example.drifting.ui.login.ExampleAdapter;
 import com.example.drifting.ui.login.ExampleItem;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import backend.util.database.SetDatabase;
-import backend.util.database.UserProfile;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,11 +40,10 @@ public class ChatFragment extends Fragment {
     private FirebaseAuth mAuth;
     private String currentUserID;
 
-    private static  String name = null;
+    private static  ArrayList<String> name = new ArrayList<>();
+    private static  ArrayList<String> time = new ArrayList<>();
+
     Uri url;
-
-
-
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -136,7 +115,7 @@ public class ChatFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
 
         currentUserID = mAuth.getCurrentUser().getUid();
-        ContacsRef = FirebaseDatabase.getInstance().getReference().child("Contacts").child(currentUserID);
+        ContacsRef = FirebaseDatabase.getInstance().getReference().child("Contacts").child(currentUserID).child("friend_list");
        // UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
 
@@ -146,19 +125,22 @@ public class ChatFragment extends Fragment {
 
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
 
-                    DatabaseReference friendRef;
-                    String friendId = snapshot1.getValue().toString();
-                    int  equal_sign=  friendId.indexOf("=");
-                    String f_id = friendId.substring(1,equal_sign);
+//                    String friendId = snapshot1.getValue().toString();
+//                    Log.d("=================", friendId);
+//                    int  equal_sign=  friendId.indexOf("=");
+//                    String f_id = friendId.substring(1,equal_sign);
+//                    Log.d("========", f_id);
+                    String f_id = snapshot1.getKey();
                     Log.d("========", f_id);
 
-                    friendRef = FirebaseDatabase.getInstance().getReference().child("user").child(f_id);
+                    //TODO: get time
 
+                    DatabaseReference friendRef = FirebaseDatabase.getInstance().getReference().child("user").child(f_id);
                     friendRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot_) {
-                            name = snapshot_.child("user_name").getValue().toString();
-                            Log.d(" ", name);
+                            name.add(snapshot_.child("user_name").getValue().toString());
+                            //Log.d(" ", name[0]);
 //                            FirebaseStorage storage = FirebaseStorage.getInstance();
 //                            StorageReference storageRef = storage.getReference();
 //                            DatabaseReference avatarRef = FirebaseDatabase.getInstance().getReference("avatars/");
@@ -175,7 +157,7 @@ public class ChatFragment extends Fragment {
 //
 //                                }
 //                            });
-                            exampleList.add(new ExampleItem(R.drawable.avatar, name, "Let's chat", "12:00"));
+                            //exampleList.add(new ExampleItem(R.drawable.avatar, name, "Let's chat", "12:00"));
 
                         }
                         @Override
@@ -222,13 +204,13 @@ public class ChatFragment extends Fragment {
 //        // TODO: time: ex. "15:00" for today; otherwise, "Monday" or "11/23" instead
 //        // TODO: the 3rd parameter is the most recent message sent by the user's friend
 //        // TODO: and the 4th parameter is the time of the most recent message sent
-          exampleList.add(new ExampleItem( R.drawable.avatar, name, "yooooo! Lets go get some boba >.<", "12:00"));
-//        exampleList.add(new ExampleItem( R.drawable.avatar, "Sam", "How are you? >.<", "13:00"));
-//        exampleList.add(new ExampleItem( R.drawable.avatar, "Jiaming", "I am fine! Thank you! And you? >.<", "14:00"));
-//        exampleList.add(new ExampleItem( R.drawable.avatar, "Tao Jin", "Just finished my midterm >.<", "15:00"));
-//        exampleList.add(new ExampleItem( R.drawable.avatar, "Lucky", "yaaaaaa >.<", "17:00"));
-//        exampleList.add(new ExampleItem( R.drawable.avatar, "Vickie", "haaaaaa >.<", "18:00"));
-//        exampleList.add(new ExampleItem( R.drawable.avatar, "Samuel", "laaaaaa >.<", "19:00"));
+
+            Log.d("size", Integer.toString(name.size()));
+          for(int i = 0; i < name.size(); i++) {
+              exampleList.add(new ExampleItem(R.drawable.avatar, name.get(i), "You are friends now! Let's start chatting.", "12:00"));
+          }
+
+          name.clear();
     }
 
 //    private void filter(String text) {
