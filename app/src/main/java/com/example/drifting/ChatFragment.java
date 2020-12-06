@@ -42,6 +42,7 @@ public class ChatFragment extends Fragment {
 
     private static  ArrayList<String> name = new ArrayList<>();
     private static  ArrayList<String> time = new ArrayList<>();
+    private static  ArrayList<String> Uer_id = new ArrayList<>();
 
     Uri url;
 
@@ -140,6 +141,7 @@ public class ChatFragment extends Fragment {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot_) {
                             name.add(snapshot_.child("user_name").getValue().toString());
+                            Uer_id.add(snapshot_.child("user_id").getValue().toString());
                             //Log.d(" ", name[0]);
 //                            FirebaseStorage storage = FirebaseStorage.getInstance();
 //                            StorageReference storageRef = storage.getReference();
@@ -207,7 +209,7 @@ public class ChatFragment extends Fragment {
 
             Log.d("size", Integer.toString(name.size()));
           for(int i = 0; i < name.size(); i++) {
-              exampleList.add(new ExampleItem(R.drawable.avatar, name.get(i), "You are friends now! Let's start chatting.", "12:00"));
+              exampleList.add(new ExampleItem(R.drawable.avatar, name.get(i), "You are friends now! Let's start chatting.", "12:00", Uer_id.get(i)));
           }
 
           name.clear();

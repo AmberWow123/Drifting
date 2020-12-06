@@ -5,17 +5,18 @@ import android.widget.ImageView;
 
 public class ExampleItem {
 
-
     final private int friend_image;
     final private String friend_name;
     final private String recent_text;
     final private String recent_text_sent_time; // TODO: backend might need to check
+    final private String friend_id;
 
-    public ExampleItem(int image_src, String name, String text, String time) {
+    public ExampleItem(int image_src, String name, String text, String time, String id) {
         friend_image = image_src;
         friend_name = name;
         recent_text = text;
         recent_text_sent_time = time;
+        friend_id = id;
     }
 
     public int getFriendImage() {
@@ -32,5 +33,9 @@ public class ExampleItem {
 
     public String getTime() {
         return recent_text_sent_time;
+    }
+
+    public String getID() {
+        return friend_id;
     }
 }
