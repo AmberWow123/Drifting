@@ -62,7 +62,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
         ExampleItem currentItem = exampleList.get(position);
 
         // setting info into the holder
-        holder.imageView.set(currentItem.getFriendImage());
+        holder.imageView.setImageResource(currentItem.getFriendImage());
         holder.text_name.setText(currentItem.getName());
         holder.text_message.setText(currentItem.getText());
         holder.text_time.setText(currentItem.getTime());

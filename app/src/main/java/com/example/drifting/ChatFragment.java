@@ -173,6 +173,8 @@ public class ChatFragment extends Fragment {
 //                                }
 //                            });
 
+                            exampleList.add(new ExampleItem(R.drawable.avatar, name, "Let's chat", "12:00"));
+
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
@@ -180,7 +182,7 @@ public class ChatFragment extends Fragment {
                         }
                     });
 
-                 exampleList.add(new ExampleItem(R.drawable.avatar, name, "Let's chat", "12:00"));
+                 //exampleList.add(new ExampleItem(R.drawable.avatar, name, "Let's chat", "12:00"));
 
 
                 }
