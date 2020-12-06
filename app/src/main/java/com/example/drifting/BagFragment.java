@@ -120,7 +120,7 @@ public class BagFragment extends Fragment {
         sent_indicator = getView().findViewById(R.id.sent_indicator);
         picked_indicator = getView().findViewById(R.id.picked_indicator);
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
+       /* DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
         //get current userID
         FirebaseAuth fAuth;
         fAuth = FirebaseAuth.getInstance();
@@ -146,6 +146,8 @@ public class BagFragment extends Fragment {
 
             }
         });
+        */
+        
 
         picked_button.setOnClickListener(new Button.OnClickListener(){
              @Override
