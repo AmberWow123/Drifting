@@ -30,16 +30,13 @@ public class SettingActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, LoginActivity.class);
 
-
         logout_button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth fAuth = FirebaseAuth.getInstance();
-                    fAuth.signOut();
-                    startActivity(intent);
-                    finish();
-                    // todo: logout token and end current activity. Make sure that the user cannot go back to the setting page.
-                    Toast.makeText(SettingActivity.this, "Logout Succeed", Toast.LENGTH_LONG).show();
+                startActivity(intent);
+                finish();
+                // todo: logout token and end current activity. Make sure that the user cannot go back to the setting page.
+                Toast.makeText(SettingActivity.this, "Logout Succeed", Toast.LENGTH_LONG).show();
             }
         });
     }
