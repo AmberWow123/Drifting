@@ -5,6 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+<<<<<<< HEAD
+=======
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+>>>>>>> parent of 493c407... 1
 import android.widget.TextView;
 
 import com.example.drifting.HomeFragment;
@@ -37,6 +44,7 @@ public class ViewBottleActivity extends AppCompatActivity {
         // set canvas width and height.
         getWindow().setLayout((int)(width*1), (int)(height*0.75));
 
+<<<<<<< HEAD
         //get database reference
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
         //get current userID
@@ -44,6 +52,50 @@ public class ViewBottleActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
 
         reference.addValueEventListener(new ValueEventListener() {
+=======
+        String msg = "";
+        String fromUser = "";
+        String city = "";
+        String comment = "";
+        String bottleID = "";
+        String fromUserID = "";
+        String pictureURL = null;
+        String videoURL = null;
+        FirebaseAuth fAuth = FirebaseAuth.getInstance();
+        String current_user = fAuth.getUid();
+
+        if (HomeFragment.currBottle != null) {
+             msg = HomeFragment.currBottle.message;
+             fromUser = HomeFragment.currBottle.fromUser;
+             city = HomeFragment.currBottle.city;
+             comment = HomeFragment.currBottle.comment;
+             bottleID = HomeFragment.currBottle.bottleID;
+             fromUserID = HomeFragment.currBottle.userID;
+             pictureURL = HomeFragment.currBottle.pictureDownloadURL;
+             //Log.d("feafiawn",pictureURL);
+             videoURL = HomeFragment.currBottle.videoDownloadURL;
+        }
+
+
+        TextView messageView = findViewById(R.id.bottle_message_textview);
+        messageView.setText(msg);
+
+        TextView fromUserView = findViewById(R.id.from_var_textview);
+        fromUserView.setText(fromUser);
+
+        TextView locationView = findViewById(R.id.location_var_textview);
+        locationView.setText(city);
+
+        TextView commentView = findViewById(R.id.comment_field_textview);
+        commentView.setText(comment);
+
+        ImageView pictureView = findViewById(R.id.bottle_image);
+        //Log.d("url",pictureURL);
+        if(pictureURL != null) Picasso.get().load(pictureURL).into(pictureView);
+
+        Button close_button = findViewById(R.id.close_button);
+        close_button.setOnClickListener(new View.OnClickListener() {
+>>>>>>> parent of 493c407... 1
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {

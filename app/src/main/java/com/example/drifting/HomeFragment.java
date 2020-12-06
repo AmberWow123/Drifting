@@ -253,6 +253,15 @@ public class HomeFragment extends Fragment {
             self = this;
             message = bottleBack.message;
             city = bottleBack.city;
+<<<<<<< HEAD
+=======
+            bottleID = bottleBack.getBottleID();
+            isVideo = bottleBack.isVideo;
+            pictureDownloadURL = bottleBack.picture;
+            Log.d("awfawef",pictureDownloadURL);
+            videoDownloadURL = bottleBack.video;
+
+>>>>>>> parent of 493c407... 1
             this.bottle_index = bottle_index;
             locationID = getRandomBottleLocation();
             bottleView =  getView().findViewById(locationID);
