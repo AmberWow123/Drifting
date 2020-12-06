@@ -42,9 +42,11 @@ public class SetDatabase {
     //add a new bottle to the database
     public void addNewBottle(Bottle_back this_bottle, Uri file){
         DatabaseReference bottlesRef = database.child("bottle");
+        bottlesRef.child(String.valueOf(this_bottle.bottleID)).setValue(this_bottle);
 
         if (this_bottle.ext != null) {
             StorageReference targetRef;
+            DatabaseReference targetdataRef = database.child("bottle").child(String.valueOf(this_bottle.bottleID));
 
             if (!this_bottle.isVideo)
                 targetRef = storageRef.child("picture/" + this_bottle.bottleID + ".jpg");
@@ -66,20 +68,14 @@ public class SetDatabase {
                         public void onSuccess(Uri uri) {
                             Uri downloadUrl = uri;
                             //Log.d("eafawnvaw", uri.toString());
-
-
-                            if (this_bottle.isVideo) this_bottle.video = uri.toString();
-                            else this_bottle.picture = uri.toString();
+                            if (this_bottle.isVideo) targetdataRef.child("video").setValue(uri.toString());
+                            else targetdataRef.child("picture").setValue(uri.toString());
                             //Do what you want with the url
-                            bottlesRef.child(String.valueOf(this_bottle.bottleID)).setValue(this_bottle);
                         }
 
                     });
                 }
             });
-        }
-        else {
-            bottlesRef.child(String.valueOf(this_bottle.bottleID)).setValue(this_bottle);
         }
 
     }
