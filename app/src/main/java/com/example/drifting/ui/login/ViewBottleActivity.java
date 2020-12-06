@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.drifting.AddFriendActivity;
 import com.example.drifting.HomeFragment;
-import com.example.drifting.NavBar;
 import com.example.drifting.R;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,16 +54,20 @@ public class ViewBottleActivity extends AppCompatActivity {
         String comment = "";
         String bottleID = "";
         String fromUserID = "";
-        FirebaseAuth fAuth = FirebaseAuth.getInstance();
-        String current_user = fAuth.getUid();
+        Boolean isAnonymous = false;
 
         if (HomeFragment.currBottle != null) {
              msg = HomeFragment.currBottle.message;
-             fromUser = HomeFragment.currBottle.fromUser;
              city = HomeFragment.currBottle.city;
+             fromUser = HomeFragment.currBottle.fromUser;
              comment = HomeFragment.currBottle.comment;
              bottleID = HomeFragment.currBottle.bottleID;
              fromUserID = HomeFragment.currBottle.userID;
+             isAnonymous = HomeFragment.currBottle.isAnonymous;
+
+             if (isAnonymous){
+                 fromUser = "Anonymous";
+             }
         }
 
 
@@ -90,9 +93,7 @@ public class ViewBottleActivity extends AppCompatActivity {
             }
         });
 
-        // Throw back function
         Button throwBack_button = findViewById(R.id.throw_back_button);
-        String finalBottleID = bottleID;
         throwBack_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -122,30 +123,33 @@ public class ViewBottleActivity extends AppCompatActivity {
         });
 
         LinearLayout fromLayout = findViewById(R.id.from_layout);
-        fromLayout.setOnClickListener(new View.OnClickListener() {
+
+        if (isAnonymous) {
+
+            fromLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(ViewBottleActivity.this, "Bottle is anonymous", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+        else {
+            fromLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 startActivity(new Intent(ViewBottleActivity.this, AddFriendActivity.class));
-
             }
         });
+        }
 
         //------------------------------------------------------------------------
 
-        //set isviewed to be true
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
         DatabaseReference this_bottle_data = reference.child(bottleID);
         Map<String, Object> bottle_update = new HashMap<>();
         bottle_update.put("isViewed", true);
         this_bottle_data.updateChildren(bottle_update);
-
-        //save the bottle id in user's receive list
-        DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(current_user);
-        final DatabaseReference added_bottle= UserRef.child("receive_list");
-        Map<String, Object> user_update = new HashMap<>();
-        user_update.put(bottleID, true);
-        added_bottle.updateChildren(user_update);
     }
 
 

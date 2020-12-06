@@ -53,11 +53,8 @@
         android:drawablePadding="8dp"
         android:ems="10"
         android:fontFamily="@font/poppins"
-        android:gravity="left|center_vertical"
         android:hint="Search friends..."
         android:inputType="textPersonName"
-        android:paddingStart="5dp"
-        android:paddingTop="4dp"
         android:textColor="#101010"
         android:textColorHint="#a1a1a1"
         android:textSize="15sp"
@@ -71,7 +68,7 @@
         android:layout_height="0dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bg_chat_search_bar">
@@ -88,6 +85,7 @@
                 android:layout_height="0dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentEnd="true"
+                android:padding="4dp"
                 android:scrollbars="vertical"
 
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -97,6 +95,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

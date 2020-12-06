@@ -101,12 +101,6 @@ public class BottleProvider {
                         continue;
                     }
 
-                    //check if the bottle has been picked up by the same user before
-                    if(this_bottle.pickHistory.containsKey(userID)){
-                        Log.d("isPicked","A bottle picked before was returned");
-                        continue;
-                    }
-
                     //TODO: comment for test purpose, REUSE for formal product
                     //check if the bottle is from the same user
 //                    if (this_bottle.getUserID().equals(userID)) {
@@ -144,10 +138,7 @@ public class BottleProvider {
         long currTimestampMillis = timer.getTimestamp();
         double bottleTravelRate = 13.0;     // Increase this variable to make the bottles drift faster. The unit is in degree/hour
 
-        double manhattanDistance =  Math.min((abs(bottle.latitude - latitude) + (abs(bottle.latitude) +
-                abs(latitude)) / 180.0 * abs(bottle.longitude - longitude)),
-                360 - (abs(bottle.latitude - latitude) + (abs(bottle.latitude) + abs(latitude)) / 180.0
-                        * abs(bottle.longitude - longitude)));
+        double manhattanDistance = (abs(bottle.latitude - latitude) + abs(bottle.longitude - longitude));
 
         if(manhattanDistance < 0.0001){     // Floating point operation: consider two locations the same if their manhattan distance
                                             // is this small.

@@ -1,6 +1,15 @@
 package backend.util.database;
 
-import java.util.HashMap;
+import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+
+import com.example.drifting.HomeFragment;
+import com.example.drifting.ui.login.ViewBottleActivity;
+import java.util.Random;
 
 public class Bottle_back{
 
@@ -16,9 +25,6 @@ public class Bottle_back{
      public String comment;
      public Boolean isViewed = false;
 
-    //history attribute to track all users picked up the bottles
-     public HashMap<String, Boolean> pickHistory = new HashMap<>();
-
      public Bottle_back(){
      }
 
@@ -26,6 +32,7 @@ public class Bottle_back{
 
     public Bottle_back(String msg, String bottleID, String userID, Boolean isAnonymous, String city,
                        double latitude, double longitude, long timestamp, String comment, Boolean viewed){
+
 
         self = this;
         this.message = msg;
@@ -82,6 +89,4 @@ public class Bottle_back{
     public void setIsViewed(Boolean isViewed){
          this.isViewed = isViewed;
     }
-
-    public HashMap<String, Boolean> getPickHistory() {return pickHistory;}
 }
