@@ -26,6 +26,7 @@ import static androidx.core.content.ContextCompat.startActivity;
 public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder> {
     private ArrayList<ExampleItem> exampleList;
     public static String userName;
+    public static String friend_id;
 
     public static class ExampleViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageView;
@@ -71,6 +72,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
             public void onClick(View v) {
                 ChatFragment.chatContext.startActivity(new Intent(ChatFragment.chatActivity, ChatActivity.class));
                 userName = currentItem.getName();
+                friend_id =currentItem.getID();
             }
         });
 

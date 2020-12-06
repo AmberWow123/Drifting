@@ -22,6 +22,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.HashMap;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -31,6 +36,12 @@ public class ChatActivity extends AppCompatActivity {
     ScrollView scroll;
     Button return_button;
     TextView userName_textview;
+    String friend_id;
+
+   // private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private DatabaseReference UserRef;
+    FirebaseUser firebaseUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +55,11 @@ public class ChatActivity extends AppCompatActivity {
         userName_textview = findViewById(R.id.textView2);
 
         userName_textview.setText(ExampleAdapter.userName);
+        friend_id = ExampleAdapter.friend_id;
+
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+
         TextView textView1 = new TextView(this);
         LayoutParams layoutParams1 = new LayoutParams(LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT);
@@ -77,6 +93,9 @@ public class ChatActivity extends AppCompatActivity {
                 textView2.setBackgroundResource(R.drawable.border8);
                 linearLayout.addView(textView2);
                 scroll.scrollTo(0, scroll.getBottom());
+
+
+                sendMessage(firebaseUser.getUid(), friend_id, content);
             }
         });
 
@@ -87,6 +106,19 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void sendMessage(String sender, String receiver, String message){
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("sender", sender);
+        hashMap.put("receiver", receiver);
+        hashMap.put("message", message);
+
+        reference.child("Chats").push().setValue(hashMap);
 
     }
 }
