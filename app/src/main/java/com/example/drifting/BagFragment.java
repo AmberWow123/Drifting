@@ -30,8 +30,7 @@ import java.util.Map;
 import backend.util.database.Bottle_back;
 
 import com.example.drifting.ui.login.ViewBagBottleActivity;
-<<<<<<< Updated upstream
-=======
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,7 +41,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import backend.util.database.Bottle_back;
->>>>>>> Stashed changes
+
 
 
 /**
