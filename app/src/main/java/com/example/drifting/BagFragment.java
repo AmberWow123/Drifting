@@ -24,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import backend.util.database.Bottle_back;
 import com.example.drifting.ui.login.ViewBagBottleActivity;
@@ -148,6 +150,7 @@ public class BagFragment extends Fragment {
         picked_button.setOnClickListener(new Button.OnClickListener(){
              @Override
             public void onClick(View v) {
+
                  linearLayout.removeAllViews();
                  sent_indicator.setVisibility(View.GONE);
                  picked_indicator.setVisibility(View.VISIBLE);
@@ -172,15 +175,16 @@ public class BagFragment extends Fragment {
                          }
                      });
                  }
-                 //pickedTime = null;
-                 //pickedBottle = null;
-                 //pickedLocation = null;
+                 //pickedTime.clear();
+                 //pickedBottle.clear();
+                 //pickedLocation.clear();
             }
         });
 
         sent_button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                
                 linearLayout.removeAllViews();
                 sent_indicator.setVisibility(View.VISIBLE);
                 picked_indicator.setVisibility(View.GONE);
@@ -205,9 +209,9 @@ public class BagFragment extends Fragment {
                         }
                     });
                 }
-                //sentBottle = null;
-                //sentTime = null;
-                //sentLocation = null;
+                //sentBottle.clear();
+                //sentTime.clear();
+                //sentLocation.clear();
             }
         });
 
