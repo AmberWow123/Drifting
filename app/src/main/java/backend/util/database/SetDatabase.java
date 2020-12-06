@@ -41,12 +41,12 @@ public class SetDatabase {
 
     //add a new bottle to the database
     public void addNewBottle(Bottle_back this_bottle, Uri file){
-        DatabaseReference bottlesRef = database.child("bottler");
+        DatabaseReference bottlesRef = database.child("bottle");
         bottlesRef.child(String.valueOf(this_bottle.bottleID)).setValue(this_bottle);
 
         if (this_bottle.ext != null) {
             StorageReference targetRef;
-            DatabaseReference targetdataRef = database.child("bottler").child(String.valueOf(this_bottle.bottleID));
+            DatabaseReference targetdataRef = database.child("bottle").child(String.valueOf(this_bottle.bottleID));
 
             if (!this_bottle.isVideo)
                 targetRef = storageRef.child("picture/" + this_bottle.bottleID + ".jpg");

@@ -259,7 +259,7 @@ public class HomeFragment extends Fragment {
                 else {
                     if (bottleList.size() < BOTTLE_MAX) {
                         //get database reference
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottler");
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
                         //get current userID
                         FirebaseAuth fAuth;
                         fAuth = FirebaseAuth.getInstance();

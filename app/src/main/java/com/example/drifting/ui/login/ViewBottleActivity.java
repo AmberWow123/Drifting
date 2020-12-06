@@ -97,7 +97,7 @@ public class ViewBottleActivity extends AppCompatActivity {
         throwBack_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottler");
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
                 DatabaseReference this_bottle_data = reference.child(finalBottleID);
 
                 // set isViewed to false
@@ -136,7 +136,7 @@ public class ViewBottleActivity extends AppCompatActivity {
         //------------------------------------------------------------------------
 
         //set isviewed to be true
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottler");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
         DatabaseReference this_bottle_data = reference.child(bottleID);
         Map<String, Object> bottle_update = new HashMap<>();
         bottle_update.put("isViewed", true);

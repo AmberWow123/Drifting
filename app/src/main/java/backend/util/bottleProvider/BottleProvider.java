@@ -37,7 +37,7 @@ public class BottleProvider {
     private ExecutorService es;
     private Context context;
     private Activity activity;
-    private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottler");
+    private DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
     private FirebaseAuth fAuth = FirebaseAuth.getInstance();
     private boolean isFetchComplete = false;
     public boolean locationLess = false;    // Change this to true to start the app in location-less mode
