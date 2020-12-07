@@ -183,7 +183,7 @@ public class BagFragment extends Fragment {
                                             //Log.d("Msg ", msg);
                                             //Log.d("Time ", String.valueOf(time));
                                             //Log.d("City", city);
-                                            //bottle_ref.removeEventListener(this);
+                                            bottle_ref.removeEventListener(this);
                                         }
 
                                         @Override
@@ -197,7 +197,7 @@ public class BagFragment extends Fragment {
                             //Log.d("userId", "UserID " + userID);
                             //Log.d("sentBottle", "Bottle " + sentBottle.toString());
                         }
-                        //user_ref.removeEventListener(this);
+                        user_ref.removeEventListener(this);
                     }
 
                     @Override
@@ -278,7 +278,7 @@ public class BagFragment extends Fragment {
                                         //Log.d("Msg ", msg);
                                         //Log.d("Time ", String.valueOf(time));
                                         //Log.d("City", city);
-                                        //bottle_ref.removeEventListener(this);
+                                        bottle_ref.removeEventListener(this);
                                     }
 
                                     @Override
@@ -292,7 +292,7 @@ public class BagFragment extends Fragment {
 
                         //Log.d("userId", "UserID " + userID);
                         //Log.d("sentBottle", "Bottle " + sentBottle.toString());
-                        //user_ref.removeEventListener(this);
+                        user_ref.removeEventListener(this);
                     }
 
                     @Override
