@@ -82,7 +82,7 @@ public class ChatActivity extends AppCompatActivity {
             String message = chat.getMessage();
 
             // I send the message
-            if (this_sender == firebaseUser.getUid()) {
+            if (this_sender.equals(firebaseUser.getUid())) {
                 TextView textView2 = new TextView(ChatActivity.this);
                 LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
                 layoutParams.gravity = Gravity.RIGHT;
