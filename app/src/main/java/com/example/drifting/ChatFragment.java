@@ -158,7 +158,7 @@ public class ChatFragment extends Fragment {
 //                                }
 //                            });
                             //exampleList.add(new ExampleItem(R.drawable.avatar, name, "Let's chat", "12:00"));
-                            friendRef.removeEventListener(this);
+                            //friendRef.removeEventListener(this);
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
@@ -169,7 +169,7 @@ public class ChatFragment extends Fragment {
                  //exampleList.add(new ExampleItem(R.drawable.avatar, name, "Let's chat", "12:00"));
 
                 }
-                ContacsRef.removeEventListener(this);
+                //ContacsRef.removeEventListener(this);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

@@ -50,9 +50,11 @@ public class BagFragment extends Fragment {
     public static ArrayList<String> pickedBottle = new ArrayList<String>();
     public static ArrayList<String> pickedTime = new ArrayList<String>();
     public static ArrayList<String> pickedLocation = new ArrayList<String>();
+    public static ArrayList<String> pickedBottleID = new ArrayList<String>();
     public static ArrayList<String> sentBottle = new ArrayList<String>();
     public static ArrayList<String> sentTime = new ArrayList<String>();
     public static ArrayList<String> sentLocation = new ArrayList<String>();
+    public static ArrayList<String> sentBottleID = new ArrayList<String>();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -176,10 +178,12 @@ public class BagFragment extends Fragment {
                                             pickedTime.add(String.valueOf(time));
                                             String city = snapshot_2.child("city").getValue(String.class);
                                             pickedLocation.add(city);
+                                            String b_id = snapshot_2.child("bottleID").getValue(String.class);
+                                            pickedBottleID.add(b_id);
                                             //Log.d("Msg ", msg);
                                             //Log.d("Time ", String.valueOf(time));
                                             //Log.d("City", city);
-                                            bottle_ref.removeEventListener(this);
+                                            //bottle_ref.removeEventListener(this);
                                         }
 
                                         @Override
@@ -193,7 +197,7 @@ public class BagFragment extends Fragment {
                             //Log.d("userId", "UserID " + userID);
                             //Log.d("sentBottle", "Bottle " + sentBottle.toString());
                         }
-                        user_ref.removeEventListener(this);
+                        //user_ref.removeEventListener(this);
                     }
 
                     @Override
@@ -218,11 +222,16 @@ public class BagFragment extends Fragment {
                     bag_date.setText(pickedTime.get(i));
                     bag_content.setText(pickedBottle.get(i));
                     bag_location.setText(pickedLocation.get(i));
+                    String bottle_id = pickedBottleID.get(i);
                     linearLayout.addView(customView, layoutParams);
                     customView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            startActivity(new Intent(getActivity(), ViewBagBottleActivity.class));
+                            Intent intent = new Intent(getActivity(), ViewBagBottleActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("BottleID", bottle_id);
+                            intent.putExtras(b);
+                            startActivity(intent);
                         }
                     });
                 }
@@ -264,10 +273,12 @@ public class BagFragment extends Fragment {
                                         sentTime.add(String.valueOf(time));
                                         String city = snapshot_2.child("city").getValue(String.class);
                                         sentLocation.add(city);
+                                        String b_id = snapshot_2.child("bottleID").getValue(String.class);
+                                        sentBottleID.add(b_id);
                                         //Log.d("Msg ", msg);
                                         //Log.d("Time ", String.valueOf(time));
                                         //Log.d("City", city);
-                                        bottle_ref.removeEventListener(this);
+                                        //bottle_ref.removeEventListener(this);
                                     }
 
                                     @Override
@@ -281,7 +292,7 @@ public class BagFragment extends Fragment {
 
                         //Log.d("userId", "UserID " + userID);
                         //Log.d("sentBottle", "Bottle " + sentBottle.toString());
-                        user_ref.removeEventListener(this);
+                        //user_ref.removeEventListener(this);
                     }
 
                     @Override
@@ -305,11 +316,16 @@ public class BagFragment extends Fragment {
                     bag_date.setText(sentTime.get(i));
                     bag_content.setText(sentBottle.get(i));
                     bag_location.setText(sentLocation.get(i));
+                    String bottle_id = sentBottleID.get(i);
                     linearLayout.addView(customView, layoutParams);
                     customView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            startActivity(new Intent(getActivity(), ViewBagBottleActivity.class));
+                            Intent intent = new Intent(getActivity(), ViewBagBottleActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("BottleID", bottle_id);
+                            intent.putExtras(b);
+                            startActivity(intent);
                         }
                     });
                 }
