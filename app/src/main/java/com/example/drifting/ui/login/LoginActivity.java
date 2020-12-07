@@ -165,6 +165,7 @@ public class LoginActivity extends AppCompatActivity {
                                         String name = snapshot.child("user_name").getValue() != null ? snapshot.child("user_name").getValue().toString() : "unspecified";
                                         Toast.makeText(LoginActivity.this, "Welcome, " + name, Toast.LENGTH_LONG).show();
                                         // Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
+                                        UserRef.removeEventListener(this);
                                     }
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
@@ -221,6 +222,7 @@ public class LoginActivity extends AppCompatActivity {
                                        String name = snapshot.child("user_name").getValue() != null ? snapshot.child("user_name").getValue().toString() : "unspecified";
                                        Toast.makeText(LoginActivity.this, "Welcome, " + name, Toast.LENGTH_LONG).show();
                                        // Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
+                                       UserRef.removeEventListener(this);
                                    }
                                    @Override
                                    public void onCancelled(@NonNull DatabaseError error) {
