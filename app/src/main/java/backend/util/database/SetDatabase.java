@@ -1,6 +1,7 @@
 package backend.util.database;
 
 import android.net.Uri;
+import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.NonNull;
@@ -37,6 +38,14 @@ public class SetDatabase {
         //System.out.println(database == null);
         DatabaseReference usersRef = database.child("user");
         usersRef.child(userProfile.user_id).setValue(userProfile);
+    }
+
+    //add a new chat to the database
+    public void addNewChat (Chat chat) {
+        //System.out.println(database == null);
+        DatabaseReference chatsRef = database.child("Chats");
+        chatsRef.push().setValue(chat);
+        Log.d("successful add ", "yay" + chat.receiver + chat.sender);
     }
 
     //add a new bottle to the database
