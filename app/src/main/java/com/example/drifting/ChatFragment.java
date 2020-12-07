@@ -168,7 +168,7 @@ public class ChatFragment extends Fragment {
                                 else {
                                     //if not repeated
                                     name.add(this_name);
-                                    Uer_id.add(snapshot1.child("receiver").getValue().toString());
+                                    Uer_id.add(needed_id);
                                     message.add(snapshot1.child("message").getValue().toString());
                                     chat_messages.add(chat);
                                 }
