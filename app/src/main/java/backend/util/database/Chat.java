@@ -2,9 +2,9 @@ package backend.util.database;
 
 public class Chat {
 
-    private String sender;
-    private String receiver;
-    private String message;
+    public String sender;
+    public String receiver;
+    public String message;
 
     public Chat(String sender, String receiver, String message) {
         this.sender = sender;

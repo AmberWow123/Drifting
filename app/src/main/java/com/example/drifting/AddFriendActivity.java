@@ -12,7 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.drifting.ui.login.ViewBottleActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +25,9 @@ import com.squareup.picasso.Picasso;
 import java.util.Calendar;
 import java.util.Date;
 
+import backend.util.database.Chat;
+import backend.util.database.SetDatabase;
+
 public class AddFriendActivity extends AppCompatActivity {
 
     private static  String name = null;
@@ -37,6 +39,8 @@ public class AddFriendActivity extends AppCompatActivity {
 
     //contact
     private DatabaseReference ContactsRef;
+    //chats
+    private DatabaseReference ChatRef;
 
 
     @Override
@@ -44,6 +48,8 @@ public class AddFriendActivity extends AppCompatActivity {
 
         //contact
         ContactsRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
+        //chat
+        ChatRef = FirebaseDatabase.getInstance().getReference().child("Chats");
 
 
         FirebaseAuth fAuth = FirebaseAuth.getInstance();
@@ -160,6 +166,17 @@ public class AddFriendActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+        //add chat
+//        HashMap<String, Object> hashMap = new HashMap<>();
+//        hashMap.put("sender", current_user);
+//        hashMap.put("receiver", receiverUserID);
+//        hashMap.put("message", "You are friends now! Let's start chatting.");
+//        ChatRef.push().setValue(hashMap);
+        Chat new_chat = new Chat (current_user, receiverUserID, "You are friends now! Let's start chatting.");
+        SetDatabase db = new SetDatabase();
+        db.addNewChat(new_chat);
+
     }
 
 }

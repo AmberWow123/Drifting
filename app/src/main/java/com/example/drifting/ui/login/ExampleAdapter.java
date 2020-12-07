@@ -16,10 +16,13 @@ import com.example.drifting.R;
 
 import java.util.ArrayList;
 
+import backend.util.database.Chat;
+
 public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder> {
     private ArrayList<ExampleItem> exampleList;
     public static String userName;
     public static String friend_id;
+    public static ArrayList<Chat> chat_messages;
 
     public static class ExampleViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageView;
@@ -66,6 +69,7 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
                 ChatFragment.chatContext.startActivity(new Intent(ChatFragment.chatActivity, ChatActivity.class));
                 userName = currentItem.getName();
                 friend_id =currentItem.getID();
+                chat_messages = currentItem.chat_messages;
             }
         });
 
