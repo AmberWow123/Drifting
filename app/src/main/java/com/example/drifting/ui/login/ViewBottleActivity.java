@@ -60,6 +60,7 @@ public class ViewBottleActivity extends AppCompatActivity {
         String fromUserID = "";
         String pictureURL = null;
         String videoURL = null;
+        Boolean isAnonymous = false;
         FirebaseAuth fAuth = FirebaseAuth.getInstance();
         String current_user = fAuth.getUid();
 
@@ -73,6 +74,11 @@ public class ViewBottleActivity extends AppCompatActivity {
              pictureURL = HomeFragment.currBottle.pictureDownloadURL;
              if(pictureURL!=null) Log.d("feafiawn",pictureURL);
              videoURL = HomeFragment.currBottle.videoDownloadURL;
+             isAnonymous = HomeFragment.currBottle.isAnonymous;
+
+            if (isAnonymous){
+                fromUser = "Anonymous";
+            }
         }
 
 
@@ -154,25 +160,32 @@ public class ViewBottleActivity extends AppCompatActivity {
         });
 
         LinearLayout fromLayout = findViewById(R.id.from_layout);
-        fromLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (isAnonymous) {
 
-                startActivity(new Intent(ViewBottleActivity.this, AddFriendActivity.class));
+            fromLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(ViewBottleActivity.this, "Bottle is anonymous", Toast.LENGTH_SHORT).show();
+                }
+            });
 
-            }
-        });
-
+        }
+        else {
+            fromLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(ViewBottleActivity.this, AddFriendActivity.class));
+                }
+            });
+        }
         //------------------------------------------------------------------------
 
         //set isviewed to be true
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
         DatabaseReference this_bottle_data = reference.child(bottleID);
-        if(!bottleID.equals("")) {
-            Map<String, Object> bottle_update = new HashMap<>();
-            bottle_update.put("isViewed", true);
-            this_bottle_data.updateChildren(bottle_update);
-        }
+        Map<String, Object> bottle_update = new HashMap<>();
+        bottle_update.put("isViewed", true);
+        this_bottle_data.updateChildren(bottle_update);
 
         //save the bottle id in user's receive list
         DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(current_user);
