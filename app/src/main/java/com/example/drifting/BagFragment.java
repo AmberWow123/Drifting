@@ -133,6 +133,7 @@ public class BagFragment extends Fragment {
 
                  Object hm_obj = new Object();
 
+
                  //ArrayList<String> bottle_ids = new ArrayList<String>();
                  user_ref.addValueEventListener(new ValueEventListener() {
                      @Override
@@ -222,7 +223,7 @@ public class BagFragment extends Fragment {
                 DatabaseReference user_ref = ref.child("user").child(userID).child("send_list");
 
                 Object hm_obj = new Object();
-
+                //Log.d("sizeofBottle",String.valueOf(sentBottle.size()));
                 //ArrayList<String> bottle_ids = new ArrayList<String>();
                 user_ref.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -239,6 +240,7 @@ public class BagFragment extends Fragment {
                                     public void onDataChange(@NonNull DataSnapshot snapshot_2) {
                                         String msg = snapshot_2.child("message").getValue(String.class);
                                         sentBottle.add(msg);
+                                        Log.d("msg",msg);
                                         long time = snapshot_2.child("timestamp").getValue(Long.class);
                                         sentTime.add(String.valueOf(time));
                                         String city = snapshot_2.child("city").getValue(String.class);
@@ -260,6 +262,9 @@ public class BagFragment extends Fragment {
 
                         //Log.d("userId", "UserID " + userID);
                         //Log.d("sentBottle", "Bottle " + sentBottle.toString());
+                        Log.d("sizeofBottle",String.valueOf(sentBottle.size()));
+                        Log.d("UID",userID);
+                        //Log.d("BottleMsg",sentBottle.get(0));
                         user_ref.removeEventListener(this);
                     }
 
