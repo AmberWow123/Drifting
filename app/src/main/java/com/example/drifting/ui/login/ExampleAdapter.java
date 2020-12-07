@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,13 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.drifting.ChatFragment;
 import com.example.drifting.R;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import android.app.Activity;
-
-import static androidx.core.content.ContextCompat.startActivity;
 
 public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder> {
     private ArrayList<ExampleItem> exampleList;
@@ -75,8 +68,6 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
                 friend_id =currentItem.getID();
             }
         });
-
-
 
     }
 
