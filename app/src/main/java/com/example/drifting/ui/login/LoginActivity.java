@@ -150,6 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, feedback, Toast.LENGTH_SHORT).show();
 
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(mAuth.getCurrentUser().getUid());
 
 
                 if (ca.isValid()) {
