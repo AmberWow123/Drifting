@@ -120,34 +120,6 @@ public class BagFragment extends Fragment {
         sent_indicator = getView().findViewById(R.id.sent_indicator);
         picked_indicator = getView().findViewById(R.id.picked_indicator);
 
-       /* DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
-        //get current userID
-        FirebaseAuth fAuth;
-        fAuth = FirebaseAuth.getInstance();
-
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                    Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
-                    //String bottleID = this_bottle.getBottleID();
-                    String userID = fAuth.getUid();
-                    if(userID == this_bottle.getUserID()){
-                        sentBottle.add(this_bottle.getMessage());
-                        sentTime.add(String.valueOf(this_bottle.getTimestamp()));
-                        sentLocation.add(this_bottle.getCity());
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        */
 
         picked_button.setOnClickListener(new Button.OnClickListener(){
              @Override
@@ -296,6 +268,8 @@ public class BagFragment extends Fragment {
 
                     }
                 });
+
+
                 linearLayout.removeAllViews();
                 sent_indicator.setVisibility(View.VISIBLE);
                 picked_indicator.setVisibility(View.GONE);
