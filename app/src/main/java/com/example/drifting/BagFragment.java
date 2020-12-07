@@ -165,37 +165,40 @@ public class BagFragment extends Fragment {
                  user_ref.addValueEventListener(new ValueEventListener() {
                      @Override
                      public void onDataChange(@NonNull DataSnapshot snapshot) {
-                         Log.d("ref", user_ref.toString());
-                         HashMap<String, Boolean> hp = (HashMap)snapshot.getValue(hm_obj.getClass());
-                         for (Map.Entry<String, Boolean> set : hp.entrySet()) {
-                             if(set.getValue() == true) {
-                                 //set.getKey() is the bottle id
-                                 //Log.d("HashMap: ","Key: "+ set.getKey() + " Val: " + set.getValue());
-                                 DatabaseReference bottle_ref = ref.child("bottle").child(set.getKey());
-                                 bottle_ref.addValueEventListener(new ValueEventListener() {
-                                     @Override
-                                     public void onDataChange(@NonNull DataSnapshot snapshot_2) {
-                                         String msg = snapshot_2.child("message").getValue(String.class);
-                                         pickedBottle.add(msg);
-                                         long time = snapshot_2.child("timestamp").getValue(Long.class);
-                                         pickedTime.add(String.valueOf(time));
-                                         String city = snapshot_2.child("city").getValue(String.class);
-                                         pickedLocation.add(city);
-                                         //Log.d("Msg ", msg);
-                                         //Log.d("Time ", String.valueOf(time));
-                                         //Log.d("City", city);
-                                     }
+                         if(snapshot.getValue(hm_obj.getClass()) != null) {
+                             HashMap<String, Boolean> hp = (HashMap) snapshot.getValue(hm_obj.getClass());
+                             for (Map.Entry<String, Boolean> set : hp.entrySet()) {
+                                 if (set.getValue() == true) {
+                                     //set.getKey() is the bottle id
+                                     //Log.d("HashMap: ","Key: "+ set.getKey() + " Val: " + set.getValue());
+                                     DatabaseReference bottle_ref = ref.child("bottle").child(set.getKey());
+                                     bottle_ref.addValueEventListener(new ValueEventListener() {
+                                         @Override
+                                         public void onDataChange(@NonNull DataSnapshot snapshot_2) {
+                                             String msg = snapshot_2.child("message").getValue(String.class);
+                                             pickedBottle.add(msg);
+                                             long time = snapshot_2.child("timestamp").getValue(Long.class);
+                                             pickedTime.add(String.valueOf(time));
+                                             String city = snapshot_2.child("city").getValue(String.class);
+                                             pickedLocation.add(city);
+                                             //Log.d("Msg ", msg);
+                                             //Log.d("Time ", String.valueOf(time));
+                                             //Log.d("City", city);
+                                             bottle_ref.removeEventListener(this);
+                                         }
 
-                                     @Override
-                                     public void onCancelled(@NonNull DatabaseError error) {
+                                         @Override
+                                         public void onCancelled(@NonNull DatabaseError error) {
 
-                                     }
-                                 });
+                                         }
+                                     });
+                                 }
                              }
                          }
 
                          //Log.d("userId", "UserID " + userID);
                          //Log.d("sentBottle", "Bottle " + sentBottle.toString());
+                         user_ref.removeEventListener(this);
                      }
 
                      @Override
@@ -203,6 +206,8 @@ public class BagFragment extends Fragment {
 
                      }
                  });
+
+
 
                  linearLayout.removeAllViews();
                  sent_indicator.setVisibility(View.GONE);
@@ -250,9 +255,10 @@ public class BagFragment extends Fragment {
                 user_ref.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Log.d("ref", user_ref.toString());
-                        HashMap<String, Boolean> hp = (HashMap)snapshot.getValue(hm_obj.getClass());
-                        for (Map.Entry<String, Boolean> set : hp.entrySet()) {
+
+                        if(snapshot.getValue(hm_obj.getClass()) != null) {
+                            HashMap<String, Boolean> hp = (HashMap) snapshot.getValue(hm_obj.getClass());
+                            for (Map.Entry<String, Boolean> set : hp.entrySet()) {
                                 //set.getKey() is the bottle id
                                 //Log.d("HashMap: ","Key: "+ set.getKey() + " Val: " + set.getValue());
                                 DatabaseReference bottle_ref = ref.child("bottle").child(set.getKey());
@@ -268,6 +274,7 @@ public class BagFragment extends Fragment {
                                         //Log.d("Msg ", msg);
                                         //Log.d("Time ", String.valueOf(time));
                                         //Log.d("City", city);
+                                        bottle_ref.removeEventListener(this);
                                     }
 
                                     @Override
@@ -276,10 +283,12 @@ public class BagFragment extends Fragment {
                                     }
                                 });
 
+                            }
                         }
 
                         //Log.d("userId", "UserID " + userID);
                         //Log.d("sentBottle", "Bottle " + sentBottle.toString());
+                        user_ref.removeEventListener(this);
                     }
 
                     @Override
