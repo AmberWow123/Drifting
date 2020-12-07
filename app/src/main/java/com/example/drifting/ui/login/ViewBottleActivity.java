@@ -183,11 +183,9 @@ public class ViewBottleActivity extends AppCompatActivity {
         //set isviewed to be true
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
         DatabaseReference this_bottle_data = reference.child(bottleID);
-        if(!bottleID.equals("")) {
-            Map<String, Object> bottle_update = new HashMap<>();
-            bottle_update.put("isViewed", true);
-            this_bottle_data.updateChildren(bottle_update);
-        }
+        Map<String, Object> bottle_update = new HashMap<>();
+        bottle_update.put("isViewed", true);
+        this_bottle_data.updateChildren(bottle_update);
 
         //save the bottle id in user's receive list
         DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(current_user);
