@@ -145,8 +145,13 @@ public class ChatFragment extends Fragment {
                         String sender_id = snapshot1.child("sender").getValue().toString();
                         String receiver_id = snapshot1.child("receiver").getValue().toString();
 
+                        //set the display name always to be others
+                        String needed_id;
+                        if(receiver_id.equals(currentUserID))  needed_id = sender_id ;
+                        else    needed_id = receiver_id;
+
                         //need to get receiver's name
-                        DatabaseReference friendRef = FirebaseDatabase.getInstance().getReference().child("user").child(receiver_id);
+                        DatabaseReference friendRef = FirebaseDatabase.getInstance().getReference().child("user").child(needed_id);
                         friendRef.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot_) {
