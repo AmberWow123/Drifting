@@ -363,6 +363,10 @@ public class HomeFragment extends Fragment {
         public String pictureDownloadURL;
         public String videoDownloadURL;
         public boolean isVideo;
+<<<<<<< Updated upstream
+=======
+        public boolean isAnonymous;
+>>>>>>> Stashed changes
 
 
         /**
@@ -423,7 +427,11 @@ public class HomeFragment extends Fragment {
             pictureDownloadURL = bottleBack.picture;
             //Log.d("awfawef",pictureDownloadURL);
             videoDownloadURL = bottleBack.video;
+<<<<<<< Updated upstream
 
+=======
+            isAnonymous = bottleBack.isAnonymous;
+>>>>>>> Stashed changes
             this.bottle_index = bottle_index;
             locationID = getRandomBottleLocation();
             bottleView =  getView().findViewById(locationID);

@@ -1,14 +1,8 @@
 package com.example.drifting.ui.login;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.widget.LinearLayout.LayoutParams;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,20 +10,18 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.drifting.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+<<<<<<< Updated upstream
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.HashMap;
+=======
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
@@ -199,18 +191,17 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TextView textView2 = new TextView(ChatActivity.this);
-                LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
-                        LayoutParams.WRAP_CONTENT);
+                LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
                 layoutParams.gravity = Gravity.RIGHT;
                 layoutParams.setMargins(50, 20, 50, 20);
                 textView2.setLayoutParams(layoutParams);
-                tfield = (EditText)findViewById(R.id.message_area);
+                tfield = (EditText) findViewById(R.id.message_area);
                 String content = tfield.getText().toString();
                 tfield.setText("");
                 textView2.setText(content);
                 textView2.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
                 textView2.setTextColor(0xFF000000);
-                textView2.setPadding(35,20,35,20);
+                textView2.setPadding(35, 20, 35, 20);
                 textView2.setBackgroundResource(R.drawable.border8);
                 linearLayout.addView(textView2);
                 scroll.scrollTo(0, scroll.getBottom());
@@ -223,7 +214,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        return_button.setOnClickListener(new Button.OnClickListener(){
+        return_button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

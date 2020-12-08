@@ -1,6 +1,7 @@
 package com.example.drifting.ui.login;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
