@@ -26,6 +26,15 @@ import com.squareup.picasso.Picasso;
 import java.util.Calendar;
 import java.util.Date;
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+import backend.util.database.Chat;
+import backend.util.database.SetDatabase;
+
+>>>>>>> b509b89f2a3932709a2bdc18147a6cbe88c6fb2a
+>>>>>>> Stashed changes
 public class AddFriendActivity extends AppCompatActivity {
 
     private static  String name = null;
@@ -37,6 +46,8 @@ public class AddFriendActivity extends AppCompatActivity {
 
     //contact
     private DatabaseReference ContactsRef;
+    //chats
+    private DatabaseReference ChatRef;
 
 
     @Override
@@ -44,6 +55,8 @@ public class AddFriendActivity extends AppCompatActivity {
 
         //contact
         ContactsRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
+        //chat
+        ChatRef = FirebaseDatabase.getInstance().getReference().child("Chats");
 
 
         FirebaseAuth fAuth = FirebaseAuth.getInstance();
@@ -143,23 +156,57 @@ public class AddFriendActivity extends AppCompatActivity {
 
     private void Add_friend(String current_user, String receiverUserID)
     {
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+        Date currentTime = Calendar.getInstance().getTime();
+
+        ContactsRef.child(current_user).child(receiverUserID)
+                .child("Contacts").setValue(currentTime)
+=======
+>>>>>>> Stashed changes
 
 
         Date currentTime = Calendar.getInstance().getTime();
 
         ContactsRef.child(current_user).child("friend_list")
                 .child(receiverUserID).setValue(currentTime)
+<<<<<<< Updated upstream
+=======
+>>>>>>> b509b89f2a3932709a2bdc18147a6cbe88c6fb2a
+>>>>>>> Stashed changes
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task)
                     {
                         if (task.isSuccessful())
                         {
+<<<<<<< Updated upstream
                             ContactsRef.child(receiverUserID).child("friend_list")
                                     .child(current_user).setValue(currentTime);
+=======
+<<<<<<< HEAD
+                            ContactsRef.child(receiverUserID).child(current_user)
+                                    .child("Contacts").setValue(currentTime);
+=======
+                            ContactsRef.child(receiverUserID).child("friend_list")
+                                    .child(current_user).setValue(currentTime);
+>>>>>>> b509b89f2a3932709a2bdc18147a6cbe88c6fb2a
+>>>>>>> Stashed changes
                         }
                     }
                 });
+
+        //add chat
+//        HashMap<String, Object> hashMap = new HashMap<>();
+//        hashMap.put("sender", current_user);
+//        hashMap.put("receiver", receiverUserID);
+//        hashMap.put("message", "You are friends now! Let's start chatting.");
+//        ChatRef.push().setValue(hashMap);
+        Chat new_chat = new Chat (current_user, receiverUserID, "You are friends now! Let's start chatting.");
+        SetDatabase db = new SetDatabase();
+        db.addNewChat(new_chat);
+
     }
 
 }

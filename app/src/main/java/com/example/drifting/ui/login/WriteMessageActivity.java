@@ -173,7 +173,11 @@ public class WriteMessageActivity extends AppCompatActivity {
                     //save the bottle id in user's send list
                     DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(userID);
                     final DatabaseReference added_bottle= UserRef.child("send_list");
+<<<<<<< Updated upstream
                     //added_bottle.setValue(true);
+=======
+                    added_bottle.setValue(true);
+>>>>>>> Stashed changes
 
                     SetDatabase set = new SetDatabase();
                     if (isVideo) {

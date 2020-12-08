@@ -8,8 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +27,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.view.View.VISIBLE;
 
 public class ViewBottleActivity extends AppCompatActivity {
 
@@ -55,6 +59,10 @@ public class ViewBottleActivity extends AppCompatActivity {
         String fromUserID = "";
         String pictureURL = null;
         String videoURL = null;
+<<<<<<< Updated upstream
+=======
+        Boolean isAnonymous = false;
+>>>>>>> Stashed changes
         FirebaseAuth fAuth = FirebaseAuth.getInstance();
         String current_user = fAuth.getUid();
 
@@ -68,6 +76,14 @@ public class ViewBottleActivity extends AppCompatActivity {
              pictureURL = HomeFragment.currBottle.pictureDownloadURL;
              if(pictureURL!=null) Log.d("feafiawn",pictureURL);
              videoURL = HomeFragment.currBottle.videoDownloadURL;
+<<<<<<< Updated upstream
+=======
+             isAnonymous = HomeFragment.currBottle.isAnonymous;
+
+            if (isAnonymous){
+                fromUser = "Anonymous";
+            }
+>>>>>>> Stashed changes
         }
 
 
@@ -85,7 +101,31 @@ public class ViewBottleActivity extends AppCompatActivity {
 
         ImageView pictureView = findViewById(R.id.bottle_image);
         //Log.d("url",pictureURL);
+<<<<<<< Updated upstream
         if(pictureURL != null) Picasso.get().load(pictureURL).into(pictureView);
+=======
+        if(pictureURL != null) {
+            pictureView.setVisibility(VISIBLE);
+            Picasso.get().load(pictureURL).into(pictureView);
+        }
+
+        VideoView videoView = findViewById(R.id.bottle_vedio);
+        if(videoURL != null) {
+            Log.d("videourl",videoURL);
+            videoView.setVisibility(VISIBLE);
+            videoView.setZOrderOnTop(true);
+
+
+            Uri uri = Uri.parse(videoURL);
+            videoView.setVideoURI(uri);
+            videoView.setMediaController(new MediaController(this));
+            videoView.requestFocus();
+            videoView.start();
+
+
+
+        }
+>>>>>>> Stashed changes
 
         Button close_button = findViewById(R.id.close_button);
         close_button.setOnClickListener(new View.OnClickListener() {
@@ -129,15 +169,24 @@ public class ViewBottleActivity extends AppCompatActivity {
         });
 
         LinearLayout fromLayout = findViewById(R.id.from_layout);
-        fromLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (isAnonymous) {
 
-                startActivity(new Intent(ViewBottleActivity.this, AddFriendActivity.class));
+            fromLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(ViewBottleActivity.this, "Bottle is anonymous", Toast.LENGTH_SHORT).show();
+                }
+            });
 
-            }
-        });
-
+        }
+        else {
+            fromLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(ViewBottleActivity.this, AddFriendActivity.class));
+                }
+            });
+        }
         //------------------------------------------------------------------------
 
         //set isviewed to be true

@@ -75,11 +75,24 @@
 
                 <VideoView
                     android:id="@+id/bottle_vedio"
+<<<<<<< Updated upstream
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="50dp"
                     android:visibility="gone"
                     tools:visibility="visible" />
+=======
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0"
+                    android:visibility="gone" />
+>>>>>>> Stashed changes
 
                 <ImageView
                     android:id="@+id/bottle_image"
@@ -88,8 +101,12 @@
                     android:adjustViewBounds="true"
                     android:paddingBottom="50dp"
                     android:scaleType="fitStart"
+<<<<<<< Updated upstream
                     android:visibility="gone"
                     tools:visibility="visible" />
+=======
+                    android:visibility="gone" />
+>>>>>>> Stashed changes
 
                 <LinearLayout
                     android:id="@+id/from_layout"
