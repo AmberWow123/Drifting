@@ -36,7 +36,9 @@ public class ViewBagBottleActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
 
         //todo: bottle id from bag fragment
-        String bottle_ID = b.getString("BottleID");
+        //String bottle_ID = b.getString("BottleID");
+        TextView bottle = findViewById(R.id.textView_bag_bottle_id);
+        String bottle_ID = bottle.getText().toString();
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -58,8 +60,9 @@ public class ViewBagBottleActivity extends AppCompatActivity {
             bottleID = HomeFragment.currBottle.bottleID;
             fromUserID = HomeFragment.currBottle.userID;
         }
+        */
 
-         */
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         DatabaseReference bottle_ref = ref.child("bottle").child(bottle_ID);
 
@@ -89,7 +92,6 @@ public class ViewBagBottleActivity extends AppCompatActivity {
 
             }
         });
-
 
 
 

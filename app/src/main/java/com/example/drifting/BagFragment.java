@@ -219,18 +219,20 @@ public class BagFragment extends Fragment {
                     TextView bag_content = (TextView) customView.findViewById(R.id.textView_bag_content);
                     TextView bag_date = (TextView) customView.findViewById(R.id.textView_bag_time);
                     TextView bag_location = (TextView) customView.findViewById(R.id.textView_bag_location);
+                    TextView bag_bottleID = (TextView) customView.findViewById(R.id.textView_bag_bottle_id);
                     bag_date.setText(pickedTime.get(i));
                     bag_content.setText(pickedBottle.get(i));
                     bag_location.setText(pickedLocation.get(i));
-                    String bottle_id = pickedBottleID.get(i);
+                    bag_bottleID.setText(pickedBottleID.get(i));
+                    //String bottle_id = pickedBottleID.get(i);
                     linearLayout.addView(customView, layoutParams);
                     customView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(getActivity(), ViewBagBottleActivity.class);
-                            Bundle b = new Bundle();
-                            b.putString("BottleID", bottle_id);
-                            intent.putExtras(b);
+                            //Bundle b = new Bundle();
+                            //b.putString("BottleID", bottle_id);
+                            //intent.putExtras(b);
                             startActivity(intent);
                         }
                     });
@@ -313,18 +315,20 @@ public class BagFragment extends Fragment {
                     TextView bag_content = (TextView) customView.findViewById(R.id.textView_bag_content);
                     TextView bag_date = (TextView) customView.findViewById(R.id.textView_bag_time);
                     TextView bag_location = (TextView) customView.findViewById(R.id.textView_bag_location);
+                    TextView bag_bottleID = (TextView) customView.findViewById(R.id.textView_bag_bottle_id);
                     bag_date.setText(sentTime.get(i));
                     bag_content.setText(sentBottle.get(i));
                     bag_location.setText(sentLocation.get(i));
-                    String bottle_id = sentBottleID.get(i);
+                    bag_bottleID.setText(sentBottleID.get(i));
+                    //String bottle_id = sentBottleID.get(i);
                     linearLayout.addView(customView, layoutParams);
                     customView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(getActivity(), ViewBagBottleActivity.class);
-                            Bundle b = new Bundle();
-                            b.putString("BottleID", bottle_id);
-                            intent.putExtras(b);
+                            //Bundle b = new Bundle();
+                            //b.putString("BottleID", bottle_id);
+                            //intent.putExtras(b);
                             startActivity(intent);
                         }
                     });
