@@ -58,8 +58,8 @@ public class ChatActivity extends AppCompatActivity {
 
         //get needed info
         userName_textview.setText(ExampleAdapter.userName);
-        friend_id = ExampleAdapter.friend_id;
         chat_messages = ExampleAdapter.chat_messages;
+        friend_id = ExampleAdapter.friend_id;
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         //filter out the specific chats using chat_messages
@@ -73,6 +73,8 @@ public class ChatActivity extends AppCompatActivity {
                 mychat.add(chat);
             }
         }
+
+        //friend_id = (mychat.get(0).receiver.equals(firebaseUser.getUid())) ? mychat.get(0).sender : mychat.get(0).receiver;
 
         //loop to display all messages
         for (int i = 0; i < mychat.size(); i++) {
