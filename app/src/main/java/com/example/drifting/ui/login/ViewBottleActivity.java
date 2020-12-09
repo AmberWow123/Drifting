@@ -107,14 +107,11 @@ public class ViewBottleActivity extends AppCompatActivity {
             videoView.setVisibility(VISIBLE);
             videoView.setZOrderOnTop(true);
 
-
             Uri uri = Uri.parse(videoURL);
             videoView.setVideoURI(uri);
             videoView.setMediaController(new MediaController(this));
             videoView.requestFocus();
             videoView.start();
-
-
 
         }
 
@@ -183,16 +180,19 @@ public class ViewBottleActivity extends AppCompatActivity {
         //set isviewed to be true
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
         DatabaseReference this_bottle_data = reference.child(bottleID);
-        Map<String, Object> bottle_update = new HashMap<>();
-        bottle_update.put("isViewed", true);
-        this_bottle_data.updateChildren(bottle_update);
 
-        //save the bottle id in user's receive list
-        DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(current_user);
-        final DatabaseReference added_bottle= UserRef.child("receive_list");
-        Map<String, Object> user_update = new HashMap<>();
-        user_update.put(bottleID, true);
-        added_bottle.updateChildren(user_update);
+        if(!bottleID.equals("")) {
+            Map<String, Object> bottle_update = new HashMap<>();
+            bottle_update.put("isViewed", true);
+            this_bottle_data.updateChildren(bottle_update);
+
+            //save the bottle id in user's receive list
+            DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(current_user);
+            final DatabaseReference added_bottle = UserRef.child("receive_list");
+            Map<String, Object> user_update = new HashMap<>();
+            user_update.put(bottleID, true);
+            added_bottle.updateChildren(user_update);
+        }
     }
 
 
