@@ -42,8 +42,14 @@ public class AddFriendActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friend);
 
-        String fromUser = HomeFragment.currBottle.fromUser;
-        String fromUserID = HomeFragment.currBottle.userID;
+        String fromUser;
+        String fromUserID;
+
+        fromUser = getIntent().getStringExtra("FriendName");
+        fromUserID = getIntent().getStringExtra("FriendID");
+
+
+
 
         SetDatabase sd = new SetDatabase();
         text_render[0] = findViewById(R.id.username_view);
@@ -51,11 +57,12 @@ public class AddFriendActivity extends AppCompatActivity {
         text_render[2] = findViewById(R.id.gender_text_view);
         text_render[3] = findViewById(R.id.age_text_view);
         text_render[4] = findViewById(R.id.country_text_view);
-        sd.add_friend_info_text(info, text_render);
+
+        sd.add_friend_info_text(info, text_render, fromUserID);
 
 
         ImageView profileImage = findViewById(R.id.profile_image);
-        sd.add_friend_avatar(profileImage);
+        sd.add_friend_avatar(profileImage, fromUserID);
 
         Button addFriendButton = findViewById(R.id.add_friend_button);
 
@@ -65,7 +72,7 @@ public class AddFriendActivity extends AppCompatActivity {
 
                 Add_friend(current_user, fromUserID);
                 Toast.makeText(AddFriendActivity.this, "Yay you just add a friend!! :D", Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(AddFriendActivity.this, NavBar.class));
+
                 finish();
 
             }

@@ -2,6 +2,8 @@ package backend.util.database;
 
 import android.util.Log;
 
+import com.example.drifting.HomeFragment;
+
 import java.util.HashMap;
 
 import backend.util.time.DriftTime;
@@ -29,6 +31,7 @@ public class Bottle_back{
      public String message;
      public String bottleID;
      public String userID;
+     public String username;
      public Boolean isAnonymous;
      public String city;
      public double latitude;
@@ -53,13 +56,14 @@ public class Bottle_back{
     /*
     ** Real constructor: construct with specific messages
      */
-    public Bottle_back(String msg, String bottleID, String userID, Boolean isAnonymous, String city,
+    public Bottle_back(String msg, String bottleID, String userID, String username, Boolean isAnonymous, String city,
                        double latitude, double longitude, long timestamp, Boolean viewed, String filename, boolean isVideo) {
 
         self = this;
         this.message = msg;
         this.bottleID= bottleID;
         this.userID = userID;
+        this.username = username;
         this.isAnonymous = isAnonymous;
         this.city = city;
         this.latitude = latitude;
@@ -71,6 +75,24 @@ public class Bottle_back{
         this.likes = 0;
 
         Log.e("Bottle date", "Date of current bottle: " + DriftTime.getDate(this.timestamp));
+    }
+
+    public Bottle_back(HomeFragment.Bottle bottleFront){
+        self = this;
+        this.message = bottleFront.message;
+        this.bottleID= bottleFront.bottleID;
+        this.userID = bottleFront.userID;
+        this.username = bottleFront.fromUser;
+        this.isAnonymous = bottleFront.isAnonymous;
+        this.city = bottleFront.city;
+        this.latitude = 181;
+        this.longitude = 181;
+        this.timestamp = bottleFront.thrownTimestamp;
+        this.isViewed = false;
+        this.video = bottleFront.videoDownloadURL;
+        this.picture = bottleFront.pictureDownloadURL;
+        this.isVideo = bottleFront.isVideo;
+        this.likes = bottleFront.likes;
     }
 
     public String getMessage(){
@@ -94,6 +116,8 @@ public class Bottle_back{
     public String getBottleID(){
          return bottleID;
     }
+
+    public String getUsername() {return username;}
 
     public Boolean getIsAnonymous(){
          return isAnonymous;

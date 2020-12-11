@@ -12,6 +12,7 @@
         android:id="@+id/bag_container"
         android:layout_width="match_parent"
         android:layout_height="65dp"
+        android:contentDescription="BottleID"
         android:background="#FFFFFF">
 
         <TextView
@@ -54,6 +55,12 @@
             android:text="00/00/0000"
             android:textColor="#010101"
             android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/textView_bag_bottle_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

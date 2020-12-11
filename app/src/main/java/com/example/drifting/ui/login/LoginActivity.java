@@ -34,12 +34,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 
 import backend.util.authentication.CredentialAuthenticator;
 import backend.util.connectivity.ConnectionChecker;
 import backend.util.container.BagData;
+import backend.util.container.DrifterData;
 import backend.util.database.SetDatabase;
 
 
@@ -145,14 +145,11 @@ public class LoginActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 loadingBar.setVisibility((View.GONE));
                                 BagData.pickedBottle = new ArrayList<>();
-                                BagData.pickedLocation = new ArrayList<>();
-                                BagData.pickedTime = new ArrayList<>();
                                 BagData.sentBottle = new ArrayList<>();
-                                BagData.sentLocation = new ArrayList<>();
-                                BagData.sentTime = new ArrayList<>();
+
                                 SetDatabase sd = new SetDatabase();
-                                sd.get_sent_bottles(BagData.sentBottle, BagData.sentTime, BagData.sentLocation);
-                                sd.get_picked_bottles(BagData.pickedBottle, BagData.pickedTime, BagData.pickedLocation);
+                                sd.get_sent_bottles(BagData.sentBottle);
+                                sd.get_picked_bottles(BagData.pickedBottle);
 
 
                                 UserRef.addValueEventListener(new ValueEventListener() {
@@ -160,6 +157,7 @@ public class LoginActivity extends AppCompatActivity {
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         String name = snapshot.child("user_name").getValue() != null ? snapshot.child("user_name").getValue().toString() : "unspecified";
                                         Toast.makeText(LoginActivity.this, "Welcome, " + name, Toast.LENGTH_LONG).show();
+                                        DrifterData.username = name;
                                         // Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
                                         UserRef.removeEventListener(this);
                                     }
@@ -213,19 +211,17 @@ public class LoginActivity extends AppCompatActivity {
                            if (task.isSuccessful()) {
                                loadingBar.setVisibility((View.GONE));
                                BagData.pickedBottle = new ArrayList<>();
-                               BagData.pickedLocation = new ArrayList<>();
-                               BagData.pickedTime = new ArrayList<>();
                                BagData.sentBottle = new ArrayList<>();
-                               BagData.sentLocation = new ArrayList<>();
-                               BagData.sentTime = new ArrayList<>();
+
                                SetDatabase sd = new SetDatabase();
-                               sd.get_sent_bottles(BagData.sentBottle, BagData.sentTime, BagData.sentLocation);
-                               sd.get_picked_bottles(BagData.pickedBottle, BagData.pickedTime, BagData.pickedLocation);
+                               sd.get_sent_bottles(BagData.sentBottle);
+                               sd.get_picked_bottles(BagData.pickedBottle);
                                UserRef.addValueEventListener(new ValueEventListener() {
                                    @Override
                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
                                        String name = snapshot.child("user_name").getValue() != null ? snapshot.child("user_name").getValue().toString() : "unspecified";
                                        Toast.makeText(LoginActivity.this, "Welcome, " + name, Toast.LENGTH_LONG).show();
+                                       DrifterData.username = name;
                                        // Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
                                        UserRef.removeEventListener(this);
                                    }

@@ -177,7 +177,7 @@ public class SetDatabase {
     }
 
     // get sent bottles for the bag
-    public void get_sent_bottles(ArrayList<String> sentBottle, ArrayList<String> sentTime, ArrayList<String> sentLocation) {
+    public void get_sent_bottles(ArrayList<Bottle_back> sentBottle) {
         ArrayList<Bottle_back> sent_bottles = new ArrayList<Bottle_back>();
         //get current userID
         FirebaseAuth fAuth;
@@ -201,13 +201,10 @@ public class SetDatabase {
                         bottle_ref.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot_2) {
-                                String msg = snapshot_2.child("message").getValue(String.class);
-                                sentBottle.add(msg);
-                                long time = snapshot_2.child("timestamp").getValue(Long.class);
-                                sentTime.add(d_time.getDate(time));
-                                String city = snapshot_2.child("city").getValue(String.class);
-                                sentLocation.add(city);
+                                Bottle_back bottle = snapshot_2.getValue(Bottle_back.class);
+                                sentBottle.add(bottle);
                                 bottle_ref.removeEventListener(this);
+
                             }
 
                             @Override
@@ -231,7 +228,7 @@ public class SetDatabase {
     }
 
     //get picked bottles for the bag
-    public void get_picked_bottles(ArrayList<String> pickedBottle, ArrayList<String> pickedTime, ArrayList<String> pickedLocation) {
+    public void get_picked_bottles(ArrayList<Bottle_back> pickedBottle) {
         //get current userID
         DriftTime d_time = new DriftTime();
         FirebaseAuth fAuth;
@@ -256,12 +253,8 @@ public class SetDatabase {
                             bottle_ref.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot_2) {
-                                    String msg = snapshot_2.child("message").getValue(String.class);
-                                    pickedBottle.add(msg);
-                                    long time = snapshot_2.child("timestamp").getValue(Long.class);
-                                    pickedTime.add(d_time.getDate(time));
-                                    String city = snapshot_2.child("city").getValue(String.class);
-                                    pickedLocation.add(city);
+                                    Bottle_back bottle = snapshot_2.getValue(Bottle_back.class);
+                                    pickedBottle.add(bottle);
                                     bottle_ref.removeEventListener(this);
                                 }
 
@@ -492,10 +485,18 @@ public class SetDatabase {
 
     }
 
+    public void add_friend_info_text(String[] info, TextView [] text_render, String fromUserID){
+        //contact
+        DatabaseReference ContactsRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
+        //chat
+        DatabaseReference ChatRef = FirebaseDatabase.getInstance().getReference().child("Chats");
 
-    public void add_friend_info_text(String[] info, TextView [] text_render){
 
-        String fromUserID = HomeFragment.currBottle.userID;
+        FirebaseAuth fAuth = FirebaseAuth.getInstance();
+        String current_user = fAuth.getUid();
+
+
+
 
         //retrieve user data from database
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("user");
@@ -504,10 +505,12 @@ public class SetDatabase {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 info[0] = (snapshot.child("user_name").getValue() != null) ? snapshot.child("user_name").getValue().toString() : "unspecified";
-                info[1] = (snapshot.child("user_gender").getValue() != null) ? snapshot.child("user_gender").getValue().toString() : "unspecified";
-                info[2] = (snapshot.child("user_country").getValue() != null) ? snapshot.child("user_country").getValue().toString() : "unspecified";
-                info[3] = (snapshot.child("user_age").getValue() != null) ? snapshot.child("user_age").getValue().toString() : "unspecified";
-                info[4] = (snapshot.child("user_email").getValue() != null) ? snapshot.child("user_email").getValue().toString() : "unspecified";
+                info[1] = (snapshot.child("user_email").getValue() != null) ? snapshot.child("user_email").getValue().toString() : "unspecified";
+                info[2] = (snapshot.child("user_gender").getValue() != null) ? snapshot.child("user_gender").getValue().toString() : "unspecified";
+                info[3] = (snapshot.child("age").getValue() != null) ? snapshot.child("age").getValue().toString() : "unspecified";
+                info[4] = (snapshot.child("user_country").getValue() != null) ? snapshot.child("user_country").getValue().toString() : "unspecified";
+
+
                 
                 text_render[0].setText(info[0]);
 
@@ -527,9 +530,8 @@ public class SetDatabase {
         });
     }
 
-    public void add_friend_avatar(ImageView profileImage){
+    public void add_friend_avatar(ImageView profileImage, String fromUserID){
         DatabaseReference avatarRef = FirebaseDatabase.getInstance().getReference("avatars/");
-        String fromUserID = HomeFragment.currBottle.userID;
         avatarRef = avatarRef.child(fromUserID);
         avatarRef.addValueEventListener(new ValueEventListener() {
             @Override

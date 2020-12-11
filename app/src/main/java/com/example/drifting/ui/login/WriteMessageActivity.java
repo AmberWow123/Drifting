@@ -1,59 +1,62 @@
  package com.example.drifting.ui.login;
 
  import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.media.ThumbnailUtils;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Looper;
-import android.provider.MediaStore;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
+ import android.annotation.SuppressLint;
+ import android.content.Intent;
+ import android.content.SharedPreferences;
+ import android.content.pm.PackageManager;
+ import android.database.Cursor;
+ import android.graphics.Bitmap;
+ import android.location.Address;
+ import android.location.Geocoder;
+ import android.location.Location;
+ import android.media.ThumbnailUtils;
+ import android.net.Uri;
+ import android.os.Build;
+ import android.os.Bundle;
+ import android.os.Looper;
+ import android.provider.MediaStore;
+ import android.util.Log;
+ import android.view.View;
+ import android.widget.Button;
+ import android.widget.CompoundButton;
+ import android.widget.EditText;
+ import android.widget.ImageView;
+ import android.widget.Switch;
+ import android.widget.TextView;
+ import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+ import androidx.annotation.NonNull;
+ import androidx.annotation.Nullable;
+ import androidx.appcompat.app.AppCompatActivity;
+ import androidx.core.app.ActivityCompat;
+ import androidx.core.content.ContextCompat;
 
-import com.example.drifting.R;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+ import com.example.drifting.NavBar;
+ import com.example.drifting.R;
+ import com.google.android.gms.location.FusedLocationProviderClient;
+ import com.google.android.gms.location.LocationCallback;
+ import com.google.android.gms.location.LocationRequest;
+ import com.google.android.gms.location.LocationResult;
+ import com.google.android.gms.location.LocationServices;
+ import com.google.android.gms.tasks.OnSuccessListener;
+ import com.google.firebase.auth.FirebaseAuth;
+ import com.google.firebase.database.DatabaseReference;
+ import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+ import java.text.SimpleDateFormat;
+ import java.util.Date;
+ import java.util.HashMap;
+ import java.util.List;
+ import java.util.Locale;
+ import java.util.Map;
 
-import backend.util.container.BagData;
-import backend.util.database.Bottle_back;
-import backend.util.database.SetDatabase;
-import backend.util.time.DriftTime;
+ import backend.util.container.BagData;
+ import backend.util.container.DrifterData;
+ import backend.util.database.Bottle_back;
+ import backend.util.database.SetDatabase;
+ import backend.util.time.DriftTime;
+
 
 //import com.google.firebase.database.annotations.Nullable;
 
@@ -158,7 +161,7 @@ public class WriteMessageActivity extends AppCompatActivity {
                     if (filename != null) {
                         Log.d("","ffff");
                     }
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, DrifterData.username,
                             true, city, latitude[0], longitude[0], currTime.getTimestamp(),
                              false, filename, isVideo);
 
@@ -201,7 +204,7 @@ public class WriteMessageActivity extends AppCompatActivity {
                         isVideo = true;
                     }
 
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, DrifterData.username,
                             false, city, latitude[0], longitude[0], currTime.getTimestamp(),
                             false, filename, isVideo);
 

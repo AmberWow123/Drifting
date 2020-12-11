@@ -16,11 +16,23 @@ import androidx.fragment.app.Fragment;
 
 import com.example.drifting.ui.login.ViewBagBottleActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 
 import backend.util.container.BagData;
+import backend.util.database.Bottle_back;
 import backend.util.database.SetDatabase;
 import backend.util.time.DriftTime;
+
 
 
 /**
@@ -35,12 +47,10 @@ public class BagFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    public static ArrayList<String> pickedBottle = BagData.pickedBottle;
-    public static ArrayList<String> pickedTime = BagData.pickedTime;
-    public static ArrayList<String> pickedLocation = BagData.pickedLocation;
-    public static ArrayList<String> sentBottle = BagData.sentBottle;
-    public static ArrayList<String> sentTime = BagData.sentTime;
-    public static ArrayList<String> sentLocation = BagData.sentLocation;
+
+    public static ArrayList<Bottle_back> pickedBottle = BagData.pickedBottle;
+    public static ArrayList<Bottle_back> sentBottle = BagData.sentBottle;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -112,43 +122,51 @@ public class BagFragment extends Fragment {
              @Override
             public void onClick(View v) {
 
-                 DriftTime d_time = new DriftTime();
+                linearLayout.removeAllViews();
+                sent_indicator.setVisibility(View.GONE);
+                picked_indicator.setVisibility(View.VISIBLE);
 
-                 linearLayout.removeAllViews();
-                 sent_indicator.setVisibility(View.GONE);
-                 picked_indicator.setVisibility(View.VISIBLE);
+                for (int i = 0; i < pickedBottle.size(); i++) {
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    layoutParams.setMargins(0, 0, 0, 10);
+                    View customView = getLayoutInflater().inflate(R.layout.bag_item, null);
+                    TextView bag_content = (TextView) customView.findViewById(R.id.textView_bag_content);
+                    TextView bag_date = (TextView) customView.findViewById(R.id.textView_bag_time);
+                    TextView bag_location = (TextView) customView.findViewById(R.id.textView_bag_location);
+                    //TextView bag_bottleID = (TextView) customView.findViewById(R.id.textView_bag_bottle_id);
+                    bag_date.setText(DriftTime.getDate(pickedBottle.get(i).timestamp));
+                    bag_content.setText(pickedBottle.get(i).message);
+                    bag_location.setText(pickedBottle.get(i).city);
+                    //bag_bottleID.setText(pickedBottleID.get(i));
+                    String userID = pickedBottle.get(i).userID;
+                    String username = pickedBottle.get(i).username;
+                    String bottle_message = pickedBottle.get(i).message;
+                    String bottle_city = pickedBottle.get(i).city;
+                    String bottle_time = DriftTime.getDate(pickedBottle.get(i).timestamp);
+                    linearLayout.addView(customView, layoutParams);
+                    customView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getActivity(), ViewBagBottleActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("Username", username);
+                            b.putString("UserID", userID);
+                            b.putString("BottleMessage", bottle_message);
+                            b.putString("BottleCity", bottle_city);
+                            b.putString("BottleTime", bottle_time);
+                            intent.putExtras(b);
+                            startActivity(intent);
+                        }
+                    });
+                }
 
-                 for(int i=0; i<pickedBottle.size(); i++) {
-                     //LinearLayout row = new LinearLayout(getActivity());
-                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                     layoutParams.setMargins(0, 0, 0, 10);
-                     View customView = getLayoutInflater().inflate(R.layout.bag_item, null);
-                     TextView bag_content = (TextView)customView.findViewById(R.id.textView_bag_content);
-                     TextView bag_date = (TextView) customView.findViewById(R.id.textView_bag_time);
-                     TextView bag_location = (TextView) customView.findViewById(R.id.textView_bag_location);
-                     bag_date.setText(pickedTime.get(i));
-                     bag_content.setText(pickedBottle.get(i));
-                     bag_location.setText(pickedLocation.get(i));
-                     linearLayout.addView(customView, layoutParams);
-                     customView.setOnClickListener(new View.OnClickListener() {
-                         @Override
-                         public void onClick(View v) {
-                             startActivity(new Intent(getActivity(), ViewBagBottleActivity.class));
-                         }
-                     });
-                 }
-
-//                 pickedTime.clear();
-//                 pickedBottle.clear();
-//                 pickedLocation.clear();
             }
         });
 
         sent_button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 DriftTime d_time = new DriftTime();
                 linearLayout.removeAllViews();
                 sent_indicator.setVisibility(View.VISIBLE);
@@ -162,14 +180,29 @@ public class BagFragment extends Fragment {
                     TextView bag_content = (TextView)customView.findViewById(R.id.textView_bag_content);
                     TextView bag_date = (TextView) customView.findViewById(R.id.textView_bag_time);
                     TextView bag_location = (TextView) customView.findViewById(R.id.textView_bag_location);
-                    bag_date.setText(sentTime.get(i));
-                    bag_content.setText(sentBottle.get(i));
-                    bag_location.setText(sentLocation.get(i));
+                    //TextView bag_bottleID = (TextView) customView.findViewById(R.id.textView_bag_bottle_id);
+                    bag_date.setText(DriftTime.getDate(sentBottle.get(i).timestamp));
+                    bag_content.setText(sentBottle.get(i).message);
+                    bag_location.setText(sentBottle.get(i).city);
+                    //bag_bottleID.setText(pickedBottleID.get(i));
+                    String userID = pickedBottle.get(i).userID;
+                    String username = sentBottle.get(i).username;
+                    String bottle_message = sentBottle.get(i).message;
+                    String bottle_city = sentBottle.get(i).city;
+                    String bottle_time = DriftTime.getDate(sentBottle.get(i).timestamp);
                     linearLayout.addView(customView, layoutParams);
                     customView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            startActivity(new Intent(getActivity(), ViewBagBottleActivity.class));
+                            Intent intent = new Intent(getActivity(), ViewBagBottleActivity.class);
+                            Bundle b = new Bundle();
+                            b.putString("UserID", userID);
+                            b.putString("Username", username);
+                            b.putString("BottleMessage", bottle_message);
+                            b.putString("BottleCity", bottle_city);
+                            b.putString("BottleTime", bottle_time);
+                            intent.putExtras(b);
+                            startActivity(intent);
                         }
                     });
                 }
