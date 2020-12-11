@@ -237,7 +237,7 @@ public class SetDatabase {
         FirebaseAuth fAuth;
         fAuth = FirebaseAuth.getInstance();
         String userID = fAuth.getUid();
-        Log.d("IDIDIDIDID", userID);
+        //Log.d("IDIDIDIDID", userID);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         DatabaseReference user_ref = ref.child("user").child(userID).child("receive_list");
 
