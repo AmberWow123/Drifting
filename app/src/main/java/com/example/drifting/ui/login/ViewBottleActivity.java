@@ -26,6 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -90,9 +92,6 @@ public class ViewBottleActivity extends AppCompatActivity {
 
         TextView locationView = findViewById(R.id.location_var_textview);
         locationView.setText(city);
-
-        TextView commentView = findViewById(R.id.comment_field_textview);
-        commentView.setText(comment);
 
         ImageView pictureView = findViewById(R.id.bottle_image);
         //Log.d("url",pictureURL);
@@ -175,6 +174,21 @@ public class ViewBottleActivity extends AppCompatActivity {
                 }
             });
         }
+
+        LinearLayout like_layout = findViewById(R.id.like_layout);
+        TextView like_count = findViewById(R.id.like_label_textview);
+
+        int likes = 0;
+        // TODO: get num of likes from db through bottle_back
+        // like_count.setText(likes+"");
+        like_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                like_count.setText((Integer.parseInt((String) like_count.getText()) + 1)+"");
+                // TODO: 1. add logic for incrementing like count in db 2. prevent this user from liking again.
+            }
+        });
+
         //------------------------------------------------------------------------
 
         //set isviewed to be true
