@@ -212,6 +212,9 @@ public class WriteMessageActivity extends AppCompatActivity {
                     Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
                             false, city, latitude[0], longitude[0], currTime.getTimestamp(),
                             false, filename, isVideo);
+
+                    BagData.addSentBackendBottle(this_bottle);
+
                     SetDatabase set = new SetDatabase();
 
                     if (isVideo) {
