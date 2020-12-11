@@ -14,16 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.drifting.AddFriendActivity;
 import com.example.drifting.HomeFragment;
-import com.example.drifting.NavBar;
 import com.example.drifting.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.squareup.picasso.Picasso;
 
 import backend.util.container.BagData;
@@ -132,7 +128,7 @@ public class ViewBottleActivity extends AppCompatActivity {
                 BagData.throwBack();
 
                 Toast.makeText(ViewBottleActivity.this, "Yay you just throw the bottle back!! :D", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(ViewBottleActivity.this, NavBar.class));
+                //startActivity(new Intent(ViewBottleActivity.this, NavBar.class));
                 finish();
             }
         });

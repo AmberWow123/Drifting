@@ -215,7 +215,7 @@ public class SettingFragment extends Fragment {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         String item = parent.getItemAtPosition(position).toString();
-                        UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, item, country, age, privacy, receive_list, send_list);
+                        UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, item, country, age, privacy, receive_list, send_list);
                         SetDatabase set = new SetDatabase();
                         set.addNewUser(us);
                     }
@@ -243,7 +243,7 @@ public class SettingFragment extends Fragment {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         String item = parent.getItemAtPosition(position).toString();
-                        UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, item, receive_list, send_list);
+                        UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, gender, country, age, item, receive_list, send_list);
                         SetDatabase set = new SetDatabase();
                         set.addNewUser(us);
                     }
@@ -331,7 +331,7 @@ public class SettingFragment extends Fragment {
                 nameTV.setText(nameEdit.getText().toString());
                 String name = nameEdit.getText().toString();
 
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, privacy, receive_list, send_list);
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null,gender, country, age, privacy, receive_list, send_list);
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
 
@@ -347,7 +347,7 @@ public class SettingFragment extends Fragment {
                 email_TV.setText(email_Edit.getText().toString());
                 String email = email_Edit.getText().toString();
 
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, privacy, receive_list, send_list);
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, gender, country, age, privacy, receive_list, send_list);
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
@@ -362,7 +362,7 @@ public class SettingFragment extends Fragment {
                 age_TV.setText(age_Edit.getText().toString());
                 String age = age_Edit.getText().toString();
 
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, privacy, receive_list, send_list);
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, gender, country, age, privacy, receive_list, send_list);
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }
@@ -377,7 +377,7 @@ public class SettingFragment extends Fragment {
                 coun_TV.setText(coun_Edit.getText().toString());
                 String country = coun_Edit.getText().toString();
 
-                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, null, gender, country, age, privacy, receive_list, send_list);
+                UserProfile us = new UserProfile(firebaseUser.getUid(), name, email, null, null, gender, country, age, privacy, receive_list, send_list);
                 SetDatabase set = new SetDatabase();
                 set.addNewUser(us);
             }

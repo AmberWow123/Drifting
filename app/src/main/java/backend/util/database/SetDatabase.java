@@ -5,10 +5,10 @@ import android.util.Log;
 import android.util.Pair;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.drifting.HomeFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,9 +21,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-import com.example.drifting.AddFriendActivity;
-import com.example.drifting.HomeFragment;
-import com.example.drifting.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -418,7 +416,8 @@ public class SetDatabase {
         this_bottle_data.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                like[0] = Integer.parseInt(snapshot.child("likes").getValue().toString());
+                int this_like = (snapshot.child("likes").getValue() != null) ?  Integer.parseInt(snapshot.child("likes").getValue().toString()) : 0;
+                like[0] = this_like;
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -447,19 +446,7 @@ public class SetDatabase {
     }
 
 
-
-
     public void add_friend_info_text(String[] info, TextView [] text_render){
-        //contact
-        DatabaseReference ContactsRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
-        //chat
-        DatabaseReference ChatRef = FirebaseDatabase.getInstance().getReference().child("Chats");
-
-
-        FirebaseAuth fAuth = FirebaseAuth.getInstance();
-        String current_user = fAuth.getUid();
-
-
 
         String fromUserID = HomeFragment.currBottle.userID;
 
