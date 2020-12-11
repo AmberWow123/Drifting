@@ -296,20 +296,20 @@ public class SetDatabase {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
-                    Log.d("urlefawefea",this_bottle.picture);
+                    Log.d("urlefawefea", this_bottle.picture);
                     //String bottleID = this_bottle.getBottleID();
                     String userID = fAuth.getUid();
-                    HashMap<String, Boolean> this_history= this_bottle.getPickHistory();
+                    HashMap<String, Boolean> this_history = this_bottle.getPickHistory();
 
                     //debug: print picked history
-                    for(String users : this_history.keySet()) {
+                    for (String users : this_history.keySet()) {
                         Log.d("", "picked content:");
                         Log.d("user:", users);
                     }
 
                     //check if the bottle is viewed
-                    if(this_bottle.getIsViewed()) {
-                        Log.d("isViewed","A viewed bottle was returned");
+                    if (this_bottle.getIsViewed()) {
+                        Log.d("isViewed", "A viewed bottle was returned");
                         continue;
                     }
 
@@ -320,19 +320,22 @@ public class SetDatabase {
 //                                    }
 
                     //check if the bottle has been picked up by the same user before
-                    if(this_bottle.pickHistory.containsKey(userID)){
-                        Log.d("isPicked","A bottle picked before was returned");
+                    if (this_bottle.pickHistory.containsKey(userID)) {
+                        Log.d("isPicked", "A bottle picked before was returned");
                         continue;
-                    }
-
-                    else {
+                    } else {
                         reference.removeEventListener(this);
                         this_bottle_list[0] = this_bottle;
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
 
 
