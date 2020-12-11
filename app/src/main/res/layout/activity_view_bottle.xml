@@ -157,7 +157,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/add_comment_layout"
+                    android:id="@+id/like_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -167,19 +167,20 @@
                     >
 
                     <TextView
-                        android:id="@+id/comment_label_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_light"
-                        android:text="Comment:"
+                        android:text="Likes:"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         />
 
-                    <Button
+                    <TextView
+                        android:id="@+id/like_label_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="[add]"
+                        android:text="0"
+                        android:drawableRight="@drawable/heart"
                         android:textColor="@color/black"
                         android:background="@android:color/transparent"
                         android:gravity="center_vertical|right"
@@ -188,20 +189,6 @@
                 </LinearLayout>
 
 
-
-                <!-- below is the where sample comments insert -->
-                <TextView
-                    android:id="@+id/comment_field_textview"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_light"
-                    android:background="@drawable/view_msg_rect"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="15dp"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    >
-                </TextView>
 
                 <TextView
                     android:layout_width="fill_parent"

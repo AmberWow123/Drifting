@@ -45,14 +45,6 @@ public class RegisterActivity extends AppCompatActivity {
         hidden_button = findViewById(R.id.hide_password);
 
         fAuth = FirebaseAuth.getInstance();
-
-        //TODO: add these code after we have sign out button
-       //check if the user is already logged in
-//        if(fAuth.getCurrentUser() != null){
-//            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//            finish();
-//        }
-
         hidden_button.setOnClickListener((new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -127,7 +119,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             Toast.makeText(RegisterActivity.this, "Yay User Created! :D", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                            UserProfile userProfile = new UserProfile(fAuth.getUid(),null, email, null,null,null,null, null,null,null, null, null);
+                            UserProfile userProfile = new UserProfile(fAuth.getUid(),mUsername.getText().toString(), email, null,null,null,null, null,null,null, null, null);
                             SetDatabase set = new SetDatabase();
                             set.addNewUser(userProfile);
                         }

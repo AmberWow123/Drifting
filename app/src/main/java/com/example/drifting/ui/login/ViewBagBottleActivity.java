@@ -125,13 +125,6 @@ public class ViewBagBottleActivity extends AppCompatActivity {
             }
         });
 
-//        //------------------------------------------------------------------------
-//
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
-//        DatabaseReference this_bottle_data = reference.child(bottleID);
-//        Map<String, Object> bottle_update = new HashMap<>();
-//        bottle_update.put("isViewed", true);
-//        this_bottle_data.updateChildren(bottle_update);
     }
 
     @Nullable

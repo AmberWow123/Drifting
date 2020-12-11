@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,24 +22,21 @@ import com.example.drifting.AddFriendActivity;
 import com.example.drifting.HomeFragment;
 import com.example.drifting.NavBar;
 import com.example.drifting.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.squareup.picasso.Picasso;
 
-import java.util.HashMap;
-import java.util.Map;
+import backend.util.container.BagData;
+import backend.util.database.SetDatabase;
 
 import static android.view.View.VISIBLE;
 
 public class ViewBottleActivity extends AppCompatActivity {
 
+    private static int likes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_bottle);
@@ -60,10 +58,12 @@ public class ViewBottleActivity extends AppCompatActivity {
         String fromUserID = "";
         String pictureURL = null;
         String videoURL = null;
-        FirebaseAuth fAuth = FirebaseAuth.getInstance();
-        String current_user = fAuth.getUid();
+        Boolean isAnonymous = false;
+
+
 
         if (HomeFragment.currBottle != null) {
+             BagData.addPickedFrontendBottle(HomeFragment.currBottle);
              msg = HomeFragment.currBottle.message;
              fromUser = HomeFragment.currBottle.fromUser;
              city = HomeFragment.currBottle.city;
@@ -73,8 +73,12 @@ public class ViewBottleActivity extends AppCompatActivity {
              pictureURL = HomeFragment.currBottle.pictureDownloadURL;
              if(pictureURL!=null) Log.d("feafiawn",pictureURL);
              videoURL = HomeFragment.currBottle.videoDownloadURL;
-        }
+             isAnonymous = HomeFragment.currBottle.isAnonymous;
 
+            if (isAnonymous){
+                fromUser = "Anonymous";
+            }
+        }
 
         TextView messageView = findViewById(R.id.bottle_message_textview);
         messageView.setText(msg);
@@ -84,9 +88,6 @@ public class ViewBottleActivity extends AppCompatActivity {
 
         TextView locationView = findViewById(R.id.location_var_textview);
         locationView.setText(city);
-
-        TextView commentView = findViewById(R.id.comment_field_textview);
-        commentView.setText(comment);
 
         ImageView pictureView = findViewById(R.id.bottle_image);
         //Log.d("url",pictureURL);
@@ -101,14 +102,11 @@ public class ViewBottleActivity extends AppCompatActivity {
             videoView.setVisibility(VISIBLE);
             videoView.setZOrderOnTop(true);
 
-
             Uri uri = Uri.parse(videoURL);
             videoView.setVideoURI(uri);
             videoView.setMediaController(new MediaController(this));
             videoView.requestFocus();
             videoView.start();
-
-
 
         }
 
@@ -128,24 +126,10 @@ public class ViewBottleActivity extends AppCompatActivity {
         throwBack_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
-                DatabaseReference this_bottle_data = reference.child(finalBottleID);
 
-                // set isViewed to false
-                Map<String, Object> bottle_update = new HashMap<>();
-                bottle_update.put("isViewed", false);
-                this_bottle_data.updateChildren(bottle_update);
-
-                //add the user info to bottle history
-                final DatabaseReference added_user= this_bottle_data.child("pickHistory").child(current_user);
-                added_user.setValue(true);
-
-                //remove the bottle from user's receive list
-                DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(current_user);
-                final DatabaseReference added_bottle= UserRef.child("receive_list");
-                Map<String, Object> user_update = new HashMap<>();
-                user_update.put(finalBottleID, false);
-                added_bottle.updateChildren(user_update);
+                SetDatabase db = new SetDatabase();
+                db.throw_bottle_back(finalBottleID);
+                BagData.throwBack();
 
                 Toast.makeText(ViewBottleActivity.this, "Yay you just throw the bottle back!! :D", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(ViewBottleActivity.this, NavBar.class));
@@ -154,34 +138,48 @@ public class ViewBottleActivity extends AppCompatActivity {
         });
 
         LinearLayout fromLayout = findViewById(R.id.from_layout);
-        fromLayout.setOnClickListener(new View.OnClickListener() {
+        if (isAnonymous) {
+
+            fromLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(ViewBottleActivity.this, "Bottle is anonymous", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+        else {
+            fromLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(ViewBottleActivity.this, AddFriendActivity.class));
+                }
+            });
+        }
+
+        LinearLayout like_layout = findViewById(R.id.like_layout);
+        TextView like_count = findViewById(R.id.like_label_textview);
+
+
+        // get num of likes from db through bottle_back
+        SetDatabase db = new SetDatabase();
+        int likes = db.get_likes(finalBottleID);
+        like_count.setText(likes+"");
+
+        like_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(ViewBottleActivity.this, AddFriendActivity.class));
+                like_count.setText((Integer.parseInt((String) like_count.getText()) + 1)+"");
+                // Incrementing like count in db
+                db.update_likes(finalBottleID);
 
             }
         });
 
-        //------------------------------------------------------------------------
+        db.view_bottle(bottleID);
 
-        //set isviewed to be true
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
-        DatabaseReference this_bottle_data = reference.child(bottleID);
-        Map<String, Object> bottle_update = new HashMap<>();
-        bottle_update.put("isViewed", true);
-        this_bottle_data.updateChildren(bottle_update);
-
-        //save the bottle id in user's receive list
-        DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(current_user);
-        final DatabaseReference added_bottle= UserRef.child("receive_list");
-        Map<String, Object> user_update = new HashMap<>();
-        user_update.put(bottleID, true);
-        added_bottle.updateChildren(user_update);
     }
-
-
-
 
     @Nullable
     @Override
