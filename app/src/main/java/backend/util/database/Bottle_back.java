@@ -68,7 +68,6 @@ public class Bottle_back{
 
     public double getLongitude() {return longitude;}
 
-
     public double getTimestamp() {return timestamp;}
 
     public String getBottleID(){
