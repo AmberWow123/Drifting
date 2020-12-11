@@ -51,6 +51,7 @@
  import java.util.Locale;
  import java.util.Map;
 
+ import backend.util.container.BagData;
  import backend.util.database.Bottle_back;
  import backend.util.database.SetDatabase;
  import backend.util.time.DriftTime;
@@ -169,6 +170,8 @@ public class WriteMessageActivity extends AppCompatActivity {
                             true, city, latitude[0], longitude[0], currTime.getTimestamp(),
                             null, false, filename, isVideo);
 
+                    BagData.addSentBackendBottle(this_bottle);
+
                     //save the bottle id in user's send list
                     DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(userID);
                     final DatabaseReference added_bottle= UserRef.child("send_list");
@@ -209,6 +212,7 @@ public class WriteMessageActivity extends AppCompatActivity {
                     Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
                             false, city, latitude[0], longitude[0], currTime.getTimestamp(),
                             null, false, filename, isVideo);
+                    BagData.addSentBackendBottle(this_bottle);
                     SetDatabase set = new SetDatabase();
 
                     if (isVideo) {
@@ -229,7 +233,7 @@ public class WriteMessageActivity extends AppCompatActivity {
 
                 //return to the home page
                 Toast.makeText(WriteMessageActivity.this, "Yay you just throw a bottle! :D", Toast.LENGTH_SHORT).show();
-                openHomepageActivity();
+                finish();
             }
         });
 

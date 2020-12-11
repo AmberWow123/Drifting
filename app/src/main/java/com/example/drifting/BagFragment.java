@@ -18,6 +18,7 @@ import com.example.drifting.ui.login.ViewBagBottleActivity;
 
 import java.util.ArrayList;
 
+import backend.util.container.BagData;
 import backend.util.database.SetDatabase;
 import backend.util.time.DriftTime;
 
@@ -34,12 +35,12 @@ public class BagFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    public static ArrayList<String> pickedBottle = new ArrayList<String>();
-    public static ArrayList<String> pickedTime = new ArrayList<String>();
-    public static ArrayList<String> pickedLocation = new ArrayList<String>();
-    public static ArrayList<String> sentBottle = new ArrayList<String>();
-    public static ArrayList<String> sentTime = new ArrayList<String>();
-    public static ArrayList<String> sentLocation = new ArrayList<String>();
+    public static ArrayList<String> pickedBottle = BagData.pickedBottle;
+    public static ArrayList<String> pickedTime = BagData.pickedTime;
+    public static ArrayList<String> pickedLocation = BagData.pickedLocation;
+    public static ArrayList<String> sentBottle = BagData.sentBottle;
+    public static ArrayList<String> sentTime = BagData.sentTime;
+    public static ArrayList<String> sentLocation = BagData.sentLocation;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -111,8 +112,6 @@ public class BagFragment extends Fragment {
              @Override
             public void onClick(View v) {
 
-                 SetDatabase db = new SetDatabase();
-                 db.get_picked_bottles(pickedBottle,pickedTime,pickedLocation);
                  DriftTime d_time = new DriftTime();
 
                  linearLayout.removeAllViews();
@@ -140,9 +139,9 @@ public class BagFragment extends Fragment {
                      });
                  }
 
-                 pickedTime.clear();
-                 pickedBottle.clear();
-                 pickedLocation.clear();
+//                 pickedTime.clear();
+//                 pickedBottle.clear();
+//                 pickedLocation.clear();
             }
         });
 
@@ -150,8 +149,6 @@ public class BagFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                SetDatabase db = new SetDatabase();
-                db.get_sent_bottles(sentBottle,sentTime,sentLocation);
                 DriftTime d_time = new DriftTime();
                 linearLayout.removeAllViews();
                 sent_indicator.setVisibility(View.VISIBLE);
@@ -177,9 +174,9 @@ public class BagFragment extends Fragment {
                     });
                 }
 
-                sentBottle.clear();
-                sentTime.clear();
-                sentLocation.clear();
+//                sentBottle.clear();
+//                sentTime.clear();
+//                sentLocation.clear();
             }
         });
         sent_button.performClick();

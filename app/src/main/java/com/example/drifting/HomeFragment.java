@@ -37,8 +37,10 @@ import java.util.Vector;
 import java.util.concurrent.Executors;
 
 import backend.util.bottleProvider.BottleProvider;
+import backend.util.container.BagData;
 import backend.util.database.Bottle_back;
 import backend.util.database.SetDatabase;
+import backend.util.time.DriftTime;
 
 
 public class HomeFragment extends Fragment {
@@ -314,6 +316,8 @@ public class HomeFragment extends Fragment {
         public String videoDownloadURL;
         public boolean isVideo;
         public boolean isAnonymous;
+        public String thrownDate;
+
 
 
         /**
@@ -380,6 +384,7 @@ public class HomeFragment extends Fragment {
             bottleView =  getView().findViewById(locationID);
             imageSrc = getRandomBottleImg();
             bottleView.setBackgroundResource(imageSrc);
+            thrownDate = DriftTime.getDate(bottleBack.timestamp);
 
 
             bottleAnimation = (AnimationDrawable) bottleView.getBackground();
