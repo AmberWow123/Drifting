@@ -183,7 +183,7 @@ public class BagFragment extends Fragment {
                                             //Log.d("Msg ", msg);
                                             //Log.d("Time ", String.valueOf(time));
                                             //Log.d("City", city);
-                                            bottle_ref.removeEventListener(this);
+                                            //bottle_ref.removeEventListener(this);
                                         }
 
                                         @Override
@@ -193,11 +193,10 @@ public class BagFragment extends Fragment {
                                     });
                                 }
                             }
-
                             //Log.d("userId", "UserID " + userID);
                             //Log.d("sentBottle", "Bottle " + sentBottle.toString());
                         }
-                        user_ref.removeEventListener(this);
+                        //user_ref.removeEventListener(this);
                     }
 
                     @Override
@@ -219,20 +218,20 @@ public class BagFragment extends Fragment {
                     TextView bag_content = (TextView) customView.findViewById(R.id.textView_bag_content);
                     TextView bag_date = (TextView) customView.findViewById(R.id.textView_bag_time);
                     TextView bag_location = (TextView) customView.findViewById(R.id.textView_bag_location);
-                    TextView bag_bottleID = (TextView) customView.findViewById(R.id.textView_bag_bottle_id);
+                    //TextView bag_bottleID = (TextView) customView.findViewById(R.id.textView_bag_bottle_id);
                     bag_date.setText(pickedTime.get(i));
                     bag_content.setText(pickedBottle.get(i));
                     bag_location.setText(pickedLocation.get(i));
-                    bag_bottleID.setText(pickedBottleID.get(i));
-                    //String bottle_id = pickedBottleID.get(i);
+                    //bag_bottleID.setText(pickedBottleID.get(i));
+                    String bottle_id = pickedBottleID.get(i);
                     linearLayout.addView(customView, layoutParams);
                     customView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(getActivity(), ViewBagBottleActivity.class);
-                            //Bundle b = new Bundle();
-                            //b.putString("BottleID", bottle_id);
-                            //intent.putExtras(b);
+                            Bundle b = new Bundle();
+                            b.putString("BottleID", bottle_id);
+                            intent.putExtras(b);
                             startActivity(intent);
                         }
                     });
@@ -240,6 +239,7 @@ public class BagFragment extends Fragment {
                 pickedTime.clear();
                 pickedBottle.clear();
                 pickedLocation.clear();
+                pickedBottleID.clear();
             }
         });
 
@@ -280,7 +280,7 @@ public class BagFragment extends Fragment {
                                         //Log.d("Msg ", msg);
                                         //Log.d("Time ", String.valueOf(time));
                                         //Log.d("City", city);
-                                        bottle_ref.removeEventListener(this);
+                                        //bottle_ref.removeEventListener(this);
                                     }
 
                                     @Override
@@ -294,7 +294,7 @@ public class BagFragment extends Fragment {
 
                         //Log.d("userId", "UserID " + userID);
                         //Log.d("sentBottle", "Bottle " + sentBottle.toString());
-                        user_ref.removeEventListener(this);
+                        //user_ref.removeEventListener(this);
                     }
 
                     @Override
@@ -315,20 +315,20 @@ public class BagFragment extends Fragment {
                     TextView bag_content = (TextView) customView.findViewById(R.id.textView_bag_content);
                     TextView bag_date = (TextView) customView.findViewById(R.id.textView_bag_time);
                     TextView bag_location = (TextView) customView.findViewById(R.id.textView_bag_location);
-                    TextView bag_bottleID = (TextView) customView.findViewById(R.id.textView_bag_bottle_id);
+                    //TextView bag_bottleID = (TextView) customView.findViewById(R.id.textView_bag_bottle_id);
                     bag_date.setText(sentTime.get(i));
                     bag_content.setText(sentBottle.get(i));
                     bag_location.setText(sentLocation.get(i));
-                    bag_bottleID.setText(sentBottleID.get(i));
-                    //String bottle_id = sentBottleID.get(i);
+                    //bag_bottleID.setText(sentBottleID.get(i));
+                    String bottle_id = sentBottleID.get(i);
                     linearLayout.addView(customView, layoutParams);
                     customView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Intent intent = new Intent(getActivity(), ViewBagBottleActivity.class);
-                            //Bundle b = new Bundle();
-                            //b.putString("BottleID", bottle_id);
-                            //intent.putExtras(b);
+                            Bundle b = new Bundle();
+                            b.putString("BottleID", bottle_id);
+                            intent.putExtras(b);
                             startActivity(intent);
                         }
                     });
@@ -336,6 +336,7 @@ public class BagFragment extends Fragment {
                 sentBottle.clear();
                 sentTime.clear();
                 sentLocation.clear();
+                sentBottleID.clear();
             }
         });
         sent_button.performClick();

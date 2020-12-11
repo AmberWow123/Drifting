@@ -116,7 +116,7 @@ public class ChatFragment extends Fragment {
 
         currentUserID = mAuth.getCurrentUser().getUid();
         ContacsRef = FirebaseDatabase.getInstance().getReference().child("Contacts").child(currentUserID).child("friend_list");
-       // UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        //UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
 
         ContacsRef.addValueEventListener(new ValueEventListener() {
@@ -158,7 +158,7 @@ public class ChatFragment extends Fragment {
 //                                }
 //                            });
                             //exampleList.add(new ExampleItem(R.drawable.avatar, name, "Let's chat", "12:00"));
-                            friendRef.removeEventListener(this);
+                            //friendRef.removeEventListener(this);
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
@@ -169,7 +169,7 @@ public class ChatFragment extends Fragment {
                  //exampleList.add(new ExampleItem(R.drawable.avatar, name, "Let's chat", "12:00"));
 
                 }
-                ContacsRef.removeEventListener(this);
+                //ContacsRef.removeEventListener(this);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
