@@ -3,6 +3,9 @@ package backend.util.database;
 import android.net.Uri;
 import android.util.Log;
 import android.util.Pair;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -17,18 +20,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
+import com.squareup.picasso.Picasso;
+import com.example.drifting.AddFriendActivity;
+import com.example.drifting.HomeFragment;
+import com.example.drifting.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import backend.util.time.DriftTime;
 
-/*
-**A Database class aiming at providing the fronted with needed database operations
-* Our user cannot access our database without using SetDatabase class
-*** Applied the model layer of MVC
- */
 public class SetDatabase {
     private DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     private FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -332,6 +333,75 @@ public class SetDatabase {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
+
+
+    public void get_chat_info(ArrayList<String> name, ArrayList<String> message, ArrayList<Chat> chat_messages, ArrayList<String> Uer_id){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        String currentUserID = mAuth.getCurrentUser().getUid();
+        DatabaseReference ContacsRef = FirebaseDatabase.getInstance().getReference().child("Contacts").child(currentUserID).child("friend_list");
+
+        //Get chat history from chatRef
+        DatabaseReference ChatRef = FirebaseDatabase.getInstance().getReference().child("Chats");
+        ChatRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+
+                    Chat chat = (Chat) snapshot1.getValue(Chat.class);
+                    Log.d(">>>>>>>>>>", chat.receiver + "...");
+                    Log.d(">>>>>>>>>>", chat.message + "aaa");
+
+                    if (chat.getReceiver().equals(currentUserID) || chat.getSender().equals(currentUserID)) {
+
+                        String sender_id = snapshot1.child("sender").getValue().toString();
+                        String receiver_id = snapshot1.child("receiver").getValue().toString();
+
+                        //set the display name always to be others
+                        String needed_id;
+                        if(receiver_id.equals(currentUserID))  needed_id = sender_id ;
+                        else    needed_id = receiver_id;
+
+                        //need to get receiver's name
+                        DatabaseReference friendRef = FirebaseDatabase.getInstance().getReference().child("user").child(needed_id);
+                        friendRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot_) {
+                                String this_name = snapshot_.child("user_name").getValue() != null ?
+                                        snapshot_.child("user_name").getValue().toString() : "Default User";
+
+                                //if the conversation exists already
+                                if(name.contains(this_name)){
+                                    int index = name.indexOf(this_name);
+                                    message.set(index, snapshot1.child("message").getValue().toString());
+                                    chat_messages.add(chat);
+                                }
+
+                                else {
+                                    //if not repeated
+                                    name.add(this_name);
+                                    Uer_id.add(needed_id);
+                                    message.add(snapshot1.child("message").getValue().toString());
+                                    chat_messages.add(chat);
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                    } else {
+                        continue;
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
@@ -375,6 +445,71 @@ public class SetDatabase {
 
 
 
+
+    public void add_friend_info_text(String[] info, TextView [] text_render){
+        //contact
+        DatabaseReference ContactsRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
+        //chat
+        DatabaseReference ChatRef = FirebaseDatabase.getInstance().getReference().child("Chats");
+
+
+        FirebaseAuth fAuth = FirebaseAuth.getInstance();
+        String current_user = fAuth.getUid();
+
+
+
+        String fromUserID = HomeFragment.currBottle.userID;
+
+        //retrieve user data from database
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("user");
+        DatabaseReference this_user_data = reference.child(fromUserID);
+        this_user_data.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                info[0] = (snapshot.child("user_name").getValue() != null) ? snapshot.child("user_name").getValue().toString() : "unspecified";
+                info[1] = (snapshot.child("user_gender").getValue() != null) ? snapshot.child("user_gender").getValue().toString() : "unspecified";
+                info[2] = (snapshot.child("user_country").getValue() != null) ? snapshot.child("user_country").getValue().toString() : "unspecified";
+                info[3] = (snapshot.child("user_age").getValue() != null) ? snapshot.child("user_age").getValue().toString() : "unspecified";
+                info[4] = (snapshot.child("user_email").getValue() != null) ? snapshot.child("user_email").getValue().toString() : "unspecified";
+                
+                text_render[0].setText(info[0]);
+
+                text_render[1].setText(info[1]);
+
+                text_render[2].setText(info[2]);
+
+                text_render[3].setText(info[3]);
+
+                text_render[4].setText(info[4]);
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //Toast.makeText(AddFriendActivity.this, "Failed to retrieve user's data :(", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void add_friend_avatar(ImageView profileImage){
+        DatabaseReference avatarRef = FirebaseDatabase.getInstance().getReference("avatars/");
+        String fromUserID = HomeFragment.currBottle.userID;
+        avatarRef = avatarRef.child(fromUserID);
+        avatarRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ss : snapshot.getChildren()) {
+                    String url = ss.getValue(String.class);
+                    Picasso.get().load(url).into(profileImage);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //Toast.makeText(AddFriendActivity.this, "Failed to retrieve user's avatar :(", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 }
 
 

@@ -30,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import backend.util.database.Chat;
+import backend.util.database.SetDatabase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -116,8 +117,9 @@ public class ChatFragment extends Fragment {
     private void createExampleList() {
 
         exampleList = new ArrayList<>();
-
-        mAuth = FirebaseAuth.getInstance();
+        SetDatabase db = new SetDatabase();
+        db.get_chat_info(name,message,chat_messages,Uer_id);
+       /* mAuth = FirebaseAuth.getInstance();
 
         currentUserID = mAuth.getCurrentUser().getUid();
         ContacsRef = FirebaseDatabase.getInstance().getReference().child("Contacts").child(currentUserID).child("friend_list");
@@ -130,8 +132,8 @@ public class ChatFragment extends Fragment {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
 
                     Chat chat = (Chat) snapshot1.getValue(Chat.class);
-                    Log.d(">>>>>>>>>>", chat.receiver + "...");
-                    Log.d(">>>>>>>>>>", chat.message + "aaa");
+                    //Log.d(">>>>>>>>>>", chat.receiver + "...");
+                    //Log.d(">>>>>>>>>>", chat.message + "aaa");
 
                     if (chat.getReceiver().equals(currentUserID) || chat.getSender().equals(currentUserID)) {
 
@@ -187,6 +189,8 @@ public class ChatFragment extends Fragment {
         });
 
         Log.d("size", Integer.toString(name.size()));
+
+        */
         for (int i = 0; i < name.size(); i++) {
             exampleList.add(new ExampleItem(R.drawable.avatar, name.get(i), message.get(i), "12:00", Uer_id.get(i), chat_messages));
         }
