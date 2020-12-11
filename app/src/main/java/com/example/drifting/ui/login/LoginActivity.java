@@ -35,8 +35,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 import backend.util.authentication.CredentialAuthenticator;
 import backend.util.connectivity.ConnectionChecker;
+import backend.util.container.BagData;
+import backend.util.database.SetDatabase;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -140,6 +144,17 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 loadingBar.setVisibility((View.GONE));
+                                BagData.pickedBottle = new ArrayList<>();
+                                BagData.pickedLocation = new ArrayList<>();
+                                BagData.pickedTime = new ArrayList<>();
+                                BagData.sentBottle = new ArrayList<>();
+                                BagData.sentLocation = new ArrayList<>();
+                                BagData.sentTime = new ArrayList<>();
+                                SetDatabase sd = new SetDatabase();
+                                sd.get_sent_bottles(BagData.sentBottle, BagData.sentTime, BagData.sentLocation);
+                                sd.get_picked_bottles(BagData.pickedBottle, BagData.pickedTime, BagData.pickedLocation);
+
+
                                 UserRef.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -197,6 +212,15 @@ public class LoginActivity extends AppCompatActivity {
                        public void onComplete(@NonNull Task<AuthResult> task) {
                            if (task.isSuccessful()) {
                                loadingBar.setVisibility((View.GONE));
+                               BagData.pickedBottle = new ArrayList<>();
+                               BagData.pickedLocation = new ArrayList<>();
+                               BagData.pickedTime = new ArrayList<>();
+                               BagData.sentBottle = new ArrayList<>();
+                               BagData.sentLocation = new ArrayList<>();
+                               BagData.sentTime = new ArrayList<>();
+                               SetDatabase sd = new SetDatabase();
+                               sd.get_sent_bottles(BagData.sentBottle, BagData.sentTime, BagData.sentLocation);
+                               sd.get_picked_bottles(BagData.pickedBottle, BagData.pickedTime, BagData.pickedLocation);
                                UserRef.addValueEventListener(new ValueEventListener() {
                                    @Override
                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
