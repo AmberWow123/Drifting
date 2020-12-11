@@ -4,7 +4,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import junit.framework.TestCase;
 
-import backend.util.database.EnumD;
 import backend.util.database.SetDatabase;
 import backend.util.database.UserProfile;
 

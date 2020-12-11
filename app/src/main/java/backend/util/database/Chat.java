@@ -1,5 +1,11 @@
 package backend.util.database;
 
+/*
+** chat class: used to record chat messages in database as a class
+* Receiver: the userID of the user who should get the message
+* Sender: the userID of the one who send the message
+* message: the message send between users
+ */
 public class Chat {
 
     public String sender;

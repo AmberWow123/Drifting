@@ -24,6 +24,11 @@ import java.util.Map;
 
 import backend.util.time.DriftTime;
 
+/*
+**A Database class aiming at providing the fronted with needed database operations
+* Our user cannot access our database without using SetDatabase class
+*** Applied the model layer of MVC
+ */
 public class SetDatabase {
     private DatabaseReference database = FirebaseDatabase.getInstance().getReference();
     private FirebaseStorage storage = FirebaseStorage.getInstance();

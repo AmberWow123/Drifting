@@ -167,7 +167,7 @@ public class WriteMessageActivity extends AppCompatActivity {
                     }
                     Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
                             true, city, latitude[0], longitude[0], currTime.getTimestamp(),
-                            null, false, filename, isVideo);
+                             false, filename, isVideo);
 
                     //save the bottle id in user's send list
                     DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(userID);
@@ -208,7 +208,7 @@ public class WriteMessageActivity extends AppCompatActivity {
 
                     Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
                             false, city, latitude[0], longitude[0], currTime.getTimestamp(),
-                            null, false, filename, isVideo);
+                            false, filename, isVideo);
                     SetDatabase set = new SetDatabase();
 
                     if (isVideo) {

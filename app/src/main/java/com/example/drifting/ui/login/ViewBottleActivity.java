@@ -154,26 +154,22 @@ public class ViewBottleActivity extends AppCompatActivity {
         TextView like_count = findViewById(R.id.like_label_textview);
 
 
-        // TODO: get num of likes from db through bottle_back
+        // get num of likes from db through bottle_back
         SetDatabase db = new SetDatabase();
         int likes = db.get_likes(finalBottleID);
+        like_count.setText(likes+"");
 
         like_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //like_count.setText((Integer.parseInt((String) like_count.getText()) + 1)+"");
-                like_count.setText(likes +"");
-
-                // TODO: 1. add logic for incrementing like count in db 2. prevent this user from liking again.
-
+                like_count.setText((Integer.parseInt((String) like_count.getText()) + 1)+"");
                 // Incrementing like count in db
                 db.update_likes(finalBottleID);
 
             }
         });
 
-        //SetDatabase db = new SetDatabase();
         db.view_bottle(bottleID);
 
     }

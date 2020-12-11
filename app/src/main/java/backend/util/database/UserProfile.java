@@ -4,6 +4,10 @@ import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 
+/*
+ ** A class of user profile
+ * Containing
+ */
 public class UserProfile {
     public String user_id;
     public String user_name;
