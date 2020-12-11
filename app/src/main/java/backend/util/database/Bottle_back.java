@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.drifting.HomeFragment;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import backend.util.time.DriftTime;
 /*
@@ -132,4 +133,24 @@ public class Bottle_back{
     }
 
     public HashMap<String, Boolean> getPickHistory() {return pickHistory;}
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(message, userID, username, city, latitude, longitude, timestamp);
+    }
+
+    @Override
+    public boolean equals(Object a){
+        if(!(a instanceof Bottle_back)){
+            return false;
+        }
+
+        Bottle_back theOther = (Bottle_back) a;
+
+        return theOther.message.equals(message) && theOther.userID.equals(userID) &&
+                theOther.username.equals(username) && theOther.city.equals(city) &&
+                theOther.latitude == latitude && theOther.longitude == longitude &&
+                theOther.timestamp == timestamp;
+
+    }
 }

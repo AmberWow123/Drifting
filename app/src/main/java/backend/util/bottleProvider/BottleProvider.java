@@ -24,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 
+import backend.util.container.BagData;
 import backend.util.database.Bottle_back;
 import backend.util.time.DriftTime;
 
@@ -108,6 +109,11 @@ public class BottleProvider {
                         continue;
                     }
 
+                    if(BagData.currentSessionGeneratedBottleSet.contains(this_bottle)){
+                        Log.d("currentSessionBottles", "A bottle generated before was return");
+                        continue;
+                    }
+
                     //TODO: comment for test purpose, REUSE for formal product
                     //check if the bottle is from the same user
 //                    if (this_bottle.getUserID().equals(userID)) {
@@ -134,8 +140,14 @@ public class BottleProvider {
                 return;
             }
 
+            if(BagData.currentSessionGeneratedBottleSet.contains(b)){
+                Log.d("currentSessionBottles", "A bottle generated before was return");
+                continue;
+            }
+
             if (decideReachable(b)) {
                 nextBottles[i++] = b;
+                BagData.currentSessionGeneratedBottleSet.add(b);
             }
         }
     }

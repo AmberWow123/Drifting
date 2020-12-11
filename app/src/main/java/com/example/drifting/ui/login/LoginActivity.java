@@ -144,8 +144,6 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 loadingBar.setVisibility((View.GONE));
-                                BagData.pickedBottle = new ArrayList<>();
-                                BagData.sentBottle = new ArrayList<>();
 
                                 SetDatabase sd = new SetDatabase();
                                 sd.get_sent_bottles(BagData.sentBottle);
@@ -210,8 +208,6 @@ public class LoginActivity extends AppCompatActivity {
                        public void onComplete(@NonNull Task<AuthResult> task) {
                            if (task.isSuccessful()) {
                                loadingBar.setVisibility((View.GONE));
-                               BagData.pickedBottle = new ArrayList<>();
-                               BagData.sentBottle = new ArrayList<>();
 
                                SetDatabase sd = new SetDatabase();
                                sd.get_sent_bottles(BagData.sentBottle);
