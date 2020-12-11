@@ -82,9 +82,6 @@ public class ViewBottleActivity extends AppCompatActivity {
         TextView locationView = findViewById(R.id.location_var_textview);
         locationView.setText(city);
 
-        TextView commentView = findViewById(R.id.comment_field_textview);
-        commentView.setText(comment);
-
         ImageView pictureView = findViewById(R.id.bottle_image);
         //Log.d("url",pictureURL);
         if(pictureURL != null) {
@@ -151,6 +148,20 @@ public class ViewBottleActivity extends AppCompatActivity {
                 }
             });
         }
+
+        LinearLayout like_layout = findViewById(R.id.like_layout);
+        TextView like_count = findViewById(R.id.like_label_textview);
+
+        int likes = 0;
+        // TODO: get num of likes from db through bottle_back
+        // like_count.setText(likes+"");
+        like_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                like_count.setText((Integer.parseInt((String) like_count.getText()) + 1)+"");
+                // TODO: 1. add logic for incrementing like count in db 2. prevent this user from liking again.
+            }
+        });
 
         SetDatabase db = new SetDatabase();
         db.view_bottle(bottleID);
