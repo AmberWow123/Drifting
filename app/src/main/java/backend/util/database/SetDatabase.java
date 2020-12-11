@@ -390,24 +390,15 @@ public class SetDatabase {
                 info[2] = (snapshot.child("user_country").getValue() != null) ? snapshot.child("user_country").getValue().toString() : "unspecified";
                 info[3] = (snapshot.child("user_age").getValue() != null) ? snapshot.child("user_age").getValue().toString() : "unspecified";
                 info[4] = (snapshot.child("user_email").getValue() != null) ? snapshot.child("user_email").getValue().toString() : "unspecified";
-
-                //Log.d("", "??????????????????????????????user info:" + name + gender + country + age + email);
-
-                //set bottle's user's name, email, gender, age and country
-                //TextView username_view = findViewById(R.id.username_view);
-
+                
                 text_render[0].setText(info[0]);
 
-                //TextView email_view = findViewById(R.id.email_text_view);
                 text_render[1].setText(info[1]);
 
-                //TextView gender_view = findViewById(R.id.gender_text_view);
                 text_render[2].setText(info[2]);
 
-                //TextView age_view = findViewById(R.id.age_text_view);
                 text_render[3].setText(info[3]);
 
-                //TextView country_view = findViewById(R.id.country_text_view);
                 text_render[4].setText(info[4]);
 
             }
