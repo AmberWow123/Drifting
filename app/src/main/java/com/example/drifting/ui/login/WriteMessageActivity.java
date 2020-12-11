@@ -52,6 +52,7 @@
  import java.util.Map;
 
  import backend.util.container.BagData;
+ import backend.util.container.DrifterData;
  import backend.util.database.Bottle_back;
  import backend.util.database.SetDatabase;
  import backend.util.time.DriftTime;
@@ -166,7 +167,7 @@ public class WriteMessageActivity extends AppCompatActivity {
                     if (filename != null) {
                         Log.d("","ffff");
                     }
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, DrifterData.username,
                             true, city, latitude[0], longitude[0], currTime.getTimestamp(),
                              false, filename, isVideo);
 
@@ -209,7 +210,7 @@ public class WriteMessageActivity extends AppCompatActivity {
                         isVideo = true;
                     }
 
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, DrifterData.username,
                             false, city, latitude[0], longitude[0], currTime.getTimestamp(),
                             false, filename, isVideo);
 

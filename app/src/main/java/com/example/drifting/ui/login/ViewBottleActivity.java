@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.Task;
 import com.squareup.picasso.Picasso;
 
 import backend.util.container.BagData;
+import backend.util.database.Bottle_back;
 import backend.util.database.SetDatabase;
 
 import static android.view.View.VISIBLE;
@@ -63,7 +64,8 @@ public class ViewBottleActivity extends AppCompatActivity {
 
 
         if (HomeFragment.currBottle != null) {
-             BagData.addPickedFrontendBottle(HomeFragment.currBottle);
+             Bottle_back currBottle = new Bottle_back(HomeFragment.currBottle);
+             BagData.addPickedFrontendBottle(currBottle);
              msg = HomeFragment.currBottle.message;
              fromUser = HomeFragment.currBottle.fromUser;
              city = HomeFragment.currBottle.city;
@@ -132,7 +134,6 @@ public class ViewBottleActivity extends AppCompatActivity {
                 BagData.throwBack();
 
                 Toast.makeText(ViewBottleActivity.this, "Yay you just throw the bottle back!! :D", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(ViewBottleActivity.this, NavBar.class));
                 finish();
             }
         });
@@ -152,7 +153,10 @@ public class ViewBottleActivity extends AppCompatActivity {
             fromLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(ViewBottleActivity.this, AddFriendActivity.class));
+                    Intent addFriendIntent = new Intent(getApplicationContext(), AddFriendActivity.class);
+                    addFriendIntent.putExtra("FriendName", HomeFragment.currBottle.fromUser);
+                    addFriendIntent.putExtra("FriendID", HomeFragment.currBottle.userID);
+                    startActivity(addFriendIntent);
                 }
             });
         }

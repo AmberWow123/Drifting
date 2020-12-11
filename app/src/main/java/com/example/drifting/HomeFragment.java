@@ -201,6 +201,7 @@ public class HomeFragment extends Fragment {
                     myBottle.bottleAnimation.stop();
                     bottleView.setVisibility(View.GONE);
                     bottleList.remove(myBottle);
+
                     Log.d(" BottleList size is :" , " " + bottleList.size());
                     Log.d(" vector contains ", bottleList.toString());
                 }
@@ -316,7 +317,8 @@ public class HomeFragment extends Fragment {
         public String videoDownloadURL;
         public boolean isVideo;
         public boolean isAnonymous;
-        public String thrownDate;
+        public long thrownTimestamp;
+        public int likes;
 
 
 
@@ -384,7 +386,7 @@ public class HomeFragment extends Fragment {
             bottleView =  getView().findViewById(locationID);
             imageSrc = getRandomBottleImg();
             bottleView.setBackgroundResource(imageSrc);
-            thrownDate = DriftTime.getDate(bottleBack.timestamp);
+            thrownTimestamp = bottleBack.timestamp;
 
 
             bottleAnimation = (AnimationDrawable) bottleView.getBackground();
