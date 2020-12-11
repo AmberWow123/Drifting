@@ -284,4 +284,77 @@ public class SetDatabase {
             }
         });
     }
+
+
+
+
+    public void get_chat_info(ArrayList<String> name, ArrayList<String> message, ArrayList<Chat> chat_messages, ArrayList<String> Uer_id){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        String currentUserID = mAuth.getCurrentUser().getUid();
+        DatabaseReference ContacsRef = FirebaseDatabase.getInstance().getReference().child("Contacts").child(currentUserID).child("friend_list");
+
+        //Get chat history from chatRef
+        DatabaseReference ChatRef = FirebaseDatabase.getInstance().getReference().child("Chats");
+        ChatRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+
+                    Chat chat = (Chat) snapshot1.getValue(Chat.class);
+                    Log.d(">>>>>>>>>>", chat.receiver + "...");
+                    Log.d(">>>>>>>>>>", chat.message + "aaa");
+
+                    if (chat.getReceiver().equals(currentUserID) || chat.getSender().equals(currentUserID)) {
+
+                        String sender_id = snapshot1.child("sender").getValue().toString();
+                        String receiver_id = snapshot1.child("receiver").getValue().toString();
+
+                        //set the display name always to be others
+                        String needed_id;
+                        if(receiver_id.equals(currentUserID))  needed_id = sender_id ;
+                        else    needed_id = receiver_id;
+
+                        //need to get receiver's name
+                        DatabaseReference friendRef = FirebaseDatabase.getInstance().getReference().child("user").child(needed_id);
+                        friendRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot_) {
+                                String this_name = snapshot_.child("user_name").getValue() != null ?
+                                        snapshot_.child("user_name").getValue().toString() : "Default User";
+
+                                //if the conversation exists already
+                                if(name.contains(this_name)){
+                                    int index = name.indexOf(this_name);
+                                    message.set(index, snapshot1.child("message").getValue().toString());
+                                    chat_messages.add(chat);
+                                }
+
+                                else {
+                                    //if not repeated
+                                    name.add(this_name);
+                                    Uer_id.add(needed_id);
+                                    message.add(snapshot1.child("message").getValue().toString());
+                                    chat_messages.add(chat);
+                                }
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                    } else {
+                        continue;
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 }
