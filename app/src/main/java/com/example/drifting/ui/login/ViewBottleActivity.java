@@ -24,10 +24,6 @@ import com.example.drifting.R;
 import com.squareup.picasso.Picasso;
 
 import backend.util.database.SetDatabase;
-import org.w3c.dom.Text;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static android.view.View.VISIBLE;
 
@@ -85,6 +81,9 @@ public class ViewBottleActivity extends AppCompatActivity {
 
         TextView locationView = findViewById(R.id.location_var_textview);
         locationView.setText(city);
+
+        TextView commentView = findViewById(R.id.comment_field_textview);
+        commentView.setText(comment);
 
         ImageView pictureView = findViewById(R.id.bottle_image);
         //Log.d("url",pictureURL);
@@ -152,41 +151,6 @@ public class ViewBottleActivity extends AppCompatActivity {
                 }
             });
         }
-
-        LinearLayout like_layout = findViewById(R.id.like_layout);
-        TextView like_count = findViewById(R.id.like_label_textview);
-
-        int likes = 0;
-        // TODO: get num of likes from db through bottle_back
-        // like_count.setText(likes+"");
-        like_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                like_count.setText((Integer.parseInt((String) like_count.getText()) + 1)+"");
-                // TODO: 1. add logic for incrementing like count in db 2. prevent this user from liking again.
-            }
-        });
-
-        //------------------------------------------------------------------------
-
-        //set isviewed to be true
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
-        DatabaseReference this_bottle_data = reference.child(bottleID);
-
-        if(!bottleID.equals("")) {
-            Map<String, Object> bottle_update = new HashMap<>();
-            bottle_update.put("isViewed", true);
-            this_bottle_data.updateChildren(bottle_update);
-
-            //save the bottle id in user's receive list
-            DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(current_user);
-            final DatabaseReference added_bottle = UserRef.child("receive_list");
-            Map<String, Object> user_update = new HashMap<>();
-            user_update.put(bottleID, true);
-            added_bottle.updateChildren(user_update);
-        }
-    }
-
 
         SetDatabase db = new SetDatabase();
         db.view_bottle(bottleID);
