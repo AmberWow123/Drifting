@@ -3,10 +3,15 @@ package backend.util.database;
 import android.net.Uri;
 import android.util.Log;
 import android.util.Pair;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.drifting.AddFriendActivity;
 import com.example.drifting.HomeFragment;
+import com.example.drifting.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,6 +24,7 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
@@ -356,5 +362,80 @@ public class SetDatabase {
 
             }
         });
+    }
+
+
+    public void add_friend_info_text(String[] info, TextView [] text_render){
+        //contact
+        DatabaseReference ContactsRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
+        //chat
+        DatabaseReference ChatRef = FirebaseDatabase.getInstance().getReference().child("Chats");
+
+
+        FirebaseAuth fAuth = FirebaseAuth.getInstance();
+        String current_user = fAuth.getUid();
+
+
+
+        String fromUserID = HomeFragment.currBottle.userID;
+
+        //retrieve user data from database
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("user");
+        DatabaseReference this_user_data = reference.child(fromUserID);
+        this_user_data.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                info[0] = (snapshot.child("user_name").getValue() != null) ? snapshot.child("user_name").getValue().toString() : "unspecified";
+                info[1] = (snapshot.child("user_gender").getValue() != null) ? snapshot.child("user_gender").getValue().toString() : "unspecified";
+                info[2] = (snapshot.child("user_country").getValue() != null) ? snapshot.child("user_country").getValue().toString() : "unspecified";
+                info[3] = (snapshot.child("user_age").getValue() != null) ? snapshot.child("user_age").getValue().toString() : "unspecified";
+                info[4] = (snapshot.child("user_email").getValue() != null) ? snapshot.child("user_email").getValue().toString() : "unspecified";
+
+                //Log.d("", "??????????????????????????????user info:" + name + gender + country + age + email);
+
+                //set bottle's user's name, email, gender, age and country
+                //TextView username_view = findViewById(R.id.username_view);
+
+                text_render[0].setText(info[0]);
+
+                //TextView email_view = findViewById(R.id.email_text_view);
+                text_render[1].setText(info[1]);
+
+                //TextView gender_view = findViewById(R.id.gender_text_view);
+                text_render[2].setText(info[2]);
+
+                //TextView age_view = findViewById(R.id.age_text_view);
+                text_render[3].setText(info[3]);
+
+                //TextView country_view = findViewById(R.id.country_text_view);
+                text_render[4].setText(info[4]);
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //Toast.makeText(AddFriendActivity.this, "Failed to retrieve user's data :(", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void add_friend_avatar(ImageView profileImage){
+        DatabaseReference avatarRef = FirebaseDatabase.getInstance().getReference("avatars/");
+        String fromUserID = HomeFragment.currBottle.userID;
+        avatarRef = avatarRef.child(fromUserID);
+        avatarRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ss : snapshot.getChildren()) {
+                    String url = ss.getValue(String.class);
+                    Picasso.get().load(url).into(profileImage);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //Toast.makeText(AddFriendActivity.this, "Failed to retrieve user's avatar :(", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }
