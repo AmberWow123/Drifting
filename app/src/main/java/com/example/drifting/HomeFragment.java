@@ -263,8 +263,6 @@ public class HomeFragment extends Fragment {
                         //get current userID
                         FirebaseAuth fAuth;
                         fAuth = FirebaseAuth.getInstance();
-
-
                         reference.orderByChild("isViewed").equalTo(false).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -300,7 +298,6 @@ public class HomeFragment extends Fragment {
                                     }
 
                                     else {
-
                                         Bottle bottle_get = new Bottle(this_bottle, bottleList.size());
                                         bottle_get.comment = "filler comment";
                                         bottle_get.setVisible();
@@ -313,10 +310,8 @@ public class HomeFragment extends Fragment {
                                     }
                                 }
                             }
-
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-
                             }
                         });
                         Log.d(" BottleList size is gg:", " " + bottleList.size());
