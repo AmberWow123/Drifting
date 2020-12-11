@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -36,8 +35,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.File;
-
 import backend.util.authentication.CredentialAuthenticator;
 import backend.util.connectivity.ConnectionChecker;
 
@@ -63,15 +60,6 @@ public class LoginActivity extends AppCompatActivity {
         final Button registerButton = findViewById(R.id.signup_text);
         final ProgressBar loadingBar = findViewById(R.id.loadingBar);
 
-        //TODO: use the code when testing to auto-login
-//        FirebaseAuth fAuth;
-//        fAuth = FirebaseAuth.getInstance();
-//        //check if the user is already logged in
-//        if(fAuth.getCurrentUser() != null){
-//            startActivity(new Intent(getApplicationContext(), WriteMessageActivity.class));
-//            finish();
-//        }
-
         // to underline the "Register now" text
         TextView textView = (TextView) findViewById(R.id.sign_up);
         textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -85,14 +73,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-//        //auto login
-        //auto login
-//        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-//
-//        if(firebaseUser != null){
-//        if(firebaseUser != null ){
-//            openHomepageActivity();
-//        }
 
         loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
             @Override

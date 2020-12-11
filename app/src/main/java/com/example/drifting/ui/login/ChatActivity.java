@@ -74,8 +74,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         }
 
-        //friend_id = (mychat.get(0).receiver.equals(firebaseUser.getUid())) ? mychat.get(0).sender : mychat.get(0).receiver;
-
         //loop to display all messages
         for (int i = 0; i < mychat.size(); i++) {
             Chat chat = mychat.get(i);
@@ -118,37 +116,6 @@ public class ChatActivity extends AppCompatActivity {
         }
 
 
-//        DatabaseReference chat_ref = FirebaseDatabase.getInstance().getReference("Chats");
-//        chat_ref.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                mychat.clear();
-//                for(DataSnapshot snapshot1 : snapshot.getChildren()){
-//                    Chat chat =
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        })
-
-//
-//        TextView textView1 = new TextView(this);
-//        LayoutParams layoutParams1 = new LayoutParams(LayoutParams.WRAP_CONTENT,
-//                LayoutParams.WRAP_CONTENT);
-//        layoutParams1.gravity = Gravity.LEFT;
-//        layoutParams1.setMargins(50, 20, 50, 20);
-//        textView1.setLayoutParams(layoutParams1);
-//        textView1.setText("TextView1");
-//        textView1.setTextColor(0xFF000000);
-//        textView1.setBackgroundColor(0xff66ff66); // hex color 0xAARRGGBB
-//        textView1.setBackgroundResource(R.drawable.border9);
-//        textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-//        textView1.setPadding(35, 20, 35, 20);
-//        linearLayout.addView(textView1);
-
         //send button
         sendMessage.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -183,15 +150,6 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void sendMessage(String sender, String receiver, String message) {
-
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
-//
-//        HashMap<String, Object> hashMap = new HashMap<>();
-//        hashMap.put("sender", sender);
-//        hashMap.put("receiver", receiver);
-//        hashMap.put("message", message);
-//
-//        reference.child("Chats").push().setValue(hashMap);
 
         Chat new_chat = new Chat(sender, receiver, message);
         SetDatabase db = new SetDatabase();

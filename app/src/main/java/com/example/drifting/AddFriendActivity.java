@@ -125,13 +125,6 @@ public class AddFriendActivity extends AppCompatActivity {
 
         Button addFriendButton = findViewById(R.id.add_friend_button);
 
-
-        /*
-        if fromUserID is already in user's friend list  //TODO: NEED USER FRIEND LIST FROM DATABASE
-            addFriendButton.setVisibility(View_GONE);
-
-
-         */
         addFriendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,12 +160,6 @@ public class AddFriendActivity extends AppCompatActivity {
                     }
                 });
 
-        //add chat
-//        HashMap<String, Object> hashMap = new HashMap<>();
-//        hashMap.put("sender", current_user);
-//        hashMap.put("receiver", receiverUserID);
-//        hashMap.put("message", "You are friends now! Let's start chatting.");
-//        ChatRef.push().setValue(hashMap);
         Chat new_chat = new Chat (current_user, receiverUserID, "You are friends now! Let's start chatting.");
         SetDatabase db = new SetDatabase();
         db.addNewChat(new_chat);

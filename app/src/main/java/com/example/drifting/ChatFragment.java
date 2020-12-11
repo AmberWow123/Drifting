@@ -121,7 +121,6 @@ public class ChatFragment extends Fragment {
 
         currentUserID = mAuth.getCurrentUser().getUid();
         ContacsRef = FirebaseDatabase.getInstance().getReference().child("Contacts").child(currentUserID).child("friend_list");
-        // UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
         //Get chat history from chatRef
         ChatRef = FirebaseDatabase.getInstance().getReference().child("Chats");
@@ -129,12 +128,6 @@ public class ChatFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-
-                    //check all chat history to get the relevant ones
-                    //need to have receiver's name, message, and receiver's id
-                    //check sender and receiver name
-//                    String mmm = snapshot.child("message").getValue().toString();
-//                    Log.d("", mmm + "???????");
 
                     Chat chat = (Chat) snapshot1.getValue(Chat.class);
                     Log.d(">>>>>>>>>>", chat.receiver + "...");
@@ -182,44 +175,7 @@ public class ChatFragment extends Fragment {
                     } else {
                         continue;
                     }
-//                    String f_id = snapshot1.getKey();
-//                    Log.d("========", f_id);
-//
-//                    //TODO: get time
-//
-//                    DatabaseReference friendRef = FirebaseDatabase.getInstance().getReference().child("user").child(f_id);
-//                    friendRef.addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot snapshot_) {
-//                            name.add(snapshot_.child("user_name").getValue().toString());
-//                            //Uer_id.add(snapshot_.child("user_id").getValue().toString());
-//                            //Log.d(" ", name[0]);
-////                            FirebaseStorage storage = FirebaseStorage.getInstance();
-////                            StorageReference storageRef = storage.getReference();
-////                            DatabaseReference avatarRef = FirebaseDatabase.getInstance().getReference("avatars/");
-////                            avatarRef = avatarRef.child(friendId);
-////                            avatarRef.addValueEventListener(new ValueEventListener() {
-////                                @Override
-////                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-////                                    for (DataSnapshot ss : snapshot.getChildren()) {
-////                                         url = ss.getValue(Uri.class);
-////                                    }
-////                                }
-////                                @Override
-////                                public void onCancelled(@NonNull DatabaseError error) {
-////
-////                                }
-////                            });
-//                            //exampleList.add(new ExampleItem(R.drawable.avatar, name, "Let's chat", "12:00"));
-//
-//                        }
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError error) {
-//
-//                        }
-//                   });
 
-                    //exampleList.add(new ExampleItem(R.drawable.avatar, name, "Let's chat", "12:00"));
                 }
             }
 
@@ -228,34 +184,6 @@ public class ChatFragment extends Fragment {
 
             }
         });
-
-
-//        FirebaseStorage storage = FirebaseStorage.getInstance();
-//        StorageReference storageRef = storage.getReference();
-//        DatabaseReference avatarRef = FirebaseDatabase.getInstance().getReference("avatars/");
-//        String user_id = mAuth.getUid();
-//        avatarRef = avatarRef.child(user_id);
-//        avatarRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot ss : snapshot.getChildren()) {
-//                    String url = ss.getValue(String.class);
-//                    Picasso.get().load(url).into(profileImage);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-        //       exampleList = new ArrayList<>();
-
-//        // TODO: backend might use a loop to create all the needed chat rooms here (or whatever applies)
-//        // TODO: backend might want to sort the chat rooms by time.
-//        // TODO: time: ex. "15:00" for today; otherwise, "Monday" or "11/23" instead
-//        // TODO: the 3rd parameter is the most recent message sent by the user's friend
-//        // TODO: and the 4th parameter is the time of the most recent message sent
 
         Log.d("size", Integer.toString(name.size()));
         for (int i = 0; i < name.size(); i++) {
@@ -269,41 +197,9 @@ public class ChatFragment extends Fragment {
 
     }
 
-//    private void filter(String text) {
-//        ArrayList<ExampleItem> filteredList = new ArrayList<>();
-//
-//        for (ExampleItem item : exampleList) {
-//            if (item.getName().toLowerCase().contains(text.toLowerCase())) {
-//                filteredList.add(item);
-//            }
-//        }
-//
-//        adapter.filterList(filteredList);
-//    }
-
-//    private void createExampleList() {
-//        exampleList = new ArrayList<>();
-//
-//        // TODO: backend might use a loop to create all the needed chat rooms here (or whatever applies)
-//        // TODO: backend might want to sort the chat rooms by time.
-//        // TODO: time: ex. "15:00" for today; otherwise, "Monday" or "11/23" instead
-//        // TODO: the 3rd parameter is the most recent message sent by the user's friend
-//        // TODO: and the 4th parameter is the time of the most recent message sent
-//        exampleList.add(new ExampleItem( R.drawable.avatar, "Amber", "yooooo! Lets go get some boba >.<", "12:00"));
-//        exampleList.add(new ExampleItem( R.drawable.avatar, "Sam", "How are you? >.<", "13:00"));
-//        exampleList.add(new ExampleItem( R.drawable.avatar, "Jiaming", "I am fine! Thank you! And you? >.<", "14:00"));
-//        exampleList.add(new ExampleItem( R.drawable.avatar, "Tao Jin", "Just finished my midterm >.<", "15:00"));
-//        exampleList.add(new ExampleItem( R.drawable.avatar, "Lucky", "yaaaaaa >.<", "17:00"));
-//        exampleList.add(new ExampleItem( R.drawable.avatar, "Vickie", "haaaaaa >.<", "18:00"));
-//        exampleList.add(new ExampleItem( R.drawable.avatar, "Samuel", "laaaaaa >.<", "19:00"));
-//    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-//        final Button searchButton = getView().findViewById(R.id.search_button);
-//        final EditText input_friend_to_search = getView().findViewById(R.id.search_field);
 
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
