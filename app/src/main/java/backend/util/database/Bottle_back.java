@@ -1,6 +1,10 @@
 package backend.util.database;
 
+import android.util.Log;
+
 import java.util.HashMap;
+
+import backend.util.time.DriftTime;
 
 public class Bottle_back{
 
@@ -44,6 +48,8 @@ public class Bottle_back{
         this.isViewed = viewed;
         this.ext = filename;
         this.isVideo = isVideo;
+
+        Log.e("Bottle date", "Date of current bottle: " + DriftTime.getDate(this.timestamp));
     }
 
     public String getMessage(){
