@@ -57,6 +57,7 @@
  import backend.util.database.SetDatabase;
  import backend.util.time.DriftTime;
 
+
 //import com.google.firebase.database.annotations.Nullable;
 
 //import com.google.firebase.database.annotations.Nullable;
@@ -67,13 +68,6 @@ public class WriteMessageActivity extends AppCompatActivity {
     public TextView locationText;
     EditText TextMessage;
     Button sendBtn;
-
-    //function to return to home after sending the bottle
-    public void openHomepageActivity() {
-        Intent intent = new Intent(this, NavBar.class);
-        startActivity(intent);
-        finish();
-    }
 
     Switch switch_anon;
 

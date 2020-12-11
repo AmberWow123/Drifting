@@ -1,8 +1,6 @@
 package com.example.drifting;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,12 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -42,10 +36,8 @@ public class AddFriendActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
         FirebaseAuth fAuth = FirebaseAuth.getInstance();
         String current_user = fAuth.getUid();
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friend);
@@ -80,6 +72,7 @@ public class AddFriendActivity extends AppCompatActivity {
 
                 Add_friend(current_user, fromUserID);
                 Toast.makeText(AddFriendActivity.this, "Yay you just add a friend!! :D", Toast.LENGTH_SHORT).show();
+
                 finish();
 
             }
@@ -91,6 +84,7 @@ public class AddFriendActivity extends AppCompatActivity {
     {
         Date currentTime = Calendar.getInstance().getTime();
 
+        DatabaseReference ContactsRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
         ContactsRef.child(current_user).child("friend_list")
                 .child(receiverUserID).setValue(currentTime)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

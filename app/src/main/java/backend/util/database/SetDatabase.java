@@ -1,14 +1,16 @@
 package backend.util.database;
 
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 import android.util.Pair;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
+import com.example.drifting.HomeFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,12 +23,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-import com.example.drifting.AddFriendActivity;
-import com.example.drifting.HomeFragment;
-import com.example.drifting.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import backend.util.time.DriftTime;
 
@@ -48,6 +49,29 @@ public class SetDatabase {
         //System.out.println(database == null);
         DatabaseReference usersRef = database.child("user");
         usersRef.child(userProfile.user_id).setValue(userProfile);
+    }
+
+    public void getProfile(Consumer<UserProfile> callback) {
+        DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(auth.getUid());
+        UserRef.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                UserProfile userProfile = snapshot.getValue(UserProfile.class);
+                if (userProfile.user_name == null) Log.d("ababaab", "nullString!!!!");
+                userProfile.user_name = userProfile.user_name != null ? userProfile.user_name : "unspecified";
+                userProfile.user_gender = userProfile.user_gender != null ? userProfile.user_gender : "unspecified";
+                userProfile.user_country = userProfile.user_country != null ? userProfile.user_country : "unspecified";
+                userProfile.age = userProfile.age != null ? userProfile.age : "unspecified";
+                userProfile.user_email = userProfile.user_email != null ? userProfile.user_email : "unspecified";
+                userProfile.privacy = userProfile.privacy != null ? userProfile.privacy : "unspecified";
+                callback.accept(userProfile);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     //add a new chat to the database
@@ -127,6 +151,27 @@ public class SetDatabase {
                     }
 
                 });
+            }
+        });
+    }
+
+    public void getAvatar(Consumer<String> callback) {
+        String user_id = auth.getUid();
+        DatabaseReference avatarRef = FirebaseDatabase.getInstance().getReference("avatars/");
+        avatarRef = avatarRef.child(user_id);
+        avatarRef.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ss : snapshot.getChildren()) {
+                    String url = ss.getValue(String.class);
+                    callback.accept(url);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
@@ -411,7 +456,8 @@ public class SetDatabase {
         this_bottle_data.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                like[0] = Integer.parseInt(snapshot.child("likes").getValue().toString());
+                int this_like = (snapshot.child("likes").getValue() != null) ?  Integer.parseInt(snapshot.child("likes").getValue().toString()) : 0;
+                like[0] = this_like;
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -439,9 +485,6 @@ public class SetDatabase {
 
     }
 
-
-
-
     public void add_friend_info_text(String[] info, TextView [] text_render, String fromUserID){
         //contact
         DatabaseReference ContactsRef = FirebaseDatabase.getInstance().getReference().child("Contacts");
@@ -451,6 +494,7 @@ public class SetDatabase {
 
         FirebaseAuth fAuth = FirebaseAuth.getInstance();
         String current_user = fAuth.getUid();
+
 
 
 
