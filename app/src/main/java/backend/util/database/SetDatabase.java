@@ -6,11 +6,15 @@ import android.util.Pair;
 
 import androidx.annotation.NonNull;
 
+import com.example.drifting.HomeFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -18,6 +22,11 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import backend.util.time.DriftTime;
 
 public class SetDatabase {
     private DatabaseReference database = FirebaseDatabase.getInstance().getReference();
@@ -25,12 +34,11 @@ public class SetDatabase {
     private StorageReference storageRef = storage.getReference();
     private FirebaseAuth auth = FirebaseAuth.getInstance();
 
-    public static Pair<String,String> parseName(String filename) {
+    public static Pair<String, String> parseName(String filename) {
         int i = filename.lastIndexOf('.');
         if (i > 0 && i < filename.length() - 1) {
-            return new Pair<String, String>(filename.substring(0,i), filename.substring(i+1));
-        }
-        else return null;
+            return new Pair<String, String>(filename.substring(0, i), filename.substring(i + 1));
+        } else return null;
     }
 
     //add a new user to the database
@@ -41,7 +49,7 @@ public class SetDatabase {
     }
 
     //add a new chat to the database
-    public void addNewChat (Chat chat) {
+    public void addNewChat(Chat chat) {
         //System.out.println(database == null);
         DatabaseReference chatsRef = database.child("Chats");
         chatsRef.push().setValue(chat);
@@ -49,7 +57,7 @@ public class SetDatabase {
     }
 
     //add a new bottle to the database
-    public void addNewBottle(Bottle_back this_bottle, Uri file){
+    public void addNewBottle(Bottle_back this_bottle, Uri file) {
         DatabaseReference bottlesRef = database.child("bottle");
 
         if (this_bottle.ext != null) {
@@ -86,8 +94,7 @@ public class SetDatabase {
                     });
                 }
             });
-        }
-        else {
+        } else {
             bottlesRef.child(String.valueOf(this_bottle.bottleID)).setValue(this_bottle);
         }
 
@@ -122,14 +129,12 @@ public class SetDatabase {
     }
 
 
-
     public void uploadBottleFile(String path, String bottle_id, boolean isVideo) {
         Uri file = Uri.fromFile(new File(path));
         StorageReference targetRef = null;
         if (isVideo) {
             targetRef = storageRef.child("videos/" + bottle_id + "/" + file.getLastPathSegment());
-        }
-        else {
+        } else {
             targetRef = storageRef.child("images/" + bottle_id + "/" + file.getLastPathSegment());
         }
         UploadTask uploadTask = targetRef.putFile(file);
@@ -155,8 +160,7 @@ public class SetDatabase {
         }
         if (isVideo) {
             targetRef = storageRef.child("videos/" + bottle_id + "/" + file_name);
-        }
-        else {
+        } else {
             targetRef = storageRef.child("images/" + bottle_id + "/" + file_name);
         }
         File localFile = File.createTempFile(bottle_id + fileName.first, fileName.second);
@@ -172,5 +176,112 @@ public class SetDatabase {
             }
         });
         return localFile;
+    }
+
+    public void get_sent_bottles(ArrayList<String> sentBottle, ArrayList<String>sentTime, ArrayList<String> sentLocation) {
+        ArrayList<Bottle_back> sent_bottles = new ArrayList<Bottle_back>();
+        //get current userID
+        FirebaseAuth fAuth;
+        DriftTime d_time = new DriftTime();
+        fAuth = FirebaseAuth.getInstance();
+        String userID = fAuth.getUid();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference user_ref = ref.child("user").child(userID).child("send_list");
+
+        Object hm_obj = new Object();
+        user_ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if (snapshot.getValue(hm_obj.getClass()) != null) {
+                    HashMap<String, Boolean> hp = (HashMap) snapshot.getValue(hm_obj.getClass());
+                    for (Map.Entry<String, Boolean> set : hp.entrySet()) {
+                        //set.getKey() is the bottle id
+                        //Log.d("HashMap: ","Key: "+ set.getKey() + " Val: " + set.getValue());
+                        DatabaseReference bottle_ref = ref.child("bottle").child(set.getKey());
+                        bottle_ref.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot_2) {
+                                String msg = snapshot_2.child("message").getValue(String.class);
+                                sentBottle.add(msg);
+                                long time = snapshot_2.child("timestamp").getValue(Long.class);
+                                sentTime.add(d_time.getDate(time));
+                                String city = snapshot_2.child("city").getValue(String.class);
+                                sentLocation.add(city);
+                                bottle_ref.removeEventListener(this);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                    }
+                }
+
+                user_ref.removeEventListener(this);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void get_picked_bottles(ArrayList<String> pickedBottle, ArrayList<String>pickedTime, ArrayList<String> pickedLocation) {
+        //get current userID
+        DriftTime d_time = new DriftTime();
+        FirebaseAuth fAuth;
+        fAuth = FirebaseAuth.getInstance();
+        String userID = fAuth.getUid();
+        Log.d("IDIDIDIDID", userID);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference user_ref = ref.child("user").child(userID).child("receive_list");
+
+        Object hm_obj = new Object();
+
+
+
+        user_ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getValue(hm_obj.getClass()) != null) {
+                    HashMap<String, Boolean> hp = (HashMap) snapshot.getValue(hm_obj.getClass());
+                    for (Map.Entry<String, Boolean> set : hp.entrySet()) {
+                        if (set.getValue() == true) {
+                            //set.getKey() is the bottle id
+                            //Log.d("HashMap: ","Key: "+ set.getKey() + " Val: " + set.getValue());
+                            DatabaseReference bottle_ref = ref.child("bottle").child(set.getKey());
+                            bottle_ref.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot_2) {
+                                    String msg = snapshot_2.child("message").getValue(String.class);
+                                    pickedBottle.add(msg);
+                                    long time = snapshot_2.child("timestamp").getValue(Long.class);
+                                    pickedTime.add(d_time.getDate(time));
+                                    String city = snapshot_2.child("city").getValue(String.class);
+                                    pickedLocation.add(city);
+                                    bottle_ref.removeEventListener(this);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
+                    }
+                }
+                user_ref.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
