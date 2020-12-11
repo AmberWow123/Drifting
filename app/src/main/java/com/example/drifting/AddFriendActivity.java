@@ -141,8 +141,6 @@ public class AddFriendActivity extends AppCompatActivity {
 
     private void Add_friend(String current_user, String receiverUserID)
     {
-
-
         Date currentTime = Calendar.getInstance().getTime();
 
         ContactsRef.child(current_user).child("friend_list")
