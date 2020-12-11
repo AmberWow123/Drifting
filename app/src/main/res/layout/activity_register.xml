@@ -21,13 +21,13 @@
         android:id="@+id/sign_up_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
         android:background="@drawable/loginbutton"
         android:text="Sign Up"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/signup_button_guideline" />
+        app:layout_constraintTop_toBottomOf="@+id/re_enter_password_register" />
 
     <EditText
         android:id="@+id/username_register"

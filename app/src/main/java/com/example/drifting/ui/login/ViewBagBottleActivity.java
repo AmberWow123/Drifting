@@ -8,18 +8,37 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.drifting.AddFriendActivity;
-import com.example.drifting.HomeFragment;
 import com.example.drifting.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.Nullable;
 
 public class ViewBagBottleActivity extends AppCompatActivity {
+
+    public static String msg = "";
+    public static String fromUser = "";
+    public static String city = "";
+    public static String comment = "";
+    public static String bottleID = "";
+    public static String fromUserID = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_bag_bottle);
+        Bundle b = getIntent().getExtras();
+
+        //todo: bottle id from bag fragment
+        //String bottle_ID = b.getString("BottleID");
+        TextView bottle = findViewById(R.id.textView_bag_bottle_id);
+        String bottle_ID = bottle.getText().toString();
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -30,13 +49,9 @@ public class ViewBagBottleActivity extends AppCompatActivity {
         // set canvas width and height.
         getWindow().setLayout((int) (width * 1), (int) (height * 0.75));
 
-        String msg = "";
-        String fromUser = "";
-        String city = "";
-        String comment = "";
-        String bottleID = "";
-        String fromUserID = "";
 
+
+        /*
         if (HomeFragment.currBottle != null) {
             msg = HomeFragment.currBottle.message;
             fromUser = HomeFragment.currBottle.fromUser;
@@ -45,6 +60,40 @@ public class ViewBagBottleActivity extends AppCompatActivity {
             bottleID = HomeFragment.currBottle.bottleID;
             fromUserID = HomeFragment.currBottle.userID;
         }
+        */
+
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference bottle_ref = ref.child("bottle").child(bottle_ID);
+
+        bottle_ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                fromUserID = snapshot.child("userID").getValue(String.class);
+                msg = snapshot.child("message").getValue(String.class);
+                city = snapshot.child("city").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        DatabaseReference user_ref = ref.child("user").child(fromUserID);
+        user_ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                fromUser = snapshot.child("user_name").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
         TextView messageView = findViewById(R.id.bag_bottle_message_textview);
         messageView.setText(msg);
