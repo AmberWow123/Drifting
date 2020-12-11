@@ -26,20 +26,21 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
 import java.util.Random;
 import java.util.Vector;
 import java.util.concurrent.Executors;
 
 import backend.util.bottleProvider.BottleProvider;
+import backend.util.container.BagData;
 import backend.util.database.Bottle_back;
+import backend.util.database.SetDatabase;
+import backend.util.time.DriftTime;
 
 
 public class HomeFragment extends Fragment {
@@ -258,67 +259,18 @@ public class HomeFragment extends Fragment {
                 }
                 else {
                     if (bottleList.size() < BOTTLE_MAX) {
-                        //get database reference
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
-                        //get current userID
-                        FirebaseAuth fAuth;
-                        fAuth = FirebaseAuth.getInstance();
+                        Bottle_back[] this_bottle_list = new Bottle_back[1];
+                        SetDatabase db = new SetDatabase();
+                        db.get_bottle(this_bottle_list);
+                        Bottle_back this_bottle = this_bottle_list[0];
+                        Bottle bottle_get = new Bottle(this_bottle, bottleList.size());
+                        bottle_get.comment = "filler comment";
+                        bottle_get.setVisible();
+                        bottleList.add(bottle_get);
+                        Log.d(" Bottle content is :", " aaaaaaaaaaaaaa" + bottle_get.message);
+                        Log.d(" BottleList size is :", " bbbbbbbbbbbbbbbb" + bottleList.size());
+                        Log.d(" vector contains ", "cccccccccccccc" + bottleList.toString());
 
-
-                        reference.orderByChild("isViewed").equalTo(false).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                                    Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
-                                    Log.d("urlefawefea",this_bottle.picture);
-                                    //String bottleID = this_bottle.getBottleID();
-                                    String userID = fAuth.getUid();
-                                    HashMap<String, Boolean> this_history= this_bottle.getPickHistory();
-
-                                    //debug: print picked history
-                                    for(String users : this_history.keySet()) {
-                                        Log.d("", "picked content:");
-                                        Log.d("user:", users);
-                                    }
-
-                                    //check if the bottle is viewed
-                                    if(this_bottle.getIsViewed()) {
-                                        Log.d("isViewed","A viewed bottle was returned");
-                                        continue;
-                                    }
-
-                                    //TODO: comment for test purpose, REUSE for formal product
-                                    //check if the bottle is from the same user
-//                                    if(this_bottle.getUserID().equals(userID)){
-//                                        continue;
-//                                    }
-
-                                    //check if the bottle has been picked up by the same user before
-                                    if(this_bottle.pickHistory.containsKey(userID)){
-                                        Log.d("isPicked","A bottle picked before was returned");
-                                        continue;
-                                    }
-
-                                    else {
-
-                                        Bottle bottle_get = new Bottle(this_bottle, bottleList.size());
-                                        bottle_get.comment = "filler comment";
-                                        bottle_get.setVisible();
-                                        bottleList.add(bottle_get);
-                                        Log.d(" Bottle content is :", " aaaaaaaaaaaaaa" + bottle_get.message);
-                                        Log.d(" BottleList size is :", " " + bottleList.size());
-                                        Log.d(" vector contains ", bottleList.toString());
-                                        reference.removeEventListener(this);
-                                        break;
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
                         Log.d(" BottleList size is gg:", " " + bottleList.size());
                     }
                 }
@@ -363,6 +315,9 @@ public class HomeFragment extends Fragment {
         public String pictureDownloadURL;
         public String videoDownloadURL;
         public boolean isVideo;
+        public boolean isAnonymous;
+        public String thrownDate;
+
 
 
         /**
@@ -423,12 +378,13 @@ public class HomeFragment extends Fragment {
             pictureDownloadURL = bottleBack.picture;
             //Log.d("awfawef",pictureDownloadURL);
             videoDownloadURL = bottleBack.video;
-
+            isAnonymous = bottleBack.isAnonymous;
             this.bottle_index = bottle_index;
             locationID = getRandomBottleLocation();
             bottleView =  getView().findViewById(locationID);
             imageSrc = getRandomBottleImg();
             bottleView.setBackgroundResource(imageSrc);
+            thrownDate = DriftTime.getDate(bottleBack.timestamp);
 
 
             bottleAnimation = (AnimationDrawable) bottleView.getBackground();

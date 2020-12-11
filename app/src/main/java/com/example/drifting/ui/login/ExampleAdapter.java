@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,17 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.drifting.ChatFragment;
 import com.example.drifting.R;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import android.app.Activity;
 
-import static androidx.core.content.ContextCompat.startActivity;
+import backend.util.database.Chat;
 
 public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder> {
     private ArrayList<ExampleItem> exampleList;
     public static String userName;
+    public static String friend_id;
+    public static ArrayList<Chat> chat_messages;
 
     public static class ExampleViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageView;
@@ -71,10 +68,10 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
             public void onClick(View v) {
                 ChatFragment.chatContext.startActivity(new Intent(ChatFragment.chatActivity, ChatActivity.class));
                 userName = currentItem.getName();
+                friend_id =currentItem.getID();
+                chat_messages = currentItem.chat_messages;
             }
         });
-
-
 
     }
 

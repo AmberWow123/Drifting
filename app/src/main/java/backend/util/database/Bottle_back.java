@@ -1,7 +1,28 @@
 package backend.util.database;
 
+import android.util.Log;
+
 import java.util.HashMap;
 
+import backend.util.time.DriftTime;
+/*
+    * Bottle_back class: A class that defines the bottle for backend uses. Contains all the needed
+    * attributes of the bottle
+    * message: the message sent by the user
+    * bottleID: the unique bottleID created by combinations of userID and timeStamp
+    * userID: the user who sent the bottle
+    * isAnonymous: whether the user is anonymous
+    * city: the user's city when sent the message
+    * latitude: the user's location
+    * longitude: the user's location
+    * timestamp: timestamp of when the bottle is sent
+    * isViewed: whether the bottle has been viewed by someone
+    * ext: filename of uploaded file
+    * isVideo: whether the bottle contains a video
+    * picture: the address of the uploaded image
+    * video: the address of the uploaded video
+    * likes: the likes received by others on the bottle
+ */
 public class Bottle_back{
 
      Bottle_back self;
@@ -13,23 +34,27 @@ public class Bottle_back{
      public double latitude;
      public double longitude;
      public long timestamp;
-     public String comment;
      public Boolean isViewed = false;
      public String ext = null;
      public boolean isVideo = false;
      public String picture = null;
      public String video = null;
+     public int likes = 0;
 
     //history attribute to track all users picked up the bottles
      public HashMap<String, Boolean> pickHistory = new HashMap<>();
 
+     /*
+     ** empty constructor
+      */
      public Bottle_back(){
      }
 
-    // construct with a message and bottle index
-
+    /*
+    ** Real constructor: construct with specific messages
+     */
     public Bottle_back(String msg, String bottleID, String userID, Boolean isAnonymous, String city,
-                       double latitude, double longitude, long timestamp, String comment, Boolean viewed, String filename, boolean isVideo) {
+                       double latitude, double longitude, long timestamp, Boolean viewed, String filename, boolean isVideo) {
 
         self = this;
         this.message = msg;
@@ -40,10 +65,12 @@ public class Bottle_back{
         this.latitude = latitude;
         this.longitude = longitude;
         this.timestamp = timestamp;
-        this.comment = comment;
         this.isViewed = viewed;
         this.ext = filename;
         this.isVideo = isVideo;
+        this.likes = 0;
+
+        Log.e("Bottle date", "Date of current bottle: " + DriftTime.getDate(this.timestamp));
     }
 
     public String getMessage(){
@@ -62,7 +89,6 @@ public class Bottle_back{
 
     public double getLongitude() {return longitude;}
 
-
     public double getTimestamp() {return timestamp;}
 
     public String getBottleID(){
@@ -75,14 +101,6 @@ public class Bottle_back{
 
     public Boolean getIsViewed(){
          return isViewed;
-    }
-
-    public String getComment(){
-        return comment;
-    }
-
-    public void setComment(String comment){
-        this.comment = comment;
     }
 
     public void setIsViewed(Boolean isViewed){

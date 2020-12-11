@@ -29,14 +29,23 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import java.util.ArrayList;
 
 import backend.util.authentication.CredentialAuthenticator;
 import backend.util.connectivity.ConnectionChecker;
+import backend.util.container.BagData;
+import backend.util.database.SetDatabase;
 
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
+    private DatabaseReference UserRef;
 
     FirebaseUser firebaseUser;
     @Override
@@ -54,15 +63,6 @@ public class LoginActivity extends AppCompatActivity {
         final Button registerButton = findViewById(R.id.signup_text);
         final ProgressBar loadingBar = findViewById(R.id.loadingBar);
 
-        //TODO: use the code when testing to auto-login
-//        FirebaseAuth fAuth;
-//        fAuth = FirebaseAuth.getInstance();
-//        //check if the user is already logged in
-//        if(fAuth.getCurrentUser() != null){
-//            startActivity(new Intent(getApplicationContext(), WriteMessageActivity.class));
-//            finish();
-//        }
-
         // to underline the "Register now" text
         TextView textView = (TextView) findViewById(R.id.sign_up);
         textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -76,14 +76,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-//        //auto login
-        //auto login
-//        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-//
-//        if(firebaseUser != null){
-//        if(firebaseUser != null ){
-//            openHomepageActivity();
-//        }
 
         loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
             @Override
@@ -141,6 +133,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, feedback, Toast.LENGTH_SHORT).show();
 
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(mAuth.getCurrentUser().getUid());
 
 
                 if (ca.isValid()) {
@@ -150,8 +143,30 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 loadingBar.setVisibility((View.GONE));
-                                Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
+                                BagData.pickedBottle = new ArrayList<>();
+                                BagData.pickedLocation = new ArrayList<>();
+                                BagData.pickedTime = new ArrayList<>();
+                                BagData.sentBottle = new ArrayList<>();
+                                BagData.sentLocation = new ArrayList<>();
+                                BagData.sentTime = new ArrayList<>();
+                                SetDatabase sd = new SetDatabase();
+                                sd.get_sent_bottles(BagData.sentBottle, BagData.sentTime, BagData.sentLocation);
+                                sd.get_picked_bottles(BagData.pickedBottle, BagData.pickedTime, BagData.pickedLocation);
 
+
+                                UserRef.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        String name = snapshot.child("user_name").getValue() != null ? snapshot.child("user_name").getValue().toString() : "unspecified";
+                                        Toast.makeText(LoginActivity.this, "Welcome, " + name, Toast.LENGTH_LONG).show();
+                                        // Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
+                                        UserRef.removeEventListener(this);
+                                    }
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
                                 openHomepageActivity();
                             } else {
                                 loadingBar.setVisibility((View.GONE));
@@ -186,6 +201,7 @@ public class LoginActivity extends AppCompatActivity {
                Toast.makeText(LoginActivity.this, feedback, Toast.LENGTH_SHORT).show();
 
                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+               UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(mAuth.getCurrentUser().getUid());
 
                if(ca.isValid()) {
                    loadingBar.setVisibility(View.VISIBLE);
@@ -195,9 +211,28 @@ public class LoginActivity extends AppCompatActivity {
                        public void onComplete(@NonNull Task<AuthResult> task) {
                            if (task.isSuccessful()) {
                                loadingBar.setVisibility((View.GONE));
-                               Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
+                               BagData.pickedBottle = new ArrayList<>();
+                               BagData.pickedLocation = new ArrayList<>();
+                               BagData.pickedTime = new ArrayList<>();
+                               BagData.sentBottle = new ArrayList<>();
+                               BagData.sentLocation = new ArrayList<>();
+                               BagData.sentTime = new ArrayList<>();
+                               SetDatabase sd = new SetDatabase();
+                               sd.get_sent_bottles(BagData.sentBottle, BagData.sentTime, BagData.sentLocation);
+                               sd.get_picked_bottles(BagData.pickedBottle, BagData.pickedTime, BagData.pickedLocation);
+                               UserRef.addValueEventListener(new ValueEventListener() {
+                                   @Override
+                                   public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                       String name = snapshot.child("user_name").getValue() != null ? snapshot.child("user_name").getValue().toString() : "unspecified";
+                                       Toast.makeText(LoginActivity.this, "Welcome, " + name, Toast.LENGTH_LONG).show();
+                                       // Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
+                                       UserRef.removeEventListener(this);
+                                   }
+                                   @Override
+                                   public void onCancelled(@NonNull DatabaseError error) {
 
-
+                                   }
+                               });
                                openHomepageActivity();
                            } else {
                                loadingBar.setVisibility((View.GONE));
@@ -206,6 +241,8 @@ public class LoginActivity extends AppCompatActivity {
                        }
                    });
                }
+               loadingBar.setVisibility((View.GONE));
+
            }
        });
 
