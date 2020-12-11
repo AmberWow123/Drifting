@@ -150,7 +150,6 @@ public class WriteMessageActivity extends AppCompatActivity {
                     String bottleID = (userID + timeStamp).trim();
                     String city = locationText.getText().toString();
 
-
                     DriftTime currTime = new DriftTime();
 
                     String filename = null;
@@ -211,6 +210,7 @@ public class WriteMessageActivity extends AppCompatActivity {
                             false, city, latitude[0], longitude[0], currTime.getTimestamp(),
                             null, false, filename, isVideo);
                     SetDatabase set = new SetDatabase();
+
                     if (isVideo) {
                         set.addNewBottle(this_bottle, video);
                     } else {
@@ -372,15 +372,6 @@ public class WriteMessageActivity extends AppCompatActivity {
                         }
                     });
 
-            //   LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            //   Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            //   try{
-            //       locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
-            //   }
-            //   catch (Exception e){
-            //       e.printStackTrace();
-            //       Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
-            //   }
         }
 
     }
@@ -422,15 +413,6 @@ public class WriteMessageActivity extends AppCompatActivity {
                                     }
                                 });
 
-                        //    LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                        //    Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        //    try{
-                        //        locationText.setText(hereLocation(location.getLatitude(), location.getLongitude()));
-                        //    }
-                        //    catch (Exception e){
-                        //        e.printStackTrace();
-                        //        Toast.makeText(WriteMessageActivity.this, "Not found!", Toast.LENGTH_SHORT).show();
-                        //    }
                     }
                 }
                 else {

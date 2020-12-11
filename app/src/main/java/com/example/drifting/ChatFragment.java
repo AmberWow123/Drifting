@@ -171,6 +171,7 @@ public class ChatFragment extends Fragment {
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
                             }
+
                         });
                     } else {
                         continue;

@@ -6,7 +6,6 @@ import android.util.Pair;
 
 import androidx.annotation.NonNull;
 
-import com.example.drifting.HomeFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -15,13 +14,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -100,6 +96,7 @@ public class SetDatabase {
 
     }
 
+    //upload the avatar to the database
     public void uploadAvatars(String user_id, Uri file) {
         StorageReference targetRef = storageRef.child("avatars/" + user_id + ".jpg");
         DatabaseReference targetdataRef = database.child("avatars/");
@@ -128,57 +125,8 @@ public class SetDatabase {
         });
     }
 
-
-    public void uploadBottleFile(String path, String bottle_id, boolean isVideo) {
-        Uri file = Uri.fromFile(new File(path));
-        StorageReference targetRef = null;
-        if (isVideo) {
-            targetRef = storageRef.child("videos/" + bottle_id + "/" + file.getLastPathSegment());
-        } else {
-            targetRef = storageRef.child("images/" + bottle_id + "/" + file.getLastPathSegment());
-        }
-        UploadTask uploadTask = targetRef.putFile(file);
-
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-            }
-        });
-    }
-
-    public File downloadBottleFile(String bottle_id, String file_name, boolean isVideo) throws IOException {
-        StorageReference targetRef = null;
-        Pair<String, String> fileName = parseName(file_name);
-        if (fileName == null) {
-            return null;
-        }
-        if (isVideo) {
-            targetRef = storageRef.child("videos/" + bottle_id + "/" + file_name);
-        } else {
-            targetRef = storageRef.child("images/" + bottle_id + "/" + file_name);
-        }
-        File localFile = File.createTempFile(bottle_id + fileName.first, fileName.second);
-        targetRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                // Local temp file has been created
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });
-        return localFile;
-    }
-
-    public void get_sent_bottles(ArrayList<String> sentBottle, ArrayList<String>sentTime, ArrayList<String> sentLocation) {
+    // get sent bottles for the bag
+    public void get_sent_bottles(ArrayList<String> sentBottle, ArrayList<String> sentTime, ArrayList<String> sentLocation) {
         ArrayList<Bottle_back> sent_bottles = new ArrayList<Bottle_back>();
         //get current userID
         FirebaseAuth fAuth;
@@ -231,7 +179,8 @@ public class SetDatabase {
         });
     }
 
-    public void get_picked_bottles(ArrayList<String> pickedBottle, ArrayList<String>pickedTime, ArrayList<String> pickedLocation) {
+    //get picked bottles for the bag
+    public void get_picked_bottles(ArrayList<String> pickedBottle, ArrayList<String> pickedTime, ArrayList<String> pickedLocation) {
         //get current userID
         DriftTime d_time = new DriftTime();
         FirebaseAuth fAuth;
@@ -243,12 +192,10 @@ public class SetDatabase {
 
         Object hm_obj = new Object();
 
-
-
         user_ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.getValue(hm_obj.getClass()) != null) {
+                if (snapshot.getValue(hm_obj.getClass()) != null) {
                     HashMap<String, Boolean> hp = (HashMap) snapshot.getValue(hm_obj.getClass());
                     for (Map.Entry<String, Boolean> set : hp.entrySet()) {
                         if (set.getValue() == true) {
@@ -284,4 +231,107 @@ public class SetDatabase {
             }
         });
     }
+
+    //throw a bottle back function
+    public void throw_bottle_back(String finalBottleID) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
+        DatabaseReference this_bottle_data = reference.child(finalBottleID);
+        FirebaseAuth fAuth = FirebaseAuth.getInstance();
+        String current_user = fAuth.getUid();
+
+        // set isViewed to false
+        Map<String, Object> bottle_update = new HashMap<>();
+        bottle_update.put("isViewed", false);
+        this_bottle_data.updateChildren(bottle_update);
+
+        //add the user info to bottle history
+        final DatabaseReference added_user= this_bottle_data.child("pickHistory").child(current_user);
+        added_user.setValue(true);
+
+        //remove the bottle from user's receive list
+        DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(current_user);
+        final DatabaseReference added_bottle= UserRef.child("receive_list");
+        Map<String, Object> user_update = new HashMap<>();
+        user_update.put(finalBottleID, false);
+        added_bottle.updateChildren(user_update);
+    }
+
+    //view a existing bottle
+    public void view_bottle(String bottleID){
+
+        //set isviewed to be true
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
+        DatabaseReference this_bottle_data = reference.child(bottleID);
+        FirebaseAuth fAuth = FirebaseAuth.getInstance();
+        String current_user = fAuth.getUid();
+
+        if(!bottleID.equals("")) {
+            Map<String, Object> bottle_update = new HashMap<>();
+            bottle_update.put("isViewed", true);
+            this_bottle_data.updateChildren(bottle_update);
+
+            //save the bottle id in user's receive list
+            DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(current_user);
+            final DatabaseReference added_bottle = UserRef.child("receive_list");
+            Map<String, Object> user_update = new HashMap<>();
+            user_update.put(bottleID, true);
+            added_bottle.updateChildren(user_update);
+        }
+    }
+
+    //get a new bottle
+    public void get_bottle(Bottle_back[] this_bottle_list) {
+        //get database reference
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
+        //get current userID
+        FirebaseAuth fAuth;
+        fAuth = FirebaseAuth.getInstance();
+        reference.orderByChild("isViewed").equalTo(false).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
+                    Log.d("urlefawefea",this_bottle.picture);
+                    //String bottleID = this_bottle.getBottleID();
+                    String userID = fAuth.getUid();
+                    HashMap<String, Boolean> this_history= this_bottle.getPickHistory();
+
+                    //debug: print picked history
+                    for(String users : this_history.keySet()) {
+                        Log.d("", "picked content:");
+                        Log.d("user:", users);
+                    }
+
+                    //check if the bottle is viewed
+                    if(this_bottle.getIsViewed()) {
+                        Log.d("isViewed","A viewed bottle was returned");
+                        continue;
+                    }
+
+                    //TODO: comment for test purpose, REUSE for formal product
+                    //check if the bottle is from the same user
+//                                    if(this_bottle.getUserID().equals(userID)){
+//                                        continue;
+//                                    }
+
+                    //check if the bottle has been picked up by the same user before
+                    if(this_bottle.pickHistory.containsKey(userID)){
+                        Log.d("isPicked","A bottle picked before was returned");
+                        continue;
+                    }
+
+                    else {
+                        reference.removeEventListener(this);
+                        this_bottle_list[0] = this_bottle;
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
+
 }
+
+
