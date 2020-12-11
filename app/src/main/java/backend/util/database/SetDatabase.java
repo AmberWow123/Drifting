@@ -256,10 +256,9 @@ public class SetDatabase {
         added_bottle.updateChildren(user_update);
     }
 
-    //view a existing bottle
+    //set isviewed to be true
     public void view_bottle(String bottleID){
 
-        //set isviewed to be true
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
         DatabaseReference this_bottle_data = reference.child(bottleID);
         FirebaseAuth fAuth = FirebaseAuth.getInstance();
@@ -331,6 +330,45 @@ public class SetDatabase {
             }
         });
     }
+
+    //get bottle likes
+    public int get_likes(String bottleID){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
+        DatabaseReference this_bottle_data = reference.child(bottleID);
+        final int[] like = new int[1];
+
+        this_bottle_data.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                like[0] = Integer.parseInt(snapshot.child("likes").getValue().toString());
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return like[0];
+    }
+
+    //update bottle likes
+    public void update_likes(String bottleID){
+
+        int current_like = get_likes(bottleID);
+
+        //reach the bottle
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
+        DatabaseReference this_bottle_data = reference.child(bottleID);
+
+        if(!bottleID.equals("")) {
+            Map<String, Object> bottle_update = new HashMap<>();
+            bottle_update.put("likes", (current_like+1));
+            this_bottle_data.updateChildren(bottle_update);
+
+        }
+
+    }
+
+
 
 }
 

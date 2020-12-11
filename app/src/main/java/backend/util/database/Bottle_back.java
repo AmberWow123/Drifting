@@ -23,6 +23,7 @@ public class Bottle_back{
      public boolean isVideo = false;
      public String picture = null;
      public String video = null;
+     public int likes = 0;
 
     //history attribute to track all users picked up the bottles
      public HashMap<String, Boolean> pickHistory = new HashMap<>();
@@ -48,6 +49,7 @@ public class Bottle_back{
         this.isViewed = viewed;
         this.ext = filename;
         this.isVideo = isVideo;
+        this.likes = 0;
 
         Log.e("Bottle date", "Date of current bottle: " + DriftTime.getDate(this.timestamp));
     }

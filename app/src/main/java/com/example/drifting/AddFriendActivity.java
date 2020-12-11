@@ -129,7 +129,6 @@ public class AddFriendActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // TODO: ADD FRIEND
                 Add_friend(current_user, fromUserID);
                 Toast.makeText(AddFriendActivity.this, "Yay you just add a friend!! :D", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(AddFriendActivity.this, NavBar.class));
@@ -142,8 +141,6 @@ public class AddFriendActivity extends AppCompatActivity {
 
     private void Add_friend(String current_user, String receiverUserID)
     {
-
-
         Date currentTime = Calendar.getInstance().getTime();
 
         ContactsRef.child(current_user).child("friend_list")
