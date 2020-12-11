@@ -31,6 +31,7 @@ import static android.view.View.VISIBLE;
 public class ViewBottleActivity extends AppCompatActivity {
 
     private static int likes;
+    Boolean notliked = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,6 @@ public class ViewBottleActivity extends AppCompatActivity {
         String pictureURL = null;
         String videoURL = null;
         Boolean isAnonymous = false;
-
 
 
         if (HomeFragment.currBottle != null) {
@@ -170,7 +170,11 @@ public class ViewBottleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                like_count.setText((Integer.parseInt((String) like_count.getText()) + 1)+"");
+                if (notliked) {
+                    like_count.setText((Integer.parseInt((String) like_count.getText()) + 1) + "");
+                    notliked = false;
+                    like_count.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.heart, 0);
+                }
                 // Incrementing like count in db
                 db.update_likes(finalBottleID);
 
