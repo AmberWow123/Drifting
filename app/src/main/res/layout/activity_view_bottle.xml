@@ -180,7 +180,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:drawableRight="@drawable/heart"
+                        android:drawableRight="@drawable/empty_heart"
                         android:textColor="@color/black"
                         android:background="@android:color/transparent"
                         android:gravity="center_vertical|right"

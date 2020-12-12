@@ -36,9 +36,11 @@ public class ViewBagBottleActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
 
         //todo: bottle id from bag fragment
-        String bottle_ID = b.getString("BottleID");
-        TextView bottle = findViewById(R.id.textView_bag_bottle_id);
-        //String bottle_ID = bottle.getText().toString();
+        String userID = b.getString("UserID");
+        String username = b.getString("Username");
+        String bottleMessage = b.getString("BottleMessage");
+        String bottleCity = b.getString("BottleCity");
+        String bottleTime = b.getString("BottleTime");
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -61,36 +63,11 @@ public class ViewBagBottleActivity extends AppCompatActivity {
         */
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference bottle_ref = ref.child("bottle").child(bottle_ID);
 
-        bottle_ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                fromUserID = snapshot.child("userID").getValue(String.class);
-                msg = snapshot.child("message").getValue(String.class);
-                city = snapshot.child("city").getValue(String.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        DatabaseReference user_ref = ref.child("user").child(fromUserID);
-        user_ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                fromUser = snapshot.child("user_name").getValue(String.class);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
+        fromUser = username;
+        fromUserID = userID;
+        msg = bottleMessage;
+        city = bottleCity;
 
         TextView messageView = findViewById(R.id.bag_bottle_message_textview);
         messageView.setText(msg);
@@ -119,8 +96,10 @@ public class ViewBagBottleActivity extends AppCompatActivity {
         fromLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                startActivity(new Intent(ViewBagBottleActivity.this, AddFriendActivity.class));
+                Intent addFriendIntent = new Intent(ViewBagBottleActivity.this, AddFriendActivity.class);
+                addFriendIntent.putExtra("FriendName", fromUser);
+                addFriendIntent.putExtra("FriendID", fromUserID);
+                startActivity(addFriendIntent);
 
             }
         });

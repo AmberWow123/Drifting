@@ -52,9 +52,11 @@
  import java.util.Map;
 
  import backend.util.container.BagData;
+ import backend.util.container.DrifterData;
  import backend.util.database.Bottle_back;
  import backend.util.database.SetDatabase;
  import backend.util.time.DriftTime;
+
 
 //import com.google.firebase.database.annotations.Nullable;
 
@@ -66,13 +68,6 @@ public class WriteMessageActivity extends AppCompatActivity {
     public TextView locationText;
     EditText TextMessage;
     Button sendBtn;
-
-    //function to return to home after sending the bottle
-    public void openHomepageActivity() {
-        Intent intent = new Intent(this, NavBar.class);
-        startActivity(intent);
-        finish();
-    }
 
     Switch switch_anon;
 
@@ -166,7 +161,7 @@ public class WriteMessageActivity extends AppCompatActivity {
                     if (filename != null) {
                         Log.d("","ffff");
                     }
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, DrifterData.username,
                             true, city, latitude[0], longitude[0], currTime.getTimestamp(),
                              false, filename, isVideo);
 
@@ -209,7 +204,7 @@ public class WriteMessageActivity extends AppCompatActivity {
                         isVideo = true;
                     }
 
-                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID,
+                    Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, DrifterData.username,
                             false, city, latitude[0], longitude[0], currTime.getTimestamp(),
                             false, filename, isVideo);
 
