@@ -27,8 +27,8 @@ public class BagData {
     }
 
     public static void clear(){
-        sentBottle = new ArrayList<>();
-        pickedBottle = new ArrayList<>();
-        currentSessionGeneratedBottleSet = new HashSet<>();
+        sentBottle.clear();
+        pickedBottle.clear();
+        currentSessionGeneratedBottleSet.clear();
     }
 }
