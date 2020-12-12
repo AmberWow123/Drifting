@@ -3,6 +3,7 @@ package com.example.drifting;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,14 +31,20 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import javax.security.auth.callback.Callback;
+
 import backend.util.database.Chat;
 import backend.util.database.SetDatabase;
+
+import static com.example.drifting.NavBar.chatf;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ChatFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+
 public class ChatFragment extends Fragment {
 
     private DatabaseReference ContacsRef, ChatRef;
@@ -56,6 +64,8 @@ public class ChatFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+//    private LayoutInflater inflater;
+//    private ViewGroup container;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -114,11 +124,13 @@ public class ChatFragment extends Fragment {
         adapter.filterList(filteredList);
     }
 
-    private void createExampleList() {
+
+    public void createExampleList(boolean fromhome) {
 
         exampleList = new ArrayList<>();
         SetDatabase db = new SetDatabase();
-        db.get_chat_info(name,message,chat_messages,Uer_id);
+        db.get_chat_info(name,message,chat_messages,Uer_id, fromhome);
+        Log.e("testc", "created");
 
         for (int i = 0; i < name.size(); i++) {
             exampleList.add(new ExampleItem(R.drawable.avatar, name.get(i), message.get(i), "12:00", Uer_id.get(i), chat_messages));
@@ -134,21 +146,18 @@ public class ChatFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+//        this.inflater = inflater;
+//        this.container = container;
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_View);
 
         // create all the chat rooms (like all the friends the user had added before)
-        createExampleList();
-
         adapter = new ExampleAdapter(exampleList);
-
         recyclerView.setAdapter(adapter);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        // Inflate the layout for this fragment
         return view;
     }
 
@@ -176,6 +185,10 @@ public class ChatFragment extends Fragment {
                 filter(s.toString());
             }
         });
+
+        final Handler h = new Handler();
+
     }
+
 
 }

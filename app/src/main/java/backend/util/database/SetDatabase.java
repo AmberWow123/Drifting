@@ -10,7 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import com.example.drifting.ChatFragment;
 import com.example.drifting.HomeFragment;
+import com.example.drifting.NavBar;
+import com.example.drifting.R;
+import com.example.drifting.ui.login.ChatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -377,7 +381,7 @@ public class SetDatabase {
 
 
 
-    public void get_chat_info(ArrayList<String> name, ArrayList<String> message, ArrayList<Chat> chat_messages, ArrayList<String> Uer_id){
+    public void get_chat_info(ArrayList<String> name, ArrayList<String> message, ArrayList<Chat> chat_messages, ArrayList<String> Uer_id, Boolean fromhome){
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         String currentUserID = mAuth.getCurrentUser().getUid();
@@ -417,6 +421,7 @@ public class SetDatabase {
                                     int index = name.indexOf(this_name);
                                     message.set(index, snapshot1.child("message").getValue().toString());
                                     chat_messages.add(chat);
+                                    friendRef.removeEventListener(this);
                                 }
 
                                 else {
@@ -425,8 +430,12 @@ public class SetDatabase {
                                     Uer_id.add(needed_id);
                                     message.add(snapshot1.child("message").getValue().toString());
                                     chat_messages.add(chat);
+                                    friendRef.removeEventListener(this);
+                                    if (!fromhome){
+                                        NavBar.fm.beginTransaction().replace(R.id.container, NavBar.chatf).detach(NavBar.chatf).commitNowAllowingStateLoss();
+                                        NavBar.fm.beginTransaction().replace(R.id.container, NavBar.chatf).attach(NavBar.chatf).commitNowAllowingStateLoss();
+                                    }
                                 }
-
                             }
 
                             @Override
@@ -438,6 +447,12 @@ public class SetDatabase {
                     }
 
                 }
+                ChatRef.removeEventListener(this);
+                Log.e("reattaching", "again");
+                if (!fromhome){
+                    NavBar.fm.beginTransaction().replace(R.id.container, NavBar.chatf).detach(NavBar.chatf).commitNowAllowingStateLoss();
+                    NavBar.fm.beginTransaction().replace(R.id.container, NavBar.chatf).attach(NavBar.chatf).commitNowAllowingStateLoss();
+                }
             }
 
             @Override
@@ -448,7 +463,7 @@ public class SetDatabase {
     }
 
     //get bottle likes
-    public int get_likes(String bottleID){
+    public int get_likes(String bottleID) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
         DatabaseReference this_bottle_data = reference.child(bottleID);
         final int[] like = new int[1];
