@@ -149,10 +149,6 @@ public class BagFragment extends Fragment {
                         }
                     });
                 }
-                //pickedTime.clear();
-                pickedBottle.clear();
-                //pickedLocation.clear();
-                //pickedBottleID.clear();
             }
         });
 
@@ -198,10 +194,6 @@ public class BagFragment extends Fragment {
                         }
                     });
                 }
-                sentBottle.clear();
-                //sentTime.clear();
-                //sentLocation.clear();
-                //sentBottleID.clear();
             }
         });
         sent_button.performClick();
