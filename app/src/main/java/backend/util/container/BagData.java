@@ -25,4 +25,10 @@ public class BagData {
     public static void throwBack(){
         pickedBottle.remove(pickedBottle.size() - 1);
     }
+
+    public static void clear(){
+        sentBottle = new ArrayList<>();
+        pickedBottle = new ArrayList<>();
+        currentSessionGeneratedBottleSet = new HashSet<>();
+    }
 }

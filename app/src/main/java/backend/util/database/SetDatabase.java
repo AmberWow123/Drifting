@@ -178,7 +178,6 @@ public class SetDatabase {
 
     // get sent bottles for the bag
     public void get_sent_bottles(ArrayList<Bottle_back> sentBottle) {
-        ArrayList<Bottle_back> sent_bottles = new ArrayList<Bottle_back>();
         //get current userID
         FirebaseAuth fAuth;
         DriftTime d_time = new DriftTime();
@@ -197,12 +196,19 @@ public class SetDatabase {
                     for (Map.Entry<String, Boolean> set : hp.entrySet()) {
                         //set.getKey() is the bottle id
                         //Log.d("HashMap: ","Key: "+ set.getKey() + " Val: " + set.getValue());
-                        DatabaseReference bottle_ref = ref.child("bottle").child(set.getKey());
-                        bottle_ref.addValueEventListener(new ValueEventListener() {
+                        DatabaseReference bottle_ref = ref.child("bottle");
+                        bottle_ref.orderByChild("bottleID").equalTo(set.getKey()).addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot_2) {
-                                Bottle_back bottle = snapshot_2.getValue(Bottle_back.class);
-                                sentBottle.add(bottle);
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                    Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
+
+                                    if (this_bottle == null) {
+                                        return;
+                                    }
+
+                                    sentBottle.add(this_bottle);
+                                }
                                 bottle_ref.removeEventListener(this);
 
                             }
@@ -249,12 +255,19 @@ public class SetDatabase {
                         if (set.getValue() == true) {
                             //set.getKey() is the bottle id
                             //Log.d("HashMap: ","Key: "+ set.getKey() + " Val: " + set.getValue());
-                            DatabaseReference bottle_ref = ref.child("bottle").child(set.getKey());
-                            bottle_ref.addValueEventListener(new ValueEventListener() {
+                            DatabaseReference bottle_ref = ref.child("bottle");
+                            bottle_ref.orderByChild("bottleID").equalTo(set.getKey()).addValueEventListener(new ValueEventListener() {
                                 @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot_2) {
-                                    Bottle_back bottle = snapshot_2.getValue(Bottle_back.class);
-                                    pickedBottle.add(bottle);
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                                        Bottle_back this_bottle = snapshot1.getValue(Bottle_back.class);
+
+                                        if (this_bottle == null) {
+                                            return;
+                                        }
+
+                                        pickedBottle.add(this_bottle);
+                                    }
                                     bottle_ref.removeEventListener(this);
                                 }
 

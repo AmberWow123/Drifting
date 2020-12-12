@@ -140,6 +140,11 @@ public class WriteMessageActivity extends AppCompatActivity {
                 @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
                 String input_text = TextMessage.getText().toString().trim();
 
+                if(input_text == null || input_text.equals("")){
+                    Toast.makeText(getApplicationContext(), "Message cannot be empty!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 // anonymous case
                 if(whether_anonymous[0] > 0) {
                     String userID = fAuth.getUid();
