@@ -66,12 +66,11 @@
                 android:id="@+id/bag_bottle_message_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_light"
+                android:fontFamily="@font/poppins"
                 android:hint=""
-                android:textColor="@color/black"
-                android:textSize="30sp"
                 android:paddingBottom="50dp"
-                />
+                android:textColor="@color/black"
+                android:textSize="18sp" />
             <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -146,62 +145,37 @@
 
             </LinearLayout>
 
+
+            <!-- below is the where sample comments insert -->
             <LinearLayout
-                android:id="@+id/bag_add_comment_layout"
+                android:id="@+id/bag_like_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:background="@drawable/view_msg_rect"
+                android:orientation="horizontal"
                 android:paddingHorizontal="10dp"
-                android:paddingVertical="15dp"
-                >
+                android:paddingVertical="15dp">
 
                 <TextView
-                    android:id="@+id/bag_comment_label_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_light"
-                    android:text="Comment:"
+                    android:text="Likes:"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
-                    />
+                    android:textSize="18sp" />
 
-                <Button
+                <TextView
+                    android:id="@+id/bag_like_label_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="[add]"
-                    android:textColor="@color/black"
                     android:background="@android:color/transparent"
+                    android:drawableRight="@drawable/empty_heart"
                     android:gravity="center_vertical|right"
-                    />
+                    android:text="0"
+                    android:textColor="@color/black" />
 
             </LinearLayout>
 
-
-
-            <!-- below is the where sample comments insert -->
-            <TextView
-                android:id="@+id/bag_comment_field_textview"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_light"
-                android:background="@drawable/view_msg_rect"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="15dp"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                >
-            </TextView>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="100dp"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="15dp"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                >
-            </TextView>
         </LinearLayout>
     </ScrollView>
 

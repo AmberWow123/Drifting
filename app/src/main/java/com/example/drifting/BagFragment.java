@@ -16,21 +16,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.drifting.ui.login.ViewBagBottleActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 
 import backend.util.container.BagData;
 import backend.util.database.Bottle_back;
-import backend.util.database.SetDatabase;
 import backend.util.time.DriftTime;
 
 
@@ -136,9 +125,10 @@ public class BagFragment extends Fragment {
                     TextView bag_location = (TextView) customView.findViewById(R.id.textView_bag_location);
                     //TextView bag_bottleID = (TextView) customView.findViewById(R.id.textView_bag_bottle_id);
                     bag_date.setText(DriftTime.getDate(pickedBottle.get(i).timestamp));
-                    bag_content.setText(pickedBottle.get(i).message);
+                    bag_content.setText("From " + pickedBottle.get(i).username + ": " + pickedBottle.get(i).message);
                     bag_location.setText(pickedBottle.get(i).city);
                     //bag_bottleID.setText(pickedBottleID.get(i));
+                    String bottleID = pickedBottle.get(i).bottleID;
                     String userID = pickedBottle.get(i).userID;
                     String username = pickedBottle.get(i).username;
                     String bottle_message = pickedBottle.get(i).message;
@@ -150,6 +140,7 @@ public class BagFragment extends Fragment {
                         public void onClick(View v) {
                             Intent intent = new Intent(getActivity(), ViewBagBottleActivity.class);
                             Bundle b = new Bundle();
+                            b.putString("BottleID", bottleID);
                             b.putString("Username", username);
                             b.putString("UserID", userID);
                             b.putString("BottleMessage", bottle_message);
@@ -160,7 +151,6 @@ public class BagFragment extends Fragment {
                         }
                     });
                 }
-
             }
         });
 
@@ -182,10 +172,11 @@ public class BagFragment extends Fragment {
                     TextView bag_location = (TextView) customView.findViewById(R.id.textView_bag_location);
                     //TextView bag_bottleID = (TextView) customView.findViewById(R.id.textView_bag_bottle_id);
                     bag_date.setText(DriftTime.getDate(sentBottle.get(i).timestamp));
-                    bag_content.setText(sentBottle.get(i).message);
+                    bag_content.setText("From me: " + sentBottle.get(i).message);
                     bag_location.setText(sentBottle.get(i).city);
                     //bag_bottleID.setText(pickedBottleID.get(i));
-                    String userID = pickedBottle.get(i).userID;
+                    String bottleID = sentBottle.get(i).bottleID;
+                    String userID = sentBottle.get(i).userID;
                     String username = sentBottle.get(i).username;
                     String bottle_message = sentBottle.get(i).message;
                     String bottle_city = sentBottle.get(i).city;
@@ -196,6 +187,7 @@ public class BagFragment extends Fragment {
                         public void onClick(View v) {
                             Intent intent = new Intent(getActivity(), ViewBagBottleActivity.class);
                             Bundle b = new Bundle();
+                            b.putString("BottleID", bottleID);
                             b.putString("UserID", userID);
                             b.putString("Username", username);
                             b.putString("BottleMessage", bottle_message);
@@ -206,10 +198,6 @@ public class BagFragment extends Fragment {
                         }
                     });
                 }
-
-//                sentBottle.clear();
-//                sentTime.clear();
-//                sentLocation.clear();
             }
         });
         sent_button.performClick();

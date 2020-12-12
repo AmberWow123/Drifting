@@ -259,21 +259,7 @@ public class HomeFragment extends Fragment {
                     provider.serveNextBottles();
                 }
                 else {
-                    if (bottleList.size() < BOTTLE_MAX) {
-                        Bottle_back[] this_bottle_list = new Bottle_back[1];
-                        SetDatabase db = new SetDatabase();
-                        db.get_bottle(this_bottle_list);
-                        Bottle_back this_bottle = this_bottle_list[0];
-                        Bottle bottle_get = new Bottle(this_bottle, bottleList.size());
-                        bottle_get.comment = "filler comment";
-                        bottle_get.setVisible();
-                        bottleList.add(bottle_get);
-                        Log.d(" Bottle content is :", " aaaaaaaaaaaaaa" + bottle_get.message);
-                        Log.d(" BottleList size is :", " bbbbbbbbbbbbbbbb" + bottleList.size());
-                        Log.d(" vector contains ", "cccccccccccccc" + bottleList.toString());
-
-                        Log.d(" BottleList size is gg:", " " + bottleList.size());
-                    }
+                    Toast.makeText(getContext(), "Please ensure that location is enabled!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -284,6 +270,10 @@ public class HomeFragment extends Fragment {
         writeMessageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(provider.locationLess){
+                    Toast.makeText(getContext(), "Please ensure that location is enabled!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), WriteMessageActivity.class);
                 startActivity(intent);
             }

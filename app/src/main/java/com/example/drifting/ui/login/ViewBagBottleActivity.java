@@ -8,17 +8,15 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.drifting.AddFriendActivity;
 import com.example.drifting.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.Nullable;
+
+import backend.util.database.SetDatabase;
 
 public class ViewBagBottleActivity extends AppCompatActivity {
 
@@ -28,6 +26,7 @@ public class ViewBagBottleActivity extends AppCompatActivity {
     public static String comment = "";
     public static String bottleID = "";
     public static String fromUserID = "";
+    Boolean notliked = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +40,8 @@ public class ViewBagBottleActivity extends AppCompatActivity {
         String bottleMessage = b.getString("BottleMessage");
         String bottleCity = b.getString("BottleCity");
         String bottleTime = b.getString("BottleTime");
+        String bottleID = b.getString("BottleID");
+
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -69,6 +70,10 @@ public class ViewBagBottleActivity extends AppCompatActivity {
         msg = bottleMessage;
         city = bottleCity;
 
+        LinearLayout like_layout = findViewById(R.id.bag_like_layout);
+
+        TextView like_count = findViewById(R.id.bag_like_label_textview);
+
         TextView messageView = findViewById(R.id.bag_bottle_message_textview);
         messageView.setText(msg);
 
@@ -78,8 +83,32 @@ public class ViewBagBottleActivity extends AppCompatActivity {
         TextView locationView = findViewById(R.id.bag_location_var_textview);
         locationView.setText(city);
 
-        TextView commentView = findViewById(R.id.bag_comment_field_textview);
-        commentView.setText(comment);
+
+
+        // get num of likes from db through bottle_back
+        SetDatabase db = new SetDatabase();
+        //int[] like = new int[1];
+        //db.get_likes(finalBottleID, like);
+        //like_count.setText(like[0]+"");
+        db.get_likes(bottleID,like_count);
+
+        like_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (notliked) {
+                    like_count.setText((Integer.parseInt((String) like_count.getText()) + 1) + "");
+                    notliked = false;
+                    like_count.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.heart, 0);
+                }
+                // Incrementing like count in db
+                db.update_likes(bottleID, Integer.parseInt((String) like_count.getText()));
+
+            }
+        });
+
+        db.view_bottle(bottleID);
+
 
         Button close_button = findViewById(R.id.bag_close_button);
         close_button.setOnClickListener(new View.OnClickListener() {

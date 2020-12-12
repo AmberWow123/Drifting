@@ -33,7 +33,7 @@
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:gravity="center_vertical"
-        android:text="Add Video Link"
+        android:text="Add Video"
         android:textColor="#000000"
         app:layout_constraintEnd_toStartOf="@+id/guideline_text_right"
         app:layout_constraintHorizontal_bias="0.0"

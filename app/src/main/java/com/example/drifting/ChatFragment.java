@@ -136,6 +136,7 @@ public class ChatFragment extends Fragment {
             exampleList.add(new ExampleItem(R.drawable.avatar, name.get(i), message.get(i), "12:00", Uer_id.get(i), chat_messages));
         }
 
+
         name.clear();
         Uer_id.clear();
         message.clear();
