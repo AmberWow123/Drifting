@@ -125,7 +125,7 @@ public class BagFragment extends Fragment {
                     TextView bag_location = (TextView) customView.findViewById(R.id.textView_bag_location);
                     //TextView bag_bottleID = (TextView) customView.findViewById(R.id.textView_bag_bottle_id);
                     bag_date.setText(DriftTime.getDate(pickedBottle.get(i).timestamp));
-                    bag_content.setText(pickedBottle.get(i).message);
+                    bag_content.setText("From " + pickedBottle.get(i).username + ": " + pickedBottle.get(i).message);
                     bag_location.setText(pickedBottle.get(i).city);
                     //bag_bottleID.setText(pickedBottleID.get(i));
                     String userID = pickedBottle.get(i).userID;
@@ -174,10 +174,10 @@ public class BagFragment extends Fragment {
                     TextView bag_location = (TextView) customView.findViewById(R.id.textView_bag_location);
                     //TextView bag_bottleID = (TextView) customView.findViewById(R.id.textView_bag_bottle_id);
                     bag_date.setText(DriftTime.getDate(sentBottle.get(i).timestamp));
-                    bag_content.setText(sentBottle.get(i).message);
+                    bag_content.setText("From me: " + sentBottle.get(i).message);
                     bag_location.setText(sentBottle.get(i).city);
                     //bag_bottleID.setText(pickedBottleID.get(i));
-                    String userID = pickedBottle.get(i).userID;
+                    String userID = sentBottle.get(i).userID;
                     String username = sentBottle.get(i).username;
                     String bottle_message = sentBottle.get(i).message;
                     String bottle_city = sentBottle.get(i).city;

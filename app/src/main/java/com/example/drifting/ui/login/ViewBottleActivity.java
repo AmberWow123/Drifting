@@ -163,8 +163,10 @@ public class ViewBottleActivity extends AppCompatActivity {
 
         // get num of likes from db through bottle_back
         SetDatabase db = new SetDatabase();
-        int likes = db.get_likes(finalBottleID);
-        like_count.setText(likes+"");
+        //int[] like = new int[1];
+        //db.get_likes(finalBottleID, like);
+        //like_count.setText(like[0]+"");
+        db.get_likes(finalBottleID,like_count);
 
         like_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,7 +178,7 @@ public class ViewBottleActivity extends AppCompatActivity {
                     like_count.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.heart, 0);
                 }
                 // Incrementing like count in db
-                db.update_likes(finalBottleID);
+                db.update_likes(finalBottleID, Integer.parseInt((String) like_count.getText()));
 
             }
         });

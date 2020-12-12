@@ -49,8 +49,6 @@ public class AddFriendActivity extends AppCompatActivity {
         fromUserID = getIntent().getStringExtra("FriendID");
 
 
-
-
         SetDatabase sd = new SetDatabase();
         text_render[0] = findViewById(R.id.username_view);
         text_render[1] = findViewById(R.id.email_text_view);
@@ -59,7 +57,6 @@ public class AddFriendActivity extends AppCompatActivity {
         text_render[4] = findViewById(R.id.country_text_view);
 
         sd.add_friend_info_text(info, text_render, fromUserID);
-
 
         ImageView profileImage = findViewById(R.id.profile_image);
         sd.add_friend_avatar(profileImage, fromUserID);

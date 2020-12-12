@@ -31,6 +31,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.HashMap;
 
+import backend.util.container.BagData;
 import backend.util.database.SetDatabase;
 import backend.util.database.UserProfile;
 
@@ -200,6 +201,7 @@ public class SettingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
+                BagData.clear();
                 startActivity(intent);
                 getActivity().finish();
             }

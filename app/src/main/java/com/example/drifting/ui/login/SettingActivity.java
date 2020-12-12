@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import backend.util.container.BagData;
+
 public class SettingActivity extends AppCompatActivity {
 
     Button logout_button;
@@ -36,6 +38,7 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseAuth fAuth = FirebaseAuth.getInstance();
                     fAuth.signOut();
+                    BagData.clear();
                     startActivity(intent);
                     finish();
                     // todo: logout token and end current activity. Make sure that the user cannot go back to the setting page.
