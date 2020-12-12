@@ -22,7 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.drifting.ui.login.ForgotPasswordActivity;
 import com.example.drifting.ui.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -78,7 +77,7 @@ public class SettingFragment extends Fragment {
     Button editCountryButton;
     Button editGenderButton;
     Button logout_button;
-    Button reset_password;
+    //Button reset_password;
     EditText nameEdit;
     EditText des_Edit;
     EditText email_Edit;
@@ -161,7 +160,7 @@ public class SettingFragment extends Fragment {
         profileImage = getView().findViewById(R.id.profile_image);
         changeProfileImage = getView().findViewById(R.id.change_avatar);
         logout_button = getView().findViewById(R.id.add_friend_button);
-        reset_password = getView().findViewById(R.id.reset_password_button);
+        //reset_password = getView().findViewById(R.id.reset_password_button);
 
         name1Switcher = getView().findViewById(R.id.my_switcher);
         age_1switcher = getView().findViewById(R.id.my_switcher_age);
@@ -207,14 +206,14 @@ public class SettingFragment extends Fragment {
             }
         });
 
-        reset_password.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ForgotPasswordActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });
+//        reset_password.setOnClickListener(new Button.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), ForgotPasswordActivity.class);
+//                startActivity(intent);
+//                getActivity().finish();
+//            }
+//        });
 
 
         editUsernameButton.setOnClickListener(new Button.OnClickListener() {
