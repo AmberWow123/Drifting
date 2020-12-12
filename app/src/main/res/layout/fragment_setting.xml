@@ -23,14 +23,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.14" />
+        app:layout_constraintGuide_percent="0.1" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/profcontent_guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.89" />
+        app:layout_constraintGuide_percent="0.93" />
 
     <!--
     <TextView
@@ -535,23 +535,25 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/profcontent_guideline4"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
-        app:layout_constraintTop_toBottomOf="@+id/profile_background" />
+        app:layout_constraintTop_toBottomOf="@+id/reset_password_button"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/reset_password_button"
         android:layout_width="112dp"
         android:layout_height="26dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="40dp"
         android:background="#00FFFFFF"
         android:text="Reset Password"
         android:textAllCaps="false"
         android:textColor="#a4a4a4"
         android:textIsSelectable="false"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/add_friend_button"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintStart_toStartOf="@+id/right_guideline_profile" />
+        app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
+        app:layout_constraintTop_toBottomOf="@+id/profile_background" />
     <!--
     <Button
         android:id="@+id/editbutton"
