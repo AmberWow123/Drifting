@@ -185,8 +185,8 @@ public class BagFragment extends Fragment {
                     String bottle_message = sentBottle.get(i).message;
                     String bottle_city = sentBottle.get(i).city;
                     String bottle_time = DriftTime.getDate(sentBottle.get(i).timestamp);
-                    String bottle_pic_url = pickedBottle.get(i).picture;
-                    String bottle_vid_url = pickedBottle.get(i).video;
+                    String bottle_pic_url = sentBottle.get(i).picture;
+                    String bottle_vid_url = sentBottle.get(i).video;
                     linearLayout.addView(customView, layoutParams);
                     customView.setOnClickListener(new View.OnClickListener() {
                         @Override
