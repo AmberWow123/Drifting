@@ -128,6 +128,7 @@ public class BagFragment extends Fragment {
                     bag_content.setText("From " + pickedBottle.get(i).username + ": " + pickedBottle.get(i).message);
                     bag_location.setText(pickedBottle.get(i).city);
                     //bag_bottleID.setText(pickedBottleID.get(i));
+                    String bottleID = pickedBottle.get(i).bottleID;
                     String userID = pickedBottle.get(i).userID;
                     String username = pickedBottle.get(i).username;
                     String bottle_message = pickedBottle.get(i).message;
@@ -139,6 +140,7 @@ public class BagFragment extends Fragment {
                         public void onClick(View v) {
                             Intent intent = new Intent(getActivity(), ViewBagBottleActivity.class);
                             Bundle b = new Bundle();
+                            b.putString("BottleID", bottleID);
                             b.putString("Username", username);
                             b.putString("UserID", userID);
                             b.putString("BottleMessage", bottle_message);
@@ -173,6 +175,7 @@ public class BagFragment extends Fragment {
                     bag_content.setText("From me: " + sentBottle.get(i).message);
                     bag_location.setText(sentBottle.get(i).city);
                     //bag_bottleID.setText(pickedBottleID.get(i));
+                    String bottleID = sentBottle.get(i).bottleID;
                     String userID = sentBottle.get(i).userID;
                     String username = sentBottle.get(i).username;
                     String bottle_message = sentBottle.get(i).message;
@@ -184,6 +187,7 @@ public class BagFragment extends Fragment {
                         public void onClick(View v) {
                             Intent intent = new Intent(getActivity(), ViewBagBottleActivity.class);
                             Bundle b = new Bundle();
+                            b.putString("BottleID", bottleID);
                             b.putString("UserID", userID);
                             b.putString("Username", username);
                             b.putString("BottleMessage", bottle_message);

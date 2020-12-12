@@ -65,7 +65,8 @@
             android:fontFamily="@font/poppins"
             android:text="10:00"
             android:textColor="#305268"
-            android:textSize="10sp" />
+            android:textSize="10sp"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
