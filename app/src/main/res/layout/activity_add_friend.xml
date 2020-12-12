@@ -22,14 +22,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.03" />
+        app:layout_constraintGuide_percent="0.14" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/profcontent_guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.97" />
+        app:layout_constraintGuide_percent="0.89" />
 
     <!--
         <TextView
@@ -120,7 +120,7 @@
         android:layout_height="120dp"
         android:layout_alignParentStart="false"
         android:layout_alignParentTop="false"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/avatar_background"
         android:elevation="2dp"
         app:layout_constraintBottom_toTopOf="@+id/username_view"
@@ -131,7 +131,7 @@
         android:id="@+id/profile_image"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/avatar"
         android:elevation="6dp"
         app:layout_constraintBottom_toTopOf="@+id/username_view"
@@ -142,7 +142,7 @@
         android:id="@+id/change_avatar"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="24dp"
         android:background="#00FFFFFF"
         android:drawableBottom="@drawable/blank"
         android:elevation="4dp"

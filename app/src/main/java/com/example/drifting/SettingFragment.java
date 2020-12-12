@@ -168,14 +168,14 @@ public class SettingFragment extends Fragment {
         email_1switcher = getView().findViewById(R.id.my_switcher_email);
         coun_1switcher = getView().findViewById(R.id.my_switcher_country);
         gender_spinner = getView().findViewById(R.id.spinner2);
-        privacy_spinner = getView().findViewById(R.id.spinner1);
+        //privacy_spinner = getView().findViewById(R.id.spinner1);
 
         //get the spinner from the xml.
         //preference of privacy
 
-        String[] items_1 = new String[]{"Not visible to others", "Visible to friends only", "Visible to all"};
-        ArrayAdapter<String> adapter_privacy = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, R.id.dropdown_item, items_1);
-        privacy_spinner.setAdapter(adapter_privacy);
+        //String[] items_1 = new String[]{"Not visible to others", "Visible to friends only", "Visible to all"};
+        //ArrayAdapter<String> adapter_privacy = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, R.id.dropdown_item, items_1);
+        //privacy_spinner.setAdapter(adapter_privacy);
 
 
         //gender spinner
@@ -336,19 +336,19 @@ public class SettingFragment extends Fragment {
                 break;
         }
 
-        switch(profile.privacy) {
-            case "Not visible to others":
-                privacy_spinner.setSelection(0);
-                break;
-            case "Visible to friends only":
-                privacy_spinner.setSelection(1);
-                break;
-            case "Visible to all":
-                privacy_spinner.setSelection(2);
-                break;
-            default:
-                break;
-        }
+//        switch(profile.privacy) {
+//            case "Not visible to others":
+//                privacy_spinner.setSelection(0);
+//                break;
+//            case "Visible to friends only":
+//                privacy_spinner.setSelection(1);
+//                break;
+//            case "Visible to all":
+//                privacy_spinner.setSelection(2);
+//                break;
+//            default:
+//                break;
+//        }
         gender_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -365,19 +365,19 @@ public class SettingFragment extends Fragment {
         });
 
 
-        privacy_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getItemAtPosition(position).toString();
-                UserProfile us = new UserProfile(auth.getUid(), name, email, null, null, gender, country, age, item, receive_list, send_list);
-                SetDatabase set = new SetDatabase();
-                set.addNewUser(us);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        privacy_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                String item = parent.getItemAtPosition(position).toString();
+//                UserProfile us = new UserProfile(auth.getUid(), name, email, null, null, gender, country, age, item, receive_list, send_list);
+//                SetDatabase set = new SetDatabase();
+//                set.addNewUser(us);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
     }
 }

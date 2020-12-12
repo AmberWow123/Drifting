@@ -23,14 +23,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.03" />
+        app:layout_constraintGuide_percent="0.14" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/profcontent_guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.97" />
+        app:layout_constraintGuide_percent="0.89" />
 
     <!--
     <TextView
@@ -158,10 +158,9 @@
         android:id="@+id/profile_page_layout"
         android:layout_width="323dp"
         android:layout_height="307dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="72dp"
         android:elevation="5dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
         app:layout_constraintTop_toTopOf="@+id/profile_background">
 
@@ -273,7 +272,6 @@
                 android:backgroundTint="#a4a4a4" />
 
         </TableRow>
-
 
 
         <TableRow
@@ -449,6 +447,7 @@
 
         </TableRow>
 
+        <!--
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -473,6 +472,7 @@
                 android:popupBackground="#222222"
                 android:spinnerMode="dropdown" />
         </TableRow>
+        -->
 
     </TableLayout>
 
@@ -486,7 +486,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
         app:layout_constraintTop_toTopOf="@+id/profile_background"
-        app:layout_constraintVertical_bias="0.245" />
+        app:layout_constraintVertical_bias="0.31" />
 
     <ImageView
         android:id="@+id/line_3"
@@ -498,7 +498,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
         app:layout_constraintTop_toTopOf="@+id/profile_background"
-        app:layout_constraintVertical_bias="0.375" />
+        app:layout_constraintVertical_bias="0.44" />
 
     <ImageView
         android:id="@+id/line_2"
@@ -510,7 +510,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
         app:layout_constraintTop_toTopOf="@+id/profile_background"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintVertical_bias="0.565" />
 
     <ImageView
         android:id="@+id/line_4"
@@ -522,20 +522,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
         app:layout_constraintTop_toTopOf="@+id/profile_background"
-        app:layout_constraintVertical_bias="0.63" />
-
-    <ImageView
-        android:id="@+id/line_5"
-        android:layout_width="325dp"
-        android:layout_height="wrap_content"
-        android:elevation="6dp"
-        android:src="@drawable/line"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_background"
-        app:layout_constraintEnd_toStartOf="@+id/guideline5"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
-        app:layout_constraintTop_toTopOf="@+id/profile_background"
-        app:layout_constraintVertical_bias="0.76" />
+        app:layout_constraintVertical_bias="0.70" />
 
     <Button
         android:id="@+id/add_friend_button"
