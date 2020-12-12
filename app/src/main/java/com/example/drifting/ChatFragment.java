@@ -120,70 +120,10 @@ public class ChatFragment extends Fragment {
         SetDatabase db = new SetDatabase();
         db.get_chat_info(name,message,chat_messages,Uer_id);
 
-        mAuth = FirebaseAuth.getInstance();
+        for (int i = 0; i < name.size(); i++) {
+            exampleList.add(new ExampleItem(R.drawable.avatar, name.get(i), message.get(i), "12:00", Uer_id.get(i), chat_messages));
+        }
 
-        currentUserID = mAuth.getCurrentUser().getUid();
-        ContacsRef = FirebaseDatabase.getInstance().getReference().child("Contacts").child(currentUserID).child("friend_list");
-        //UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
-
-
-        ContacsRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-
-//                    String friendId = snapshot1.getValue().toString();
-//                    Log.d("=================", friendId);
-//                    int  equal_sign=  friendId.indexOf("=");
-//                    String f_id = friendId.substring(1,equal_sign);
-//                    Log.d("========", f_id);
-                    String f_id = snapshot1.getKey();
-                    Log.d("========", f_id);
-
-                    //TODO: get time
-
-                    DatabaseReference friendRef = FirebaseDatabase.getInstance().getReference().child("user").child(f_id);
-                    friendRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot_) {
-                            name.add(snapshot_.child("user_name").getValue().toString());
-                            //Log.d(" ", name[0]);
-//                            FirebaseStorage storage = FirebaseStorage.getInstance();
-//                            StorageReference storageRef = storage.getReference();
-//                            DatabaseReference avatarRef = FirebaseDatabase.getInstance().getReference("avatars/");
-//                            avatarRef = avatarRef.child(friendId);
-//                            avatarRef.addValueEventListener(new ValueEventListener() {
-//                                @Override
-//                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                    for (DataSnapshot ss : snapshot.getChildren()) {
-//                                         url = ss.getValue(Uri.class);
-//                                    }
-//                                }
-//                                @Override
-//                                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                                }
-//                            });
-                            //exampleList.add(new ExampleItem(R.drawable.avatar, name, "Let's chat", "12:00"));
-                            //friendRef.removeEventListener(this);
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                   });
-
-                 //exampleList.add(new ExampleItem(R.drawable.avatar, name, "Let's chat", "12:00"));
-
-                }
-                //ContacsRef.removeEventListener(this);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         name.clear();
         Uer_id.clear();
