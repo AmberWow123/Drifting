@@ -16,21 +16,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.drifting.ui.login.ViewBagBottleActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 
 import backend.util.container.BagData;
 import backend.util.database.Bottle_back;
-import backend.util.database.SetDatabase;
 import backend.util.time.DriftTime;
 
 
@@ -160,10 +149,10 @@ public class BagFragment extends Fragment {
                         }
                     });
                 }
-                pickedTime.clear();
+                //pickedTime.clear();
                 pickedBottle.clear();
-                pickedLocation.clear();
-                pickedBottleID.clear();
+                //pickedLocation.clear();
+                //pickedBottleID.clear();
             }
         });
 
@@ -210,9 +199,9 @@ public class BagFragment extends Fragment {
                     });
                 }
                 sentBottle.clear();
-                sentTime.clear();
-                sentLocation.clear();
-                sentBottleID.clear();
+                //sentTime.clear();
+                //sentLocation.clear();
+                //sentBottleID.clear();
             }
         });
         sent_button.performClick();

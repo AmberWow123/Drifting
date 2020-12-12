@@ -167,14 +167,14 @@ public class SettingFragment extends Fragment {
         email_1switcher = getView().findViewById(R.id.my_switcher_email);
         coun_1switcher = getView().findViewById(R.id.my_switcher_country);
         gender_spinner = getView().findViewById(R.id.spinner2);
-        privacy_spinner = getView().findViewById(R.id.spinner1);
+        //privacy_spinner = getView().findViewById(R.id.spinner1);
 
         //get the spinner from the xml.
         //preference of privacy
 
-        String[] items_1 = new String[]{"Not visible to others", "Visible to friends only", "Visible to all"};
-        ArrayAdapter<String> adapter_privacy = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, R.id.dropdown_item, items_1);
-        privacy_spinner.setAdapter(adapter_privacy);
+        //String[] items_1 = new String[]{"Not visible to others", "Visible to friends only", "Visible to all"};
+        //ArrayAdapter<String> adapter_privacy = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, R.id.dropdown_item, items_1);
+        //privacy_spinner.setAdapter(adapter_privacy);
 
 
         //gender spinner
