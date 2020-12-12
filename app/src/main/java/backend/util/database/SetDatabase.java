@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
-import com.example.drifting.HomeFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -461,29 +460,30 @@ public class SetDatabase {
     }
 
     //get bottle likes
-    public int get_likes(String bottleID){
+    public void get_likes(String bottleID, TextView like_count ){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
         DatabaseReference this_bottle_data = reference.child(bottleID);
-        final int[] like = new int[1];
+        //final int[] like = new int[1];
 
         this_bottle_data.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int this_like = (snapshot.child("likes").getValue() != null) ?  Integer.parseInt(snapshot.child("likes").getValue().toString()) : 0;
-                like[0] = this_like;
+                like_count.setText(this_like+"");
+                Log.d("", "fromdatachange" +  "qqqq" + this_like);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-        return like[0];
+//        Log.d("", "fromreturnnnnn" + like[0]);
+//        return like[0];
+
     }
 
     //update bottle likes
-    public void update_likes(String bottleID){
-
-        int current_like = get_likes(bottleID);
+    public void update_likes(String bottleID, int this_like){
 
         //reach the bottle
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("bottle");
@@ -491,9 +491,8 @@ public class SetDatabase {
 
         if(!bottleID.equals("")) {
             Map<String, Object> bottle_update = new HashMap<>();
-            bottle_update.put("likes", (current_like+1));
+            bottle_update.put("likes", (this_like+1));
             this_bottle_data.updateChildren(bottle_update);
-
         }
 
     }
