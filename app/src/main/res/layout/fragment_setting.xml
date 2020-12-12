@@ -537,9 +537,9 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
-        app:layout_constraintTop_toBottomOf="@+id/reset_password_button"
-        app:layout_constraintVertical_bias="0.333" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_background" />
 
+    <!--
     <Button
         android:id="@+id/reset_password_button"
         android:layout_width="112dp"
@@ -554,6 +554,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline5"
         app:layout_constraintStart_toStartOf="@+id/right_guideline_profile"
         app:layout_constraintTop_toBottomOf="@+id/profile_background" />
+        -->
     <!--
     <Button
         android:id="@+id/editbutton"
