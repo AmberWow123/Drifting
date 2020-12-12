@@ -1,12 +1,17 @@
 package com.example.drifting.ui.login;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,8 +20,11 @@ import com.example.drifting.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.Nullable;
+import com.squareup.picasso.Picasso;
 
 import backend.util.database.SetDatabase;
+
+import static android.view.View.VISIBLE;
 
 public class ViewBagBottleActivity extends AppCompatActivity {
 
@@ -26,7 +34,8 @@ public class ViewBagBottleActivity extends AppCompatActivity {
     public static String comment = "";
     public static String bottleID = "";
     public static String fromUserID = "";
-    Boolean notliked = true;
+    public static String pictureURL;
+    public static String videoURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,8 @@ public class ViewBagBottleActivity extends AppCompatActivity {
         String bottleCity = b.getString("BottleCity");
         String bottleTime = b.getString("BottleTime");
         String bottleID = b.getString("BottleID");
+        String bottlePicURL = b.getString("BottlePicURL");
+        String bottleVidURL = b.getString("BottleVidURL");
 
 
         DisplayMetrics dm = new DisplayMetrics();
@@ -69,6 +80,9 @@ public class ViewBagBottleActivity extends AppCompatActivity {
         fromUserID = userID;
         msg = bottleMessage;
         city = bottleCity;
+        pictureURL = bottlePicURL;
+        videoURL = bottleVidURL;
+
 
         LinearLayout like_layout = findViewById(R.id.bag_like_layout);
 
@@ -83,6 +97,27 @@ public class ViewBagBottleActivity extends AppCompatActivity {
         TextView locationView = findViewById(R.id.bag_location_var_textview);
         locationView.setText(city);
 
+        ImageView pictureView = findViewById(R.id.bottle_image);
+        //Log.d("url",pictureURL);
+        if(pictureURL != null) {
+            pictureView.setVisibility(VISIBLE);
+            Picasso.get().load(pictureURL).into(pictureView);
+        }
+
+        VideoView videoView = findViewById(R.id.bottle_vedio);
+        if(videoURL != null) {
+            Log.d("videourl",videoURL);
+            videoView.setVisibility(VISIBLE);
+            videoView.setZOrderOnTop(true);
+
+            Uri uri = Uri.parse(videoURL);
+            videoView.setVideoURI(uri);
+            videoView.setMediaController(new MediaController(this));
+            videoView.requestFocus();
+            videoView.start();
+
+        }
+
 
 
         // get num of likes from db through bottle_back
@@ -92,20 +127,6 @@ public class ViewBagBottleActivity extends AppCompatActivity {
         //like_count.setText(like[0]+"");
         db.get_likes(bottleID,like_count);
 
-        like_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (notliked) {
-                    like_count.setText((Integer.parseInt((String) like_count.getText()) + 1) + "");
-                    notliked = false;
-                    like_count.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.heart, 0);
-                }
-                // Incrementing like count in db
-                db.update_likes(bottleID, Integer.parseInt((String) like_count.getText()));
-
-            }
-        });
 
         db.view_bottle(bottleID);
 

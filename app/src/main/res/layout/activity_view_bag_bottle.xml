@@ -71,13 +71,21 @@
                 android:paddingBottom="50dp"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
+            <VideoView
+                android:id="@+id/bottle_vedio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="50dp"
+                android:visibility="gone" />
+
             <ImageView
+                android:id="@+id/bottle_image"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="fitStart"
                 android:adjustViewBounds="true"
                 android:paddingBottom="50dp"
-                />
+                android:scaleType="fitStart"
+                android:visibility="gone" />
             <LinearLayout
                 android:id="@+id/bag_from_layout"
                 android:layout_width="match_parent"
