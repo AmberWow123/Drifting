@@ -4,8 +4,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import junit.framework.TestCase;
 
-import backend.util.database.SetDatabase;
-import backend.util.database.UserProfile;
+import com.drifting.database.SetDatabase;
+import com.drifting.database.models.UserProfile;
 
 public class SetDatabaseTest extends TestCase {
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();

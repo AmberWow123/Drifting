@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/msg_background"
-    tools:context=".ui.login.ViewBagBottleActivity">
+    tools:context="com.drifting.ui.bag.ViewBagBottleActivity">
 
     <Button
         android:id="@+id/bag_close_button"
