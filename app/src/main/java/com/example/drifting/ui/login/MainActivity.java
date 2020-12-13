@@ -7,15 +7,33 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.WindowManager;
 
+import com.example.drifting.HomeFragment;
+import com.example.drifting.NavBar;
 import com.example.drifting.R;
+import com.google.firebase.auth.FirebaseAuth;
+
+import backend.util.container.BagData;
 
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+        if(mAuth.getCurrentUser() != null){
+            Intent intent = new Intent(this, NavBar.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
+        BagData.clear();
+
+
 
         // set window to full screen for this loading page
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,

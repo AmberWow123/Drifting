@@ -52,6 +52,7 @@ public class ViewBagBottleActivity extends AppCompatActivity {
         String bottleID = b.getString("BottleID");
         String bottlePicURL = b.getString("BottlePicURL");
         String bottleVidURL = b.getString("BottleVidURL");
+        String bagOrigin = b.getString("BagOrigin");
 
 
         DisplayMetrics dm = new DisplayMetrics();
@@ -127,9 +128,10 @@ public class ViewBagBottleActivity extends AppCompatActivity {
         //like_count.setText(like[0]+"");
         db.get_likes(bottleID,like_count);
 
-
-        db.view_bottle(bottleID);
-
+        Log.d("BagOrigin", "Bag origin is: " + bagOrigin);
+        if(bagOrigin.equals("receive_list")){
+            db.view_bottle(bottleID);
+        }
 
         Button close_button = findViewById(R.id.bag_close_button);
         close_button.setOnClickListener(new View.OnClickListener() {

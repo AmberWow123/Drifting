@@ -148,6 +148,7 @@ public class BagFragment extends Fragment {
                             b.putString("BottleMessage", bottle_message);
                             b.putString("BottleCity", bottle_city);
                             b.putString("BottleTime", bottle_time);
+                            b.putString("BagOrigin", "receive_list");
                             if (bottle_pic_url!=null) b.putString("BottlePicURL", bottle_pic_url);
                             if (bottle_vid_url!=null) b.putString("BottleVidURL", bottle_vid_url);
                             intent.putExtras(b);
@@ -199,6 +200,7 @@ public class BagFragment extends Fragment {
                             b.putString("BottleMessage", bottle_message);
                             b.putString("BottleCity", bottle_city);
                             b.putString("BottleTime", bottle_time);
+                            b.putString("BagOrigin", "send_list");
                             if (bottle_pic_url!=null) b.putString("BottlePicURL", bottle_pic_url);
                             if (bottle_vid_url!=null) b.putString("BottleVidURL", bottle_vid_url);
                             intent.putExtras(b);
