@@ -9,14 +9,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.drifting.AddFriendActivity;
 import com.example.drifting.R;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.extractor.ExtractorsFactory;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.Nullable;
@@ -105,17 +111,23 @@ public class ViewBagBottleActivity extends AppCompatActivity {
             Picasso.get().load(pictureURL).into(pictureView);
         }
 
-        VideoView videoView = findViewById(R.id.bottle_vedio);
+        PlayerView playerView = findViewById(R.id.exoplayer_bag_item);
         if(videoURL != null) {
-            Log.d("videourl",videoURL);
-            videoView.setVisibility(VISIBLE);
-            videoView.setZOrderOnTop(true);
-
-            Uri uri = Uri.parse(videoURL);
-            videoView.setVideoURI(uri);
-            videoView.setMediaController(new MediaController(this));
-            videoView.requestFocus();
-            videoView.start();
+            playerView.setVisibility(VISIBLE);
+            SimpleExoPlayer exoPlayer;
+            try {
+                exoPlayer = (SimpleExoPlayer) ExoPlayerFactory.newSimpleInstance(getApplication());
+                Uri video = Uri.parse(videoURL);
+                Log.d("waefawe",videoURL);
+                DefaultHttpDataSourceFactory dataSourceFactory = new DefaultHttpDataSourceFactory("video");
+                ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+                MediaSource mediaSource = new ExtractorMediaSource(video,dataSourceFactory,extractorsFactory,null,null);
+                playerView.setPlayer(exoPlayer);
+                exoPlayer.prepare(mediaSource);
+                exoPlayer.setPlayWhenReady(true);
+            } catch (Exception e){
+                Log.e("ViewHolder","exoplayer error"+e.toString());
+            }
 
         }
 
