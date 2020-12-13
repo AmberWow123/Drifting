@@ -282,7 +282,7 @@ public class SettingFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+            super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1000){
             if (resultCode  == RESULT_OK){
                 Uri imageUri = data.getData();
@@ -301,6 +301,7 @@ public class SettingFragment extends Fragment {
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
             }
+
         }
     }
 
