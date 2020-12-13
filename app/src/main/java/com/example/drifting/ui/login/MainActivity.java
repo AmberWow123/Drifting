@@ -1,18 +1,28 @@
 package com.example.drifting.ui.login;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.service.autofill.UserData;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.drifting.HomeFragment;
 import com.example.drifting.NavBar;
 import com.example.drifting.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import backend.util.container.BagData;
+import backend.util.container.DrifterData;
+import backend.util.database.SetDatabase;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +35,25 @@ public class MainActivity extends AppCompatActivity {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         if(mAuth.getCurrentUser() != null){
+            BagData.clear();
+            DatabaseReference UserRef = FirebaseDatabase.getInstance().getReference().child("user").child(mAuth.getCurrentUser().getUid());
+            SetDatabase sd = new SetDatabase();
+            sd.get_sent_bottles(BagData.sentBottle);
+            sd.get_picked_bottles(BagData.pickedBottle);
+            UserRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String name = snapshot.child("user_name").getValue() != null ? snapshot.child("user_name").getValue().toString() : "unspecified";
+                    DrifterData.username = name;
+                    // Toast.makeText(LoginActivity.this, "Welcome, " + mAuth.getCurrentUser().getUid(), Toast.LENGTH_LONG).show();
+                    UserRef.removeEventListener(this);
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
             Intent intent = new Intent(this, NavBar.class);
             startActivity(intent);
             finish();
