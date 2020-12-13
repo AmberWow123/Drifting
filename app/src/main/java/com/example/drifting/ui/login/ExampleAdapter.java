@@ -17,6 +17,7 @@ import com.example.drifting.R;
 import java.util.ArrayList;
 
 import backend.util.database.Chat;
+import backend.util.database.SetDatabase;
 
 public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleViewHolder> {
     private ArrayList<ExampleItem> exampleList;
@@ -58,7 +59,14 @@ public class ExampleAdapter extends RecyclerView.Adapter<ExampleAdapter.ExampleV
         ExampleItem currentItem = exampleList.get(position);
 
         // setting info into the holder
-        holder.imageView.setImageResource(currentItem.getFriendImage());
+        //holder.imageView.setImageResource(currentItem.getFriendImage());
+        //holder.imageView.setImageResource(currentItem.getFriendImage());
+        String fri_id = currentItem.getID();
+        SetDatabase db = new SetDatabase();
+        db.add_friend_avatar(holder.imageView,fri_id);
+        if(holder.imageView.getDrawable() == null) {
+            holder.imageView.setImageResource(currentItem.getFriendImage());
+        }
         holder.text_name.setText(currentItem.getName());
         holder.text_message.setText(currentItem.getText());
         holder.text_time.setText(currentItem.getTime());

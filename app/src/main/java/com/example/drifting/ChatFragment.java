@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -78,6 +80,7 @@ public class ChatFragment extends Fragment {
     private ExampleAdapter adapter;
     public static FragmentActivity chatActivity;
     public static Context chatContext;
+    public static ArrayList<ImageView> friend_images = new ArrayList<ImageView>();;
 
     public ChatFragment() {
         // Required empty public constructor
@@ -110,6 +113,11 @@ public class ChatFragment extends Fragment {
         }
         chatActivity = getActivity();
         chatContext = getContext();
+        //setContentView(R.layout.activity_fogot_password);
+        //Context context = getApplicationContext();
+       // ImageView friendImage = getView().findViewById(R.id.imageView_friend_image);
+
+
     }
 
     private void filter(String text) {
@@ -130,6 +138,20 @@ public class ChatFragment extends Fragment {
         exampleList = new ArrayList<>();
         SetDatabase db = new SetDatabase();
         db.get_chat_info(name,message,chat_messages,Uer_id, fromhome);
+        //ImageView friendImage = getView().findViewById(R.id.imageView_friend_image);
+        //R.layout.
+        //ArrayList<ImageView> friend_images = new ArrayList<ImageView>();
+        //for (int i = 0; i < Uer_id.size(); i++){
+        //    db.add_friend_avatar(friendImage,Uer_id.get(i));
+        //    friend_images.add(friendImage);
+       // }
+
+        //SetDatabase db = new SetDatabase();
+        //ImageView friendImage = new ImageView();
+        /*for (int i = 0; i < Uer_id.size(); i++){
+            db.add_friend_avatar(friendImage,Uer_id.get(i));
+            friend_images.add(friendImage);
+        }*/
         Log.e("testc", "created");
 
         for (int i = 0; i < name.size(); i++) {
@@ -141,6 +163,7 @@ public class ChatFragment extends Fragment {
         Uer_id.clear();
         message.clear();
         chat_messages.clear();
+        //friend_images.clear();
 
     }
 
@@ -149,10 +172,10 @@ public class ChatFragment extends Fragment {
                              Bundle savedInstanceState) {
 //        this.inflater = inflater;
 //        this.container = container;
+
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_View);
-
         // create all the chat rooms (like all the friends the user had added before)
         adapter = new ExampleAdapter(exampleList);
         recyclerView.setAdapter(adapter);
@@ -168,6 +191,13 @@ public class ChatFragment extends Fragment {
 
         // the input of the search field
         EditText name_to_search = getView().findViewById(R.id.search_field);
+        /*ImageView friend_image = getView().findViewById(R.id.imageView_friend_image);
+
+        SetDatabase db = new SetDatabase();
+        for (int i = 0; i < Uer_id.size(); i++){
+            db.add_friend_avatar(friend_image,Uer_id.get(i));
+            friend_images.add(friend_image);
+        }*/
 
         // as anything typed in the search field, it will search for that input
         name_to_search.addTextChangedListener(new TextWatcher() {
