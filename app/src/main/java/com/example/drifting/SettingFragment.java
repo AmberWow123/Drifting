@@ -199,6 +199,7 @@ public class SettingFragment extends Fragment {
         logout_button.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 BagData.clear();
                 startActivity(intent);

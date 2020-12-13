@@ -27,8 +27,16 @@ public class BagData {
     }
 
     public static void clear(){
-        sentBottle.clear();
-        pickedBottle.clear();
-        currentSessionGeneratedBottleSet.clear();
+        if(sentBottle != null){
+            sentBottle.clear();
+        }
+
+        if(pickedBottle != null){
+            pickedBottle.clear();
+        }
+
+        if(currentSessionGeneratedBottleSet != null){
+            currentSessionGeneratedBottleSet.clear();
+        }
     }
 }

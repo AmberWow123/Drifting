@@ -79,6 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
+                String username = mUsername.getText().toString().trim();
                 String email = mEmail.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
                 String password_re = mRePassword.getText().toString().trim();
@@ -86,6 +87,11 @@ public class RegisterActivity extends AppCompatActivity {
                 //valid checks
                 if(TextUtils.isEmpty(email)){
                     mEmail.setError("Email is Required! :(");
+                    return;
+                }
+
+                if(TextUtils.isEmpty(username)){
+                    mUsername.setError("Username is required! :(");
                     return;
                 }
 
@@ -110,6 +116,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if(!TextUtils.equals(password, password_re)){
                     mRePassword.setError("Please enter same passwords! :(");
+                    return;
                 }
 
                 //register the user in Firebase

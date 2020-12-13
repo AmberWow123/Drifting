@@ -110,7 +110,6 @@ public class BottleProvider {
                     }
 
                     if(BagData.currentSessionGeneratedBottleSet.contains(this_bottle)){
-                        Log.d("currentSessionBottles", "A bottle generated before was return");
                         continue;
                     }
 
@@ -141,7 +140,6 @@ public class BottleProvider {
             }
 
             if(BagData.currentSessionGeneratedBottleSet.contains(b)){
-                Log.d("currentSessionBottles", "A bottle generated before was return");
                 continue;
             }
 
@@ -184,7 +182,7 @@ public class BottleProvider {
                 for(int i = 0; i < 7; i++){
                     nextBottles[i] = null;
                 }
-                randomBottleList = new Vector<>();
+                randomBottleList.clear();
                 fetchNewBottles();
                 while(!isFetchComplete);
                 isFetchComplete = false;

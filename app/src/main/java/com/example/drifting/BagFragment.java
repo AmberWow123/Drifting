@@ -134,6 +134,8 @@ public class BagFragment extends Fragment {
                     String bottle_message = pickedBottle.get(i).message;
                     String bottle_city = pickedBottle.get(i).city;
                     String bottle_time = DriftTime.getDate(pickedBottle.get(i).timestamp);
+                    String bottle_pic_url = pickedBottle.get(i).picture;
+                    String bottle_vid_url = pickedBottle.get(i).video;
                     linearLayout.addView(customView, layoutParams);
                     customView.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -146,6 +148,9 @@ public class BagFragment extends Fragment {
                             b.putString("BottleMessage", bottle_message);
                             b.putString("BottleCity", bottle_city);
                             b.putString("BottleTime", bottle_time);
+                            b.putString("BagOrigin", "receive_list");
+                            if (bottle_pic_url!=null) b.putString("BottlePicURL", bottle_pic_url);
+                            if (bottle_vid_url!=null) b.putString("BottleVidURL", bottle_vid_url);
                             intent.putExtras(b);
                             startActivity(intent);
                         }
@@ -181,6 +186,8 @@ public class BagFragment extends Fragment {
                     String bottle_message = sentBottle.get(i).message;
                     String bottle_city = sentBottle.get(i).city;
                     String bottle_time = DriftTime.getDate(sentBottle.get(i).timestamp);
+                    String bottle_pic_url = sentBottle.get(i).picture;
+                    String bottle_vid_url = sentBottle.get(i).video;
                     linearLayout.addView(customView, layoutParams);
                     customView.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -193,6 +200,9 @@ public class BagFragment extends Fragment {
                             b.putString("BottleMessage", bottle_message);
                             b.putString("BottleCity", bottle_city);
                             b.putString("BottleTime", bottle_time);
+                            b.putString("BagOrigin", "send_list");
+                            if (bottle_pic_url!=null) b.putString("BottlePicURL", bottle_pic_url);
+                            if (bottle_vid_url!=null) b.putString("BottleVidURL", bottle_vid_url);
                             intent.putExtras(b);
                             startActivity(intent);
                         }
