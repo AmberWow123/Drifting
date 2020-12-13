@@ -1,11 +1,14 @@
 package com.example.drifting.ui.login;
 
+import android.widget.ImageView;
+
 import java.util.ArrayList;
 
 import backend.util.database.Chat;
 
 public class ExampleItem {
 
+    //final private int friend_image;
     final private int friend_image;
     final private String friend_name;
     final private String recent_text;
@@ -13,8 +16,8 @@ public class ExampleItem {
     final private String friend_id;
     public ArrayList<Chat> chat_messages;
 
-    public ExampleItem(int image_src, String name, String text, String time, String id, ArrayList<Chat> chat_messages) {
-        friend_image = image_src;
+    public ExampleItem(int friend_image, String name, String text, String time, String id, ArrayList<Chat> chat_messages) {
+        this.friend_image = friend_image;
         friend_name = name;
         recent_text = text;
         recent_text_sent_time = time;
