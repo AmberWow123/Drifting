@@ -86,6 +86,7 @@
                 android:paddingBottom="50dp"
                 android:scaleType="fitStart"
                 android:visibility="gone" />
+
             <LinearLayout
                 android:id="@+id/bag_from_layout"
                 android:layout_width="match_parent"
@@ -94,7 +95,6 @@
                 android:background="@drawable/view_msg_rect"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="15dp"
-
                 >
 
                 <TextView
@@ -113,10 +113,9 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_light"
                     android:gravity="center_vertical|right"
-
-
                     android:textColor="@color/black"
                     android:textSize="16sp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -127,7 +126,6 @@
                 android:background="@drawable/view_msg_rect"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="15dp"
-
                 >
 
                 <TextView
@@ -178,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:drawableRight="@drawable/empty_heart"
-                    android:gravity="center_vertical|right"
+                    android:gravity="center_vertical|end"
                     android:text="0"
                     android:textColor="@color/black" />
 
