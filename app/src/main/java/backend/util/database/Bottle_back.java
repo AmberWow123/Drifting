@@ -147,6 +147,10 @@ public class Bottle_back{
 
         Bottle_back theOther = (Bottle_back) a;
 
+        if(theOther.message == null || theOther.userID == null || theOther.username == null || theOther.city == null) {
+            return false;
+        }
+
         return theOther.message.equals(message) && theOther.userID.equals(userID) &&
                 theOther.username.equals(username) && theOther.city.equals(city) &&
                 theOther.latitude == latitude && theOther.longitude == longitude &&
