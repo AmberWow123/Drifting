@@ -9,7 +9,7 @@
     android:background="@drawable/background"
     android:elevation="4dp"
     android:fitsSystemWindows="true"
-    tools:context=".SettingFragment">
+    tools:context="com.drifting.ui.setting.SettingFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/right_guideline_profile"

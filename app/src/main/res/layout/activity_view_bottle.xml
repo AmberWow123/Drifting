@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/msg_background"
-    tools:context=".ui.login.ViewBottleActivity">
+    tools:context="com.drifting.ui.homepage.ViewBottleActivity">
 
     <Button
         android:id="@+id/close_button"
@@ -73,6 +73,7 @@
                     android:paddingBottom="50dp"
                     />
 
+<<<<<<< Updated upstream
                 <VideoView
                     android:id="@+id/bottle_vedio"
 <<<<<<< Updated upstream
@@ -92,6 +93,16 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="1.0"
                     android:visibility="gone" />
+>>>>>>> Stashed changes
+=======
+                <com.google.android.exoplayer2.ui.PlayerView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:id="@+id/exoplayer_item"
+                    android:layout_margin="3dp"
+                    app:use_controller="true"
+                    app:resize_mode="fill"
+                    android:visibility="gone"/>
 >>>>>>> Stashed changes
 
                 <ImageView
@@ -118,27 +129,27 @@
                     android:paddingVertical="15dp"
                     >
 
-                <TextView
-                    android:id="@+id/from_label_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_light"
-                    android:text="From"
+                    <TextView
+                        android:id="@+id/from_label_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_light"
+                        android:text="From"
 
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    >
-                </TextView>
-                <TextView
-                    android:id="@+id/from_var_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_light"
-                    android:gravity="center_vertical|right"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/from_var_textview"
+                        android:layout_width="match_parent"
+                        android:maxWidth="180dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_light"
+                        android:gravity="center_vertical|right"
 
 
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -151,27 +162,27 @@
                     android:paddingVertical="15dp"
 
                     >
+
                     <TextView
                         android:id="@+id/location_label_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_light"
+                        android:fontFamily="@font/poppins_light"
                         android:text="Location"
 
                         android:textColor="@color/black"
-                        android:textSize="18sp"
-                        >
-                    </TextView>
+                        android:textSize="16sp"/>
+
                     <TextView
                         android:id="@+id/location_var_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_light"
+                        android:fontFamily="@font/poppins_light"
                         android:gravity="center_vertical|right"
 
 
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
@@ -189,11 +200,15 @@
                         android:id="@+id/comment_label_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/roboto_light"
                         android:text="Comment:"
+=======
+                        android:fontFamily="@font/poppins_light"
+                        android:text="Likes:"
+>>>>>>> Stashed changes
                         android:textColor="@color/black"
-                        android:textSize="18sp"
-                        />
+                        android:textSize="16sp" />
 
                     <Button
                         android:layout_width="match_parent"
@@ -236,9 +251,9 @@
                     android:id="@+id/throw_back_button"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:text="Throw it back!"
-                    android:fontFamily="@font/roboto_light"
-                    android:background="@drawable/throwback"/>
+                    android:background="@drawable/throwback"
+                    android:fontFamily="@font/poppins_light"
+                    android:text="Throw it back!" />
 
 
             </LinearLayout>
