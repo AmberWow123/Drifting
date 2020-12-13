@@ -98,27 +98,27 @@
                     android:paddingVertical="15dp"
                     >
 
-                <TextView
-                    android:id="@+id/from_label_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_light"
-                    android:text="From"
+                    <TextView
+                        android:id="@+id/from_label_textview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_light"
+                        android:text="From"
 
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    >
-                </TextView>
-                <TextView
-                    android:id="@+id/from_var_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_light"
-                    android:gravity="center_vertical|right"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/from_var_textview"
+                        android:layout_width="match_parent"
+                        android:maxWidth="180dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_light"
+                        android:gravity="center_vertical|right"
 
 
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -131,27 +131,27 @@
                     android:paddingVertical="15dp"
 
                     >
+
                     <TextView
                         android:id="@+id/location_label_textview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_light"
+                        android:fontFamily="@font/poppins_light"
                         android:text="Location"
 
                         android:textColor="@color/black"
-                        android:textSize="18sp"
-                        >
-                    </TextView>
+                        android:textSize="16sp"/>
+
                     <TextView
                         android:id="@+id/location_var_textview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_light"
+                        android:fontFamily="@font/poppins_light"
                         android:gravity="center_vertical|right"
 
 
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
@@ -168,11 +168,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_light"
+                        android:fontFamily="@font/poppins_light"
                         android:text="Likes:"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
-                        />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/like_label_textview"
@@ -200,9 +199,9 @@
                     android:id="@+id/throw_back_button"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:text="Throw it back!"
-                    android:fontFamily="@font/roboto_light"
-                    android:background="@drawable/throwback"/>
+                    android:background="@drawable/throwback"
+                    android:fontFamily="@font/poppins_light"
+                    android:text="Throw it back!" />
 
 
             </LinearLayout>

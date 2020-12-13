@@ -96,27 +96,27 @@
                 android:paddingVertical="15dp"
 
                 >
+
                 <TextView
                     android:id="@+id/bag_from_label_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_light"
+                    android:fontFamily="@font/poppins_light"
                     android:text="From"
-
+                    android:maxWidth="180dp"
                     android:textColor="@color/black"
-                    android:textSize="18sp"
-                    >
-                </TextView>
+                    android:textSize="16sp"/>
+
                 <TextView
                     android:id="@+id/bag_from_var_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_light"
+                    android:fontFamily="@font/poppins_light"
                     android:gravity="center_vertical|right"
 
 
                     android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -129,27 +129,27 @@
                 android:paddingVertical="15dp"
 
                 >
+
                 <TextView
                     android:id="@+id/bag_location_label_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_light"
+                    android:fontFamily="@font/poppins_light"
                     android:text="Location"
 
                     android:textColor="@color/black"
-                    android:textSize="18sp"
-                    >
-                </TextView>
+                    android:textSize="16sp"/>
+
                 <TextView
                     android:id="@+id/bag_location_var_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_light"
+                    android:fontFamily="@font/poppins_light"
                     android:gravity="center_vertical|right"
 
 
                     android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -167,10 +167,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_light"
+                    android:fontFamily="@font/poppins_light"
                     android:text="Likes:"
                     android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/bag_like_label_textview"
