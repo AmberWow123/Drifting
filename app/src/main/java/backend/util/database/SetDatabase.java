@@ -10,11 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
-import com.example.drifting.ChatFragment;
-import com.example.drifting.HomeFragment;
 import com.example.drifting.NavBar;
 import com.example.drifting.R;
-import com.example.drifting.ui.login.ChatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -575,8 +572,9 @@ public class SetDatabase {
                 //Toast.makeText(AddFriendActivity.this, "Failed to retrieve user's avatar :(", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
+
+
 }
 
 
