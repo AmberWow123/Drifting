@@ -1,6 +1,5 @@
 package com.example.drifting;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -33,6 +32,8 @@ import java.util.HashMap;
 import backend.util.container.BagData;
 import backend.util.database.SetDatabase;
 import backend.util.database.UserProfile;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -281,17 +282,27 @@ public class SettingFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+            super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1000){
-            if (resultCode  == Activity.RESULT_OK){
+            if (resultCode  == RESULT_OK){
                 Uri imageUri = data.getData();
 
-                CropImage.activity()
+                CropImage.activity(imageUri)
                         .start(getContext(), this);
-                profileImage.setImageURI(imageUri);
-                SetDatabase set = new SetDatabase();
-                set.uploadAvatars(auth.getUid(),imageUri);
+
             }
+        }
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
+                profileImage.setImageURI(resultUri);
+                SetDatabase set = new SetDatabase();
+                set.uploadAvatars(auth.getUid(),resultUri);
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
+
         }
     }
 
