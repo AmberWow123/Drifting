@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.drifting.container.BagData;
 import com.example.drifting.R;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -118,7 +119,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         provider = new BottleProvider(Executors.newFixedThreadPool(5), getContext(), getActivity());
-
+        BagData.clear();
 
         LocationRequest mLocationRequest = LocationRequest.create();
         mLocationRequest.setInterval(60000);
