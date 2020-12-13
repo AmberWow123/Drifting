@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.drifting.container.DrifterData;
 import com.drifting.ui.chat.AddFriendActivity;
 import com.example.drifting.R;
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -99,7 +100,12 @@ public class ViewBagBottleActivity extends AppCompatActivity {
         messageView.setText(msg);
 
         TextView fromUserView = findViewById(R.id.bag_from_var_textview);
-        fromUserView.setText(fromUser);
+        if(bagOrigin.equals("receive_list")){
+            fromUserView.setText(fromUser);
+        }
+        else{
+            fromUserView.setText(DrifterData.username);
+        }
 
         TextView locationView = findViewById(R.id.bag_location_var_textview);
         locationView.setText(city);
@@ -167,7 +173,6 @@ public class ViewBagBottleActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     @Nullable

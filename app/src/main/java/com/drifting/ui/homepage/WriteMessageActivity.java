@@ -165,6 +165,10 @@ public class WriteMessageActivity extends AppCompatActivity {
                     if (filename != null) {
                         Log.d("","ffff");
                     }
+                    if(latitude[0] == 181.0 || longitude[0] == 181.0){
+                        return;
+                    }
+
                     Bottle_back this_bottle = new Bottle_back(input_text, bottleID, userID, DrifterData.username,
                             true, city, latitude[0], longitude[0], currTime.getTimestamp(),
                              false, filename, isVideo);

@@ -103,11 +103,11 @@ public class BottleProvider {
                         continue;
                     }
 
-                    //check if the bottle has been picked up by the same user before
-                    if(this_bottle.pickHistory.containsKey(userID)){
-                        Log.d("isPicked","A bottle picked before was returned");
-                        continue;
-                    }
+//                    //check if the bottle has been picked up by the same user before
+//                    if(this_bottle.pickHistory.containsKey(userID)){
+//                        Log.d("isPicked","A bottle picked before was returned");
+//                        continue;
+//                    }
 
                     if(BagData.currentSessionGeneratedBottleSet.contains(this_bottle)){
                         continue;

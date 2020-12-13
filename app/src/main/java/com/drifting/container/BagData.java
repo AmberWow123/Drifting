@@ -8,7 +8,7 @@ import com.drifting.database.models.Bottle_back;
 public class BagData {
     public static ArrayList<Bottle_back> sentBottle = new ArrayList<>();
     public static ArrayList<Bottle_back> pickedBottle = new ArrayList<>();
-    public static HashSet<Bottle_back> currentSessionGeneratedBottleSet = new HashSet<>();
+    public static volatile HashSet<Bottle_back> currentSessionGeneratedBottleSet = new HashSet<>();
 
     public static void addPickedFrontendBottle(Bottle_back bottle){
         pickedBottle.add(bottle);
