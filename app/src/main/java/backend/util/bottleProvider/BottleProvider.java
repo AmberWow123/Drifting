@@ -160,7 +160,7 @@ public class BottleProvider {
                 360 - (abs(bottle.latitude - latitude) + (abs(bottle.latitude) + abs(latitude)) / 180.0
                         * abs(bottle.longitude - longitude)));
 
-        if(manhattanDistance < 0.0001){     // Floating point operation: consider two locations the same if their manhattan distance
+        if(manhattanDistance < 0.01){     // Floating point operation: consider two locations the same if their manhattan distance
                                             // is this small.
             return true;
         }
