@@ -109,10 +109,6 @@ public class BottleProvider {
                         continue;
                     }
 
-                    if(BagData.currentSessionGeneratedBottleSet.contains(this_bottle)){
-                        continue;
-                    }
-
                     //TODO: comment for test purpose, REUSE for formal product
                     //check if the bottle is from the same user
                     if (this_bottle.getUserID().equals(userID)) {
@@ -139,21 +135,18 @@ public class BottleProvider {
                 return;
             }
 
-            if(BagData.currentSessionGeneratedBottleSet.contains(b)){
-                continue;
-            }
-
             if (decideReachable(b)) {
                 nextBottles[i++] = b;
-                BagData.currentSessionGeneratedBottleSet.add(b);
+
             }
         }
     }
 
     private boolean decideReachable(Bottle_back bottle) {
 
+//        return true;
         long currTimestampMillis = timer.getTimestamp();
-        double bottleTravelRate = 13.0;     // Increase this variable to make the bottles drift faster. The unit is in degree/hour
+        double bottleTravelRate = 130.0;     // Increase this variable to make the bottles drift faster. The unit is in degree/hour
 
         double manhattanDistance =  Math.min((abs(bottle.latitude - latitude) + (abs(bottle.latitude) +
                 abs(latitude)) / 180.0 * abs(bottle.longitude - longitude)),
@@ -171,24 +164,30 @@ public class BottleProvider {
     }
 
     public void serveNextBottles(){
-        es.execute(new Runnable() {
-            @Override
-            public void run() {
-                while(latitude == 181.0 || longitude == 181.0){
-                    if(locationLess){
-                        return;
+        try{
+            es.execute(new Runnable() {
+                @Override
+                public void run() {
+                    while(latitude == 181.0 || longitude == 181.0){
+                        if(locationLess){
+                            return;
+                        }
                     }
+                    for(int i = 0; i < 7; i++){
+                        nextBottles[i] = null;
+                    }
+                    randomBottleList.clear();
+                    fetchNewBottles();
+                    while(!isFetchComplete);
+                    isFetchComplete = false;
+                    prepareNewBottleList();
                 }
-                for(int i = 0; i < 7; i++){
-                    nextBottles[i] = null;
-                }
-                randomBottleList.clear();
-                fetchNewBottles();
-                while(!isFetchComplete);
-                isFetchComplete = false;
-                prepareNewBottleList();
-            }
-        });
+            });
+        }
+        catch (Exception e){
+            Log.e("RejectedExecution", "Thread pool is terminated");
+        }
+
     }
 
     public void populateNextBottles(Bottle_back[] nextBottles){

@@ -136,7 +136,7 @@ public class Bottle_back{
 
     @Override
     public int hashCode(){
-        return Objects.hash(message, userID, username, city, latitude, longitude, timestamp);
+        return Objects.hash(userID, city, latitude, longitude, timestamp);
     }
 
     @Override
@@ -151,10 +151,8 @@ public class Bottle_back{
             return false;
         }
 
-        return theOther.message.equals(message) && theOther.userID.equals(userID) &&
-                theOther.username.equals(username) && theOther.city.equals(city) &&
-                theOther.latitude == latitude && theOther.longitude == longitude &&
-                theOther.timestamp == timestamp;
+        return theOther.userID.equals(userID) && theOther.city.equals(city) &&
+                theOther.latitude == latitude && theOther.longitude == longitude && theOther.timestamp == timestamp;
 
     }
 }
